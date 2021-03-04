@@ -2,9 +2,7 @@
 
 <div class="float"><img src="_assets/pics/model_endface_step_fiber.svg" align="left" width="200px" alt="step fiber"></div>
 
-Optical fiber is a fibrous solid used to transmit light in a certain frequency range. A typical model of the end face of a simple step-index fiber without coating is shown in the figure.
-
-It is a two-layer structure. The inner layer is called the core which is made of a material with higher refractive index, and the outer layer is called the cladding which is made of a material with lower refractive index. For a single-mode fiber, the relative refractive index difference between the two layers is generally 0.02~0.005.
+Optical fiber is a fibrous solid used to transmit light in a certain frequency range. A typical model of the end face of a simple step-index fiber without coating is shown in the figure. It is a two-layer structure. The inner layer is called core with higher refractive index, and the outer layer is called the cladding with lower refractive index. For a single-mode fiber, the relative refractive index difference between the two layers is generally 0.02~0.005.
 
 <div style="clear: both"></div>
 
