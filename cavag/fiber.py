@@ -8,7 +8,7 @@ __all__ = [
     'Fiber'
 ]
 
-class Fiber(Entity):
+class Fiber(PrintInfoMixin):
     name = 'Fiber'
 
     def __init__(self, nf, wavelength, omegaf, name='Fiber', **kwargs):
