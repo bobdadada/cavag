@@ -1,0 +1,12 @@
+h1, h2, h3 {
+    clear: both;
+}
+
+/* 文字环绕，图片位于左边 */
+.float {
+    clear: both
+}
+.float > img {
+    float: left;
+    margin-right: 5px;
+}

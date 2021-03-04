@@ -11,16 +11,18 @@ __all__ = [
 class Fiber(PrintInfoMixin):
     name = 'Fiber'
 
-    def __init__(self, nf, wavelength, omegaf, name='Fiber', **kwargs):
+    def __init__(self, nf, wavelength, omegaf, ROC=sp.inf, name='Fiber', **kwargs):
         self._property = {
             'nf': None,  # 折射率
             'omegaf': None,  # 模场半径
             'wavelength': None,  # 波长
+            'mirrorsurface': None
         }
         self.name = name
         self._property['omegaf'] = omegaf
         self._property['nf'] = nf
         self._property['wavelength'] = wavelength
+        self._property['mirrorsurface'] = MirrorSurface(ROC=ROC)
         self._property.update(kwargs)
 
     def change_params(self, **kwargs):
@@ -45,25 +47,29 @@ class Fiber(PrintInfoMixin):
     def nu0(self):
         """中心频率"""
         return 2 * constants.pi / self.wavelength
+    
+    @property
+    def ROC(self):
+        """端面曲率半径"""
+        return self._property['mirrorsurface'].ROC
 
 class StepFiber(PrintInfoMixin):
     name = 'StepFiber'
 
-    def __init__(self, NAf, nf, a, wavelength, ROC=sp.inf, type='', name='StepFiber', **kwargs):
+    def __init__(self, NAf, nf, a, wavelength, ROC=sp.inf, name='StepFiber', **kwargs):
         self._property = {
             'NAf': None,  # 数值孔径
             'nf': None,  # 折射率
-            'mirrorsurface': [],
+            'mirrorsurface': None,
             'a': None,  # 光纤半径
             'wavelength': None,  # 波长
-            'type': ''  # 类型
         }
         self.name = name
         self._property['NAf'] = NAf
         self._property['nf'] = nf
         self._property['a'] = a
         self._property['wavelength'] = wavelength
-        self._property['mirrorsurface'] = [MirrorSurface(ROC=ROC)]
+        self._property['mirrorsurface'] = MirrorSurface(ROC=ROC)
         self._property.update(kwargs)
 
     def change_params(self, **kwargs):
@@ -105,5 +111,5 @@ class StepFiber(PrintInfoMixin):
 
     @property
     def ROC(self):
-        """曲率半径"""
-        return [m.ROC for m in self._property['mirrorsurface']]
+        """端面曲率半径"""
+        return self._property['mirrorsurface'].ROC
