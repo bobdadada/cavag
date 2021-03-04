@@ -1,4 +1,4 @@
-from .utils import PrintInfoMixin
+from ._utils import PrintInfoMixin
 
 __all__ = [
     'MirrorSurface',
