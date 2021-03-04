@@ -1,3 +1,22 @@
+from copy import copy
+from collections import UserDict
+
+class PropertyLost(Exception):
+    """Exception caused when necessary property are lost."""
+
+class PropertySet(UserDict):
+    def __init__(self, props=(), *args, **kwargs):
+        self.__required_props = copy(props)
+        super().__init__(*args, **kwargs)
+        for prop in props:
+            if prop not in self:
+                self[prop] = None
+    
+    def __getitem__(self, item):
+        value = super().__getitem__(item)
+        if (item in self.__required_props) and (value is None):
+            raise PropertyLost("property '%s' lost!"%item)
+        return value
 
 class PrintInfoMixin(object):
 

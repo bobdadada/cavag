@@ -1,6 +1,6 @@
 import scipy as sp
 from scipy import constants
-from ._utils import PrintInfoMixin
+from ._utils import PrintInfoMixin, PropertySet
 from .mirror import MirrorSurface
 
 __all__ = [
@@ -11,105 +11,78 @@ __all__ = [
 class Fiber(PrintInfoMixin):
     name = 'Fiber'
 
-    def __init__(self, nf, wavelength, omegaf, ROC=sp.inf, name='Fiber', **kwargs):
-        self._property = {
-            'nf': None,  # 折射率
-            'omegaf': None,  # 模场半径
-            'wavelength': None,  # 波长
-            'mirrorsurface': None
-        }
+    def __init__(self, nf, wavelength, omegaf, roc=sp.inf, name='Fiber', **kwargs):
         self.name = name
-        self._property['omegaf'] = omegaf
-        self._property['nf'] = nf
-        self._property['wavelength'] = wavelength
-        self._property['mirrorsurface'] = MirrorSurface(ROC=ROC)
-        self._property.update(kwargs)
+
+        # 折射率，波长，模场半径，光纤端面
+        self.property_set = PropertySet(('nf', 'wavelength', 'omegaf', 'mirrorsurface'))
+        self.property_set['omegaf'] = omegaf
+        self.property_set['nf'] = nf
+        self.property_set['wavelength'] = wavelength
+        self.property_set['mirrorsurface'] = MirrorSurface(ROC=roc)
+        self.property_set.update(kwargs)
 
     def change_params(self, **kwargs):
-        self._property.update(kwargs)
+        self.property_set.update(kwargs)
 
     @property
     def omegaf(self) -> float:
         """模场半径"""
-        return self._property['omegaf']
+        return self.property_set['omegaf']
 
     @property
     def nf(self) -> float:
         """折射率"""
-        return self._property['nf']
+        return self.property_set['nf']
 
     @property
     def wavelength(self) -> float:
         """中心波长"""
-        return self._property['wavelength']
+        return self.property_set['wavelength']
 
     @property
-    def nu0(self):
+    def nu0(self) -> float:
         """中心频率"""
         return 2 * constants.pi / self.wavelength
     
     @property
-    def ROC(self):
+    def roc(self) -> float:
         """端面曲率半径"""
-        return self._property['mirrorsurface'].ROC
+        return self.property_set['mirrorsurface'].ROC
 
-class StepFiber(PrintInfoMixin):
+class StepFiber(Fiber, PrintInfoMixin):
     name = 'StepFiber'
 
-    def __init__(self, NAf, nf, a, wavelength, ROC=sp.inf, name='StepFiber', **kwargs):
-        self._property = {
-            'NAf': None,  # 数值孔径
-            'nf': None,  # 折射率
-            'mirrorsurface': None,
-            'a': None,  # 光纤半径
-            'wavelength': None,  # 波长
-        }
+    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepFiber', **kwargs):
         self.name = name
-        self._property['NAf'] = NAf
-        self._property['nf'] = nf
-        self._property['a'] = a
-        self._property['wavelength'] = wavelength
-        self._property['mirrorsurface'] = MirrorSurface(ROC=ROC)
-        self._property.update(kwargs)
+
+        # 折射率，波长，光纤纤芯半径，数值孔径，光纤端面
+        self.property_set = PropertySet(('nf', 'wavelength', 'a', 'naf', 'mirrorsurface'))
+        self.property_set['naf'] = naf
+        self.property_set['nf'] = nf
+        self.property_set['a'] = a
+        self.property_set['wavelength'] = wavelength
+        self.property_set['mirrorsurface'] = MirrorSurface(ROC=roc)
+        self.property_set.update(kwargs)
 
     def change_params(self, **kwargs):
-        self._property.update(kwargs)
+        self.property_set.update(kwargs)
 
     @property
     def a(self) -> float:
         """光纤纤芯半径"""
-        return self._property['a']
+        return self.property_set['a']
 
     @property
-    def NAf(self) -> float:
+    def naf(self) -> float:
         """数值孔径"""
-        return self._property['NAf']
+        return self.property_set['naf']
 
     @property
-    def nf(self) -> float:
-        """折射率"""
-        return self._property['nf']
-
-    @property
-    def wavelength(self) -> float:
-        """中心波长"""
-        return self._property['wavelength']
-
-    @property
-    def omegaf(self):
+    def omegaf(self) -> float:
         """光纤模场半径"""
         nu0 = self.nu0
         a = self.a
-        NAf = self.NAf
-        V = nu0 * a * NAf  # 归一化频率 <2.4单模
+        naf = self.naf
+        V = nu0 * a * naf  # 归一化频率 <2.4单模
         return a * (0.65 + 1.619 * V ** (-1.5) + 2.879 * V ** (-6))
-
-    @property
-    def nu0(self):
-        """中心频率"""
-        return 2 * constants.pi / self.wavelength
-
-    @property
-    def ROC(self):
-        """端面曲率半径"""
-        return self._property['mirrorsurface'].ROC
