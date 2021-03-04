@@ -1,6 +1,6 @@
 import scipy as sp
 from scipy import constants
-from .utils import PrintInfoMixin
+from ._utils import PrintInfoMixin
 
 __all__ = [
     'GaussBeam',

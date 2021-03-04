@@ -9,7 +9,7 @@ plt.rcParams['font.sans-serif'] = ['KaiTi']  # 指定默认字体
 plt.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
 
 from typing import Union
-from .utils import PrintInfoMixin
+from ._utils import PrintInfoMixin
 from .mirror import MirrorSurface
 
 __all__ = [
