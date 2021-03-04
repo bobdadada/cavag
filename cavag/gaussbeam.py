@@ -27,12 +27,6 @@ class GaussBeam(PrintInfoMixin):
         self._property['wavelength'] = wavelength
         self._property.update(kwargs)
 
-    @classmethod
-    def fromRemotePlane(cls, position, omega, A, wavelength, name=None, **kwargs):
-        if not name:
-            name = cls.name
-        pass
-
     @property
     def position(self):
         """束腰位置"""
