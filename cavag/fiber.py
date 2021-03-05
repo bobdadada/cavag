@@ -4,14 +4,14 @@ from ._utils import PrintInfoMixin, PropertySet
 from .mirror import MirrorSurface
 
 __all__ = [
-    'StepFiber',
-    'Fiber'
+    'StepIndexFiberEnd',
+    'FiberEnd'
 ]
 
-class Fiber(PrintInfoMixin):
-    name = 'Fiber'
+class FiberEnd(PrintInfoMixin):
+    name = 'FiberEnd'
 
-    def __init__(self, nf, wavelength, omegaf, roc=sp.inf, name='Fiber', **kwargs):
+    def __init__(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd', **kwargs):
         self.name = name
 
         # 折射率，波长，模场半径，光纤端面
@@ -50,10 +50,10 @@ class Fiber(PrintInfoMixin):
         """端面曲率半径"""
         return self.property_set['mirrorsurface'].ROC
 
-class StepFiber(Fiber, PrintInfoMixin):
-    name = 'StepFiber'
+class StepIndexFiberEnd(FiberEnd, PrintInfoMixin):
+    name = 'StepIndexFiberEnd'
 
-    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepFiber', **kwargs):
+    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd', **kwargs):
         self.name = name
 
         # 折射率，波长，光纤纤芯半径，数值孔径，光纤端面
