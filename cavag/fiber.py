@@ -4,7 +4,7 @@ from ._utils import PrintInfoMixin, PropertySet
 from .mirror import MirrorSurface
 
 __all__ = [
-    'StepIndexFiberEnd',
+    'StepIndexMonoFiberEnd',
     'FiberEnd'
 ]
 
@@ -26,11 +26,6 @@ class FiberEnd(PrintInfoMixin):
         self.property_set.update(kwargs)
 
     @property
-    def omegaf(self) -> float:
-        """模场半径"""
-        return self.property_set['omegaf']
-
-    @property
     def nf(self) -> float:
         """折射率"""
         return self.property_set['nf']
@@ -39,10 +34,15 @@ class FiberEnd(PrintInfoMixin):
     def wavelength(self) -> float:
         """中心波长"""
         return self.property_set['wavelength']
+    
+    @property
+    def omegaf(self) -> float:
+        """模场半径"""
+        return self.property_set['omegaf']
 
     @property
     def nu0(self) -> float:
-        """中心频率"""
+        """中心圆频率"""
         return 2 * constants.pi / self.wavelength
     
     @property
@@ -50,10 +50,10 @@ class FiberEnd(PrintInfoMixin):
         """端面曲率半径"""
         return self.property_set['mirrorsurface'].ROC
 
-class StepIndexFiberEnd(FiberEnd, PrintInfoMixin):
-    name = 'StepIndexFiberEnd'
+class StepIndexMonoFiberEnd(FiberEnd, PrintInfoMixin):
+    name = 'StepIndexMonoFiberEnd'
 
-    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd', **kwargs):
+    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexMonoFiberEnd', **kwargs):
         self.name = name
 
         # 折射率，波长，光纤纤芯半径，数值孔径，光纤端面
