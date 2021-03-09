@@ -66,7 +66,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
 - <font color="red">a</font> - $a$ radius of fiber core,  cannot be assigned directly.
 
-- <font color="red">naf</font> - $NA_f$ Numerical aperture,  cannot be assigned directly.
+- <font color="red">naf</font> - $NA_f$ numerical aperture,  cannot be assigned directly. the numerical aperture by definition is given by$NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
 
 - <font color="red">omegaf</font> - $w_f$ radius of mode field of fiber. For the step-index monomode fiber, we can compute $w_f$ by approximation of Gaussian light. 
   $$
@@ -76,7 +76,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
   $$
   V=\frac{2\pi a}{\lambda}\cdot NA_{f}
   $$
-  Note the usual fiber normalized frequency is defined as $V_{usual}=2\pi a/\lambda \cdot NA_{f}\cdot\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$. Pay attention to the difference between this two.
+  is the normalized frequency.
 
 The constructor of `StepIndexMonoFiberEnd` object is
 
