@@ -1,12 +1,15 @@
 from copy import copy
 from collections import UserDict
+from collections.abc import Sequence
+
 
 class PropertyLost(Exception):
-    """Exception caused when necessary property are lost."""
+    """Exception raised when necessary property are lost."""
+
 
 class PropertySet(UserDict):
     def __init__(self, props=(), *args, **kwargs):
-        self.__required_props = copy(props)
+        self.__required_props = set(props)
         super().__init__(*args, **kwargs)
         for prop in props:
             if prop not in self:
@@ -17,6 +20,44 @@ class PropertySet(UserDict):
         if (item in self.__required_props) and (value is None):
             raise PropertyLost("property '%s' lost!"%item)
         return value
+    
+    def reset_required(self, props=()):
+        self.clear_required()
+        self.add_required(props=props)
+
+    def add_required(self, props=()):
+        if isinstance(props, str):
+            self.__required_props.add(props)
+            if props not in self:
+                self[props] = None
+        elif isinstance(props, Sequence):
+            self.__required_props.update(props)
+            for prop in props:
+                if prop not in self:
+                    self[prop] = None
+
+    def del_required(self, props=()):
+        if isinstance(props, str):
+            self.__required_props.discard(props)
+        elif isinstance(props, Sequence):
+            for prop in props:
+                self.__required_props.discard(prop)
+
+    def clear_required(self):
+        self.__required_props.clear()
+
+
+class _Object(object):
+    name = 'Object'
+    
+    def __init__(self, name='Object', **kwargs):
+        self.name = name
+
+        self.property_set = PropertySet()
+    
+    def change_params(self, **kwargs):
+        self.property_set.update(kwargs) 
+
 
 class PrintInfoMixin(object):
 
@@ -59,6 +100,7 @@ class PrintInfoMixin(object):
 
     def __repr__(self):
         return "<class '{}'>".format(self.__class__.__name__)
+
 
 def str_half2full(ins):
     """把字符串半角转全角"""

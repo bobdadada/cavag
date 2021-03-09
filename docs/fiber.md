@@ -22,7 +22,7 @@ Following classes are defined in the module:
 
 ----
 
-**FiberEnd**
+**FiberEnd**: `class FiberEnd(_utils._Object, _utils.PrintInfoMixin)`
 
 This class define a fiber end face object. Almost all attributes cannot be assigned by `self.attr = value`. The attributes are defined as follows:
 
@@ -44,9 +44,11 @@ All important properties are initialized in the constructor. Only by using the c
 
 - <font color="red">\_\_init\_\_(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd', **kwargs)</font>  - create a `FiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">omegaf</font>, <font color="red">roc</font> which defined above. `sp` is the abbreviation of package `scipy`.
 
+- <font color="red">change_params(self, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters.
+
 ----
 
-**StepIndexMonoFiberEnd**
+**StepIndexMonoFiberEnd**: `class StepIndexMonoFiberEnd(FiberEnd)`
 
 This class is a subclass of `FiberEnd` and particularly used to describe a step-index monomode fiber. The attributes are defined as follows:
 
