@@ -1,15 +1,3 @@
-## notations
-
-|  symbols  |              descriptions               |
-| :-------: | :-------------------------------------: |
-|   $n_f$   |          core refractive index          |
-| $\lambda$ |     wavelength of transmitted light     |
-|   $w_f$   |      radius of mode field of fiber      |
-|   $roc$   |           radius of curvature           |
-|  $\nu_0$  | circular frequency of transmitted light |
-
-----------
-
 ## Physical Background
 
 <div class="float"><img src="_assets/pics/model_endface_step_fiber.svg" style="float:left;width:200px" alt="step-index fiber" title="step-index fiber"></div>
@@ -28,7 +16,7 @@ With the advancement of technology, manufacturers can produce optical fibers for
 
 #### 1. The input and output ends of a fiber
 
-In optical coupling applications, we only need to consider the conditions of the input and output ends of the fiber. Three properties ($n_f$, $\lambda$, and $w_f$) of the fiber must be considered. Any qualified manufacturer is fully capable of providing these data.  For the fiber cavity, the end face of the fiber is not necessarily flat. For this case, the radius of curvature $roc$ of the end face needs to be considered.
+In optical coupling applications, we only need to consider the conditions of the input and output ends of the fiber. Three properties, $n_f$ (core refractive index), $\lambda$ (wavelength of transmitted light), and $w_f$ (radius of mode field), of the fiber must be considered. Any qualified manufacturer is fully capable of providing these data.  For the fiber cavity, the end face of the fiber is not necessarily flat. For this case, the radius of curvature $roc$ (radius of curvature) of the end face needs to be considered.
 
 Following classes are defined in the module:
 
@@ -66,7 +54,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
 - <font color="red">a</font> - $a$ radius of fiber core,  cannot be assigned directly.
 
-- <font color="red">naf</font> - $NA_f$ numerical aperture,  cannot be assigned directly. the numerical aperture by definition is given by$NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
+- <font color="red">naf</font> - $NA_f$ numerical aperture,  cannot be assigned directly. the numerical aperture by definition is given by $NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
 
 - <font color="red">omegaf</font> - $w_f$ radius of mode field of fiber. For the step-index monomode fiber, we can compute $w_f$ by approximation of Gaussian light. 
   $$
@@ -80,7 +68,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
 The constructor of `StepIndexMonoFiberEnd` object is
 
-- <font color="red">\_\_init\_\_(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexMonoFiberEnd', **kwargs)</font>  - create a `FiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">a</font>, <font color="red">naf</font>, <font color="red">roc</font> which defined above.
+- <font color="red">\_\_init\_\_(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexMonoFiberEnd', **kwargs)</font>  - create a `StepIndexMonoFiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">a</font>, <font color="red">naf</font>, <font color="red">roc</font> which defined above.
 
 ----
 
