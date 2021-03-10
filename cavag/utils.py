@@ -85,8 +85,8 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
     :return: 某个方向上输出光子效率。如果计算失败，则返回-1。
     """
     import numpy as np
-    from cavag.entities.fiber import Fiber
-    from cavag.entities.fpcavity import (CavityGaussMode, Cavity, judge_stable_cavity,
+    from cavag.fiber import Fiber
+    from cavag.fpcavity import (CavityGaussMode, Cavity, judge_stable_cavity,
             calculate_loss_clipping, calculate_loss_scattering, calculate_g,
             calculate_neta_ext, calculate_neta_e, calculate_C1,
             calculate_neta_mode, calculate_neta_trans)

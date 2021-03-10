@@ -1,6 +1,6 @@
 import scipy as sp
 from scipy import constants
-from .._utils import PrintInfoMixin, PropertySet, _Object
+from ._utils import PrintInfoMixin, PropertySet, _Object
 from .mirror import MirrorSurface
 
 __all__ = [

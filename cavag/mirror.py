@@ -1,5 +1,5 @@
 from .misc import Position
-from ..utils import RTLConvertor
+from .utils import RTLConvertor
 
 __all__ = [
     'MirrorSurface',

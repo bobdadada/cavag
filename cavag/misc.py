@@ -1,4 +1,4 @@
-from .._utils import PrintInfoMixin, _Object 
+from ._utils import PrintInfoMixin, _Object 
 
 class Position(_Object, PrintInfoMixin):
     name = 'Position'
