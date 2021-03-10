@@ -4,7 +4,7 @@
 
 ## Codes
 
-**This page corresponds to the module `mirror`** 
+**This page corresponds to the module `entities.mirror`** 
 
 ### Classes
 
@@ -16,7 +16,7 @@ Following classes are defined in the module:
 
 ----
 
-**MirrorSurface**: `class MirrorSurface(misc.Position)`
+**MirrorSurface**: `class MirrorSurface(entities.misc.Position)`
 
 This class defines a mirror surface and is a subclass of `misc.Position` which provides attribute <font color="red">position</font>.  Almost all attributes cannot be assigned by `self.attr = value`. The attributes are defined as follows:
 
@@ -26,7 +26,7 @@ This class defines a mirror surface and is a subclass of `misc.Position` which p
 - <font color="red">r</font> - $R$, optical reflectivity, cannot be assigned directly, default to be $0$, the value must be between $0$ and $1$.
 - <font color="red">t</font> - $T$, optical transmittance, cannot be assigned directly, default to be $1$, the value must be between $0$ and $1$.
 - <font color="red">l</font> - $L$, optical loss, cannot be assigned directly, default to be $0$, the value must be between $0$ and $1$.
-- <font color="red">position</font> - the position of the mirror, provided by `misc.Position`.
+- <font color="red">position</font> - the position of the mirror, provided by `entities.misc.Position`.
 
 The methods are defined as follows:
 
@@ -44,7 +44,7 @@ Following classes are defined in the module:
 
 ----
 
-**ThickLens**: `class ThickLens(misc.Position)`
+**ThickLens**: `class ThickLens(entities.misc.Position)`
 
 A class for thick lens. For thick lenses, the left focal length is not equal to the right focal length. Almost all attributes cannot be assigned by `self.attr = value`. The attributes are defined as follows:
 
@@ -53,7 +53,7 @@ A class for thick lens. For thick lenses, the left focal length is not equal to 
 - <font color="red">d</font> - $d$, Lens thickness, cannot be assigned directly.
 - <font color="red">fl</font> - $f_l$, left focal distance, cannot be assigned directly.
 - <font color="red">fr</font> - $f_r$, left focal distance, cannot be assigned directly.
-- <font color="red">position</font> - the position of the mirror, provided by `misc.Position`.
+- <font color="red">position</font> - the position of the mirror, provided by `entities.misc.Position`.
 
 The methods are defined as follows:
 
@@ -68,7 +68,7 @@ A class for thin lens, that is, lens with a thickness of $0$. It is a subclass o
 
 - <font color="red">name</font> - The name of instances or classes. The default is *ThinLens*, which can be modified as required.
 - <font color="red">f</font> - $f$, focal distance, cannot be assigned directly.
-- <font color="red">position</font> - the position of the mirror, provided by `misc.Position`.
+- <font color="red">position</font> - the position of the mirror, provided by `entities.misc.Position`.
 
 The methods are defined as follows:
 

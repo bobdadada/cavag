@@ -10,7 +10,7 @@ With the advancement of technology, manufacturers can produce optical fibers for
 
 ## Codes
 
-**This page corresponds to the module `fiber`** 
+**This page corresponds to the module `entities.fiber`** 
 
 ### Classes
 
