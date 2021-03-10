@@ -1,6 +1,6 @@
 import scipy as sp
 from scipy import constants
-from ._utils import PrintInfoMixin, PropertySet, _Object
+from ._utils import PrintableObject, PropertySet
 from .mirror import MirrorSurface
 
 __all__ = [
@@ -9,11 +9,11 @@ __all__ = [
 ]
 
 
-class FiberEnd(_Object, PrintInfoMixin):
+class FiberEnd(PrintableObject):
     name = 'FiberEnd'
 
     def __init__(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd', **kwargs):
-        super(_Object, self).__init__()
+        super(PrintableObject, self).__init__()
         self.name = name
 
         # 折射率，波长，模场半径，光纤端面
@@ -54,7 +54,6 @@ class StepIndexMonoFiberEnd(FiberEnd):
     name = 'StepIndexMonoFiberEnd'
 
     def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexMonoFiberEnd', **kwargs):
-        self.name = name
 
         # 折射率，波长，光纤纤芯半径，数值孔径，光纤端面
         self.property_set = PropertySet(('nf', 'wavelength', 'a', 'naf', 'mirrorsurface'))

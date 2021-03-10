@@ -22,7 +22,7 @@ Following classes are defined in the module:
 
 ----
 
-**FiberEnd**: `class FiberEnd(_utils._Object, _utils.PrintInfoMixin)`
+**FiberEnd**: `class FiberEnd(_utils.PrintableObject)`
 
 This class define a fiber end face object. Almost all attributes cannot be assigned by `self.attr = value`. The attributes are defined as follows:
 

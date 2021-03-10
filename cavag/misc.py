@@ -1,10 +1,10 @@
-from ._utils import PrintInfoMixin, _Object 
+from ._utils import PrintableObject
 
-class Position(_Object, PrintInfoMixin):
+class Position(PrintableObject):
     name = 'Position'
 
     def __init__(self, position=0, name='Position', **kwargs):
-        super(_Object, self).__init__()
+        super(PrintableObject, self).__init__()
         self.name = name
 
         # 主平面位置

@@ -56,7 +56,11 @@ class _Object(object):
         self.property_set = PropertySet()
     
     def change_params(self, **kwargs):
-        self.property_set.update(kwargs) 
+        self.property_set.update(kwargs)
+
+
+class PrintableObject(_Object, PrintInfoMixin):
+    """subclass of _Object + PrintInfoMixin"""
 
 
 class PrintInfoMixin(object):
