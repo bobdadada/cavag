@@ -1,6 +1,6 @@
 import scipy as sp
 from scipy import constants
-from ._utils import PrintInfoMixin
+from .misc import Position
 
 __all__ = [
     'GaussBeam',
@@ -10,27 +10,25 @@ __all__ = [
     'get_spot_info_after_deviation'
 ]
 
-class GaussBeam(PrintInfoMixin):
+class GaussBeam(Position):
     name = 'GaussBeam'
 
-    def __init__(self, position, omega0, A0, wavelength, name='GaussBeam', **kwargs):
-        self._property = {
-            'position': None,  # 位置
-            'omega0': None,  # 束腰半径
-            'A0': None,  # 振幅
-            'wavelength': None  # 波长
-        }
+    def __init__(self, A0, wavelength, omega0, position, name='GaussBeam', **kwargs):
+        super(Position, self).__init__(position=position)
         self.name = name
-        self._property['position'] = position
-        self._property['omega0'] = omega0
-        self._property['A0'] = A0
-        self._property['wavelength'] = wavelength
-        self._property.update(kwargs)
+
+        # 振幅, 波长, 束腰半径
+        self.property_set.add_required(('A0', 'wavelength', 'omega0'))
+        self.property_set['A0'] = A0
+        self.property_set['wavelength'] = wavelength
+        self.property_set['omega0'] = omega0
+        self.property_set['position'] = position
+        self.property_set.update(kwargs)
 
     @property
     def position(self):
         """束腰位置"""
-        return self._property['position']
+        return self.property_set['position']
 
     @property
     def z0(self):
@@ -38,19 +36,19 @@ class GaussBeam(PrintInfoMixin):
         return sp.pi * (self.omega0) ** 2 / self.wavelength
 
     @property
-    def omega0(self):
-        """束腰半径"""
-        return self._property['omega0']
-
-    @property
     def A0(self):
         """振幅"""
-        return self._property['A0']
+        return self.property_set['A0']
 
     @property
     def wavelength(self):
         """中心波长"""
-        return self._property['wavelength']
+        return self.property_set['wavelength']
+
+    @property
+    def omega0(self):
+        """束腰半径"""
+        return self.property_set['omega0']
 
 
 def convert_through_mirror(beam, mirror):
