@@ -1,7 +1,75 @@
 
 __all__ = [
-    'calculate_fpcavity_total_efficiency'
+    'calculate_fpcavity_total_efficiency',
+    'RTLConvertor'
 ]
+
+class RTLConvertor(object):
+
+    @staticmethod
+    def rtl_by_r_t2l(r, t2l):
+        """
+        计算反射率，透射率，损耗
+        :param r: 反射率
+        :param t2l: 透射损耗比
+        :return: 反射率，透射率，损耗
+        """
+        t, l = (1-r)*t2l/(t2l+1), (1-r)/(t2l+1)
+        return r, t, l
+    
+    @staticmethod
+    def rtl_by_t_r2l(t, r2l):
+        """
+        计算反射率，透射率，损耗
+        :param t: 透射率
+        :param r2l: 反射损耗比
+        :return: 反射率，透射率，损耗
+        """
+        r, l = (1-t)*r2l/(r2l+1), (1-t)/(r2l+1)
+        return r, t, l
+
+    @staticmethod
+    def add_loss(m0, l):
+        """
+        计算增添损耗后的(反射率，透射率，损耗)
+        :param m0: 原始的(反射率，透射率，损耗)
+        :param l: 添加的损耗
+        :return: 反射率，透射率，损耗
+        """
+        r0, t0, l0 = m0
+        r = r0*(1-l)
+        t = t0*(1-l)
+        l = l0*(1-l)+l
+        return r, t, l
+
+    @staticmethod
+    def add_reflectivity(m0, r):
+        """
+        计算增添反射率后的(反射率，透射率，损耗)
+        :param m0: 原始的(反射率，透射率，损耗)
+        :param r: 添加的反射率
+        :return: 反射率，透射率，损耗
+        """
+        r0, t0, l0 = m0
+        r = r0*(1-r)+r
+        t = t0*(1-r)
+        l = l0*(1-r)
+        return r, t, l
+
+    @staticmethod
+    def add_transmittance(m0, t):
+        """
+        计算增添透射率后的(反射率，透射率，损耗)
+        :param m0: 原始的(反射率，透射率，损耗)
+        :param t: 添加的透射率
+        :return: 反射率，透射率，损耗
+        """
+        r0, t0, l0 = m0
+        r = r0*(1-t)
+        t = t0*(1-t)+t
+        l = l0*(1-t)
+        return r, t, l
+
 
 def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelength, gamma, direction='l'):
     """
@@ -22,14 +90,13 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
             calculate_loss_clipping, calculate_loss_scattering, calculate_g,
             calculate_neta_ext, calculate_neta_e, calculate_C1,
             calculate_neta_mode, calculate_neta_trans)
-    from cavag.mirror import calculate_rtl, add_loss
 
     ROCl, Dl, Rl0, T2L0l, sigmascl = surL
     ROCr, Dr, Rr0, T2L0r, sigmascr = surR
 
     # 计算腔面R T L
-    Rl0, Tl0, Ll0 = calculate_rtl(Rl0, T2L0l)
-    Rr0, Tr0, Lr0 = calculate_rtl(Rr0, T2L0r)
+    Rl0, Tl0, Ll0 = RTLConvertor.rtl_by_r_t2l(Rl0, T2L0l)
+    Rr0, Tr0, Lr0 = RTLConvertor.rtl_by_r_t2l(Rr0, T2L0r)
 
     # 光纤类型
     fiberl = Fiber(nf=fiberL[0], omegaf=fiberL[1], wavelength=wavelength)
@@ -47,8 +114,8 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
     Lscr = calculate_loss_scattering(sigmascr, wavelength)
 
     # 将上述损耗加在腔面上
-    Rl, Tl, Ll = add_loss((Rl0, Tl0, Ll0), Lcll+Lscl)
-    Rr, Tr, Lr = add_loss((Rr0, Tr0, Lr0), Lclr+Lscr)
+    Rl, Tl, Ll = RTLConvertor.add_loss((Rl0, Tl0, Ll0), Lcll+Lscl)
+    Rr, Tr, Lr = RTLConvertor.add_loss((Rr0, Tr0, Lr0), Lclr+Lscr)
 
     # 计算腔和腔模
     cavity = Cavity(ROCl=ROCl, ROCr=ROCr, L=L, Rl=Rl, Rr=Rr)

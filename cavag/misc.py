@@ -3,7 +3,7 @@ from ._utils import PrintInfoMixin, _Object
 class Position(_Object, PrintInfoMixin):
     name = 'Position'
 
-    def __init__(self, position=0.0, name='Position', **kwargs):
+    def __init__(self, position=0, name='Position', **kwargs):
         super(_Object, self).__init__()
         self.name = name
 
