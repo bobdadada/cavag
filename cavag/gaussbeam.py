@@ -10,7 +10,170 @@ __all__ = [
     'get_spot_info_after_deviation'
 ]
 
-class GaussBeam(Position):
+
+class HermiteGaussBeam1D(Position):
+    name = 'GaussBeam1D'
+
+    def __init__(self, A0, wavelength, omega0, position, name='HermiteGaussBeam1D', **kwargs):
+        super(Position, self).__init__(position=position)
+        self.name = name
+
+        # 振幅, 波长, 束腰半径
+        self.property_set.add_required(('A0', 'wavelength', 'omega0'))
+        self.property_set['A0'] = A0
+        self.property_set['wavelength'] = wavelength
+        self.property_set['omega0'] = omega0
+        self.property_set['position'] = position
+        self.property_set.update(kwargs)
+
+    @property
+    def position(self):
+        """束腰位置"""
+        return self.property_set['position']
+
+    @property
+    def z0(self):
+        """瑞利长度"""
+        return sp.pi * (self.omega0) ** 2 / self.wavelength
+
+    @property
+    def A0(self):
+        """振幅"""
+        return self.property_set['A0']
+
+    @property
+    def wavelength(self):
+        """中心波长"""
+        return self.property_set['wavelength']
+
+    @property
+    def omega0(self):
+        """束腰半径"""
+        return self.property_set['omega0']
+
+class HermiteGaussBeam2D(Position):
+    name = 'GaussBeam1D'
+
+    def __init__(self, A0, wavelength, omega0, position, name='HermiteGaussBeam1D', **kwargs):
+        super(Position, self).__init__(position=position)
+        self.name = name
+
+        # 振幅, 波长, 束腰半径
+        self.property_set.add_required(('A0', 'wavelength', 'omega0'))
+        self.property_set['A0'] = A0
+        self.property_set['wavelength'] = wavelength
+        self.property_set['omega0'] = omega0
+        self.property_set['position'] = position
+        self.property_set.update(kwargs)
+
+    @property
+    def position(self):
+        """束腰位置"""
+        return self.property_set['position']
+
+    @property
+    def z0(self):
+        """瑞利长度"""
+        return sp.pi * (self.omega0) ** 2 / self.wavelength
+
+    @property
+    def A0(self):
+        """振幅"""
+        return self.property_set['A0']
+
+    @property
+    def wavelength(self):
+        """中心波长"""
+        return self.property_set['wavelength']
+
+    @property
+    def omega0(self):
+        """束腰半径"""
+        return self.property_set['omega0']
+
+
+class SymmetricHermiteGaussBeam2D(Position):
+    name = 'GaussBeam1D'
+
+    def __init__(self, A0, wavelength, omega0, position, name='HermiteGaussBeam1D', **kwargs):
+        super(Position, self).__init__(position=position)
+        self.name = name
+
+        # 振幅, 波长, 束腰半径
+        self.property_set.add_required(('A0', 'wavelength', 'omega0'))
+        self.property_set['A0'] = A0
+        self.property_set['wavelength'] = wavelength
+        self.property_set['omega0'] = omega0
+        self.property_set['position'] = position
+        self.property_set.update(kwargs)
+
+    @property
+    def position(self):
+        """束腰位置"""
+        return self.property_set['position']
+
+    @property
+    def z0(self):
+        """瑞利长度"""
+        return sp.pi * (self.omega0) ** 2 / self.wavelength
+
+    @property
+    def A0(self):
+        """振幅"""
+        return self.property_set['A0']
+
+    @property
+    def wavelength(self):
+        """中心波长"""
+        return self.property_set['wavelength']
+
+    @property
+    def omega0(self):
+        """束腰半径"""
+        return self.property_set['omega0']
+
+
+class GaussBeam1D(Position):
+    name = 'GaussBeam1D'
+
+    def __init__(self, A0, wavelength, omega0, position, name='GaussBeam1D', **kwargs):
+        super(Position, self).__init__(position=position)
+        self.name = name
+
+        # 振幅, 波长, 束腰半径
+        self.property_set.add_required(('A0', 'wavelength', 'omega0'))
+        self.property_set['A0'] = A0
+        self.property_set['wavelength'] = wavelength
+        self.property_set['omega0'] = omega0
+        self.property_set['position'] = position
+        self.property_set.update(kwargs)
+
+    @property
+    def position(self):
+        """束腰位置"""
+        return self.property_set['position']
+
+    @property
+    def z0(self):
+        """瑞利长度"""
+        return sp.pi * (self.omega0) ** 2 / self.wavelength
+
+    @property
+    def A0(self):
+        """振幅"""
+        return self.property_set['A0']
+
+    @property
+    def wavelength(self):
+        """中心波长"""
+        return self.property_set['wavelength']
+
+    @property
+    def omega0(self):
+        """束腰半径"""
+        return self.property_set['omega0']
+
+class GaussBeam2D(Position):
     name = 'GaussBeam'
 
     def __init__(self, A0, wavelength, omega0, position, name='GaussBeam', **kwargs):
