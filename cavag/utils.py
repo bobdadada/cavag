@@ -23,14 +23,14 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
             calculate_loss_clipping, calculate_loss_scattering, calculate_g,
             calculate_neta_ext, calculate_neta_e, calculate_C1,
             calculate_neta_mode, calculate_neta_trans)
-    from cavag.mirror import RTLConvertor
+    from cavag.mirror import RTLConverter
 
     ROCl, Dl, Rl0, T2L0l, sigmascl = surL
     ROCr, Dr, Rr0, T2L0r, sigmascr = surR
 
     # 计算腔面R T L
-    Rl0, Tl0, Ll0 = RTLConvertor.rtl_by_r_t2l(Rl0, T2L0l)
-    Rr0, Tr0, Lr0 = RTLConvertor.rtl_by_r_t2l(Rr0, T2L0r)
+    Rl0, Tl0, Ll0 = RTLConverter.rtl_by_r_t2l(Rl0, T2L0l)
+    Rr0, Tr0, Lr0 = RTLConverter.rtl_by_r_t2l(Rr0, T2L0r)
 
     # 光纤类型
     fiberl = Fiber(nf=fiberL[0], omegaf=fiberL[1], wavelength=wavelength)
@@ -48,8 +48,8 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
     Lscr = calculate_loss_scattering(sigmascr, wavelength)
 
     # 将上述损耗加在腔面上
-    Rl, Tl, Ll = RTLConvertor.add_loss((Rl0, Tl0, Ll0), Lcll+Lscl)
-    Rr, Tr, Lr = RTLConvertor.add_loss((Rr0, Tr0, Lr0), Lclr+Lscr)
+    Rl, Tl, Ll = RTLConverter.add_loss((Rl0, Tl0, Ll0), Lcll+Lscl)
+    Rr, Tr, Lr = RTLConverter.add_loss((Rr0, Tr0, Lr0), Lclr+Lscr)
 
     # 计算腔和腔模
     cavity = Cavity(ROCl=ROCl, ROCr=ROCr, L=L, Rl=Rl, Rr=Rr)
