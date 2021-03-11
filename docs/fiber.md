@@ -41,29 +41,40 @@ All important properties are initialized in the constructor. Only by using the c
 
 ----
 
-**StepIndexMonoFiberEnd**: `class StepIndexMonoFiberEnd(FiberEnd)`
+**StepIndexFiberEnd**: `class StepIndexFiberEnd(FiberEnd)`
 
-This class is a subclass of `FiberEnd` and particularly used to describe a step-index monomode fiber. The attributes are defined as follows:
+This class is a subclass of `FiberEnd` and particularly used to describe a step-index fiber. The attributes are defined as follows:
 
-- <font color="red">name</font> - The name of instances or classes. The default is *StepIndexMonoFiberEnd*, which can be modified as required.
+- <font color="red">name</font> - The name of instances or classes. The default is *StepIndexFiberEnd*, which can be modified as required.
+
 - <font color="red">a</font> - $a$ radius of fiber core,  cannot be assigned directly.
+
 - <font color="red">naf</font> - $NA_f$ numerical aperture,  cannot be assigned directly. the numerical aperture by definition is given by $NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
-- <font color="red">omegaf</font> - $w_f$ radius of mode field of fiber. For the step-index monomode fiber, we can compute $w_f$ by approximation of Gaussian light. 
+
+- <font color="red">omegaf</font> - $w_f$ radius of mode field of fiber. For the step-index fiber, we can compute $w_f$ by approximation of Gaussian light. 
   $$
   w_f=a(0.65 +1.619V^{-1.5}+2.879V^{-6})
   $$
-  where
+  for $V\gtrsim 1.2$ where
   $$
   V=\frac{2\pi a}{\lambda}\cdot NA_{f}
   $$
-  is the normalized frequency.
+  is the normalized frequency. This is an empirical formula given by Marcuse<a class="refer">[2]</a>.
 
-The constructor of `StepIndexMonoFiberEnd` object is
+The constructor of `StepIndexFiberEnd` object is
 
-- <font color="red">\_\_init\_\_(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexMonoFiberEnd', **kwargs)</font>  - Create a `StepIndexMonoFiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">a</font>, <font color="red">naf</font>, <font color="red">roc</font> which defined above.
+- <font color="red">\_\_init\_\_(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd', **kwargs)</font>  - Create a `StepIndexFiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">a</font>, <font color="red">naf</font>, <font color="red">roc</font> which defined above.
 - <font color="red">change_params(self, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters.
 
 ----
 
 ## Examples
+
+<div id="refer-anchor"></div>
+
+## References
+
+[1]: W. B. Joyce and B. C. DeLoach, "[Alignment of Gaussian beams](_assets/papers/alignment_of_gaussian_beams.pdf ':ignore :target=_blank')," APPLIED OPTICS 23, 23 (1984).
+
+[2]: D. Marcuse, "Loss Analysis of Single-Mode Fiber Splices," Bell Syst. Tech. J. 56, 703 (1977).
 

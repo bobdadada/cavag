@@ -5,7 +5,7 @@ from .mirror import MirrorSurface
 
 __all__ = [
     'FiberEnd',
-    'StepIndexMonoFiberEnd'
+    'StepIndexFiberEnd'
 ]
 
 
@@ -50,10 +50,10 @@ class FiberEnd(PrintableObject):
         return self.property_set['mirrorsurface'].roc
 
 
-class StepIndexMonoFiberEnd(FiberEnd):
-    name = 'StepIndexMonoFiberEnd'
+class StepIndexFiberEnd(FiberEnd):
+    name = 'StepIndexFiberEnd'
 
-    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexMonoFiberEnd', **kwargs):
+    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd', **kwargs):
 
         # 折射率，波长，光纤纤芯半径，数值孔径，光纤端面
         self.property_set = PropertySet(('nf', 'wavelength', 'a', 'naf', 'mirrorsurface'))
@@ -83,5 +83,7 @@ class StepIndexMonoFiberEnd(FiberEnd):
         nu0 = self.nu0
         a = self.a
         naf = self.naf
-        V = nu0 * a * naf  # 归一化频率 <2.4单模
+        V = nu0 * a * naf  # 归一化频率
+        # empirically that the size w of the Gaussian approximation
+        # to the fiber mode for V >~ 1.2 given by Marcuse
         return a * (0.65 + 1.619 * V ** (-1.5) + 2.879 * V ** (-6))
