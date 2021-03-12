@@ -30,7 +30,7 @@ This class defines a mirror surface and is a subclass of `misc.Position` which p
 
 The methods are defined as follows:
 
-- <font color="red">\_\_init\_\_(self, roc, r=None, t=None, l=None, position=0, name='MirrorSurface', **kwargs)</font> - Create a `MirrorSurface` object by parameters shown above. For parameter <font color="red">r</font>, <font color="red">t</font> and <font color="red">l</font>, one can provide only two of them, and the remaining one can be calculated when the class is constructed. Note $R,T,L$ are normalized in the constructor, i.e, $R+T+L=1$.
+- <font color="red">\_\_init\_\_(self, roc, r=None, t=None, l=None, position=0, name='MirrorSurface')</font> - Create a `MirrorSurface` object by parameters shown above. For parameter <font color="red">r</font>, <font color="red">t</font> and <font color="red">l</font>, one can provide only two of them, and the remaining one can be calculated when the class is constructed. Note $R,T,L$ are normalized in the constructor, i.e, $R+T+L=1$.
 - <font color="red">add_loss(self, loss)</font> - This method provides a way to add <font color="red">loss</font> to the surface. In common cases, the loss can be divided into multiple parts. At this time, the loss will be added by this method, and the method will calculate the normalized $R,T,L$.
 - <font color="red">change_params(self, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters.
 
@@ -80,7 +80,7 @@ A class for thick lens. For thick lenses, the left focal length is not equal to 
 
 The methods are defined as follows:
 
-- <font color="red">\_\_init\_\_(self, d, fl, fr, position, name='ThickLens', **kwargs)</font> - Create a `ThickLens` object by parameters shown above.
+- <font color="red">\_\_init\_\_(self, d, fl, fr, position, name='ThickLens')</font> - Create a `ThickLens` object by parameters shown above.
 - <font color="red">change_params(self, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters.
 
 ----
@@ -95,7 +95,7 @@ A class for thin lens, that is, lens with a thickness of $0$. It is a subclass o
 
 The methods are defined as follows:
 
-- <font color="red">\_\_init\_\_(self, f, position, name='ThinLens', **kwargs)</font> - Create a `ThinLens` object by parameters shown above.
+- <font color="red">\_\_init\_\_(self, f, position, name='ThinLens')</font> - Create a `ThinLens` object by parameters shown above.
 - <font color="red">change_params(self, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters.
 
 ----

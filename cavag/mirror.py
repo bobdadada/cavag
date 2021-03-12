@@ -11,7 +11,7 @@ __all__ = [
 class MirrorSurface(Position):
     name = "MirrorSurface"
 
-    def __init__(self, roc, r=None, t=None, l=None, position=0, name='MirrorSurface', **kwargs):
+    def __init__(self, roc, r=None, t=None, l=None, position=0, name='MirrorSurface'):
         super(Position, self).__init__(position=position)
         self.name = name
 
@@ -23,25 +23,24 @@ class MirrorSurface(Position):
         self.property_set['r'] = r
         self.property_set['t'] = t
         self.property_set['l'] = l
-        self.property_set.update(**kwargs)
 
     @property
-    def roc(self):
+    def roc(self) -> float:
         """曲率半径"""
         return self.property_set['roc']
 
     @property
-    def r(self):
+    def r(self) -> float:
         """反射率"""
         return self.property_set['r']
 
     @property
-    def t(self):
+    def t(self) -> float:
         """透射率"""
         return self.property_set['t']
 
     @property
-    def l(self):
+    def l(self) -> float:
         """损耗率"""
         return self.property_set['l']
     
@@ -148,7 +147,7 @@ class RTLConverter(object):
 class ThickLens(Position):
     name = "ThickLens"
 
-    def __init__(self, d, fl, fr, position, name='ThickLens', **kwargs):
+    def __init__(self, d, fl, fr, position, name='ThickLens'):
         super(Position, self).__init__(position=position)
         self.name = name
 
@@ -157,20 +156,19 @@ class ThickLens(Position):
         self.property_set['d'] = d
         self.property_set['fl'] = fl
         self.property_set['fr'] = fr
-        self.property_set.update(**kwargs)
 
     @property
-    def d(self):
+    def d(self) -> float:
         """厚度"""
         return self.property_set['d']
 
     @property
-    def fl(self):
+    def fl(self) -> float:
         """左焦距"""
         return self.property_set['fl']
 
     @property
-    def fr(self):
+    def fr(self) -> float:
         """右焦距"""
         return self.property_set['fr']
 
@@ -178,17 +176,16 @@ class ThickLens(Position):
 class ThinLens(ThickLens):
     name = "ThinLens"
 
-    def __init__(self, f, position, name='ThinLens', **kwargs):
+    def __init__(self, f, position, name='ThinLens'):
         super(ThickLens, self).__init__(self, d=0, fl=f, fr=f, position=position)
         self.name = name
 
         # 焦距
         self.property_set.add_required('f')
         self.property_set['f'] = f
-        self.property_set.update(**kwargs)
 
     @property
-    def f(self):
+    def f(self) -> float:
         """焦距"""
         return self.property_set['f']
 

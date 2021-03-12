@@ -36,7 +36,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
 All important properties are initialized in the constructor. Only by using the constructor can we generate a `FiberEnd` object.
 
-- <font color="red">\_\_init\_\_(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd', **kwargs)</font>  - Create a `FiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">omegaf</font>, <font color="red">roc</font> which defined above. `sp` is the abbreviation of package `scipy`.
+- <font color="red">\_\_init\_\_(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd')</font>  - Create a `FiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">omegaf</font>, <font color="red">roc</font> which defined above. `sp` is the abbreviation of package `scipy`.
 - <font color="red">change_params(self, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters.
 
 ----
@@ -63,7 +63,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
 The constructor of `StepIndexFiberEnd` object is
 
-- <font color="red">\_\_init\_\_(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd', **kwargs)</font>  - Create a `StepIndexFiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">a</font>, <font color="red">naf</font>, <font color="red">roc</font> which defined above.
+- <font color="red">\_\_init\_\_(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd')</font>  - Create a `StepIndexFiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">a</font>, <font color="red">naf</font>, <font color="red">roc</font> which defined above.
 - <font color="red">change_params(self, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters.
 
 ----

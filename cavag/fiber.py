@@ -12,7 +12,7 @@ __all__ = [
 class FiberEnd(PrintableObject):
     name = 'FiberEnd'
 
-    def __init__(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd', **kwargs):
+    def __init__(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd'):
         super(PrintableObject, self).__init__()
         self.name = name
 
@@ -22,7 +22,6 @@ class FiberEnd(PrintableObject):
         self.property_set['nf'] = nf
         self.property_set['wavelength'] = wavelength
         self.property_set['mirrorsurface'] = MirrorSurface(roc=roc)
-        self.property_set.update(kwargs)
 
     @property
     def nf(self) -> float:
@@ -53,7 +52,7 @@ class FiberEnd(PrintableObject):
 class StepIndexFiberEnd(FiberEnd):
     name = 'StepIndexFiberEnd'
 
-    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd', **kwargs):
+    def __init__(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd'):
 
         # 折射率，波长，光纤纤芯半径，数值孔径，光纤端面
         self.property_set = PropertySet(('nf', 'wavelength', 'a', 'naf', 'mirrorsurface'))
@@ -62,10 +61,6 @@ class StepIndexFiberEnd(FiberEnd):
         self.property_set['a'] = a
         self.property_set['wavelength'] = wavelength
         self.property_set['mirrorsurface'] = MirrorSurface(roc=roc)
-        self.property_set.update(kwargs)
-
-    def change_params(self, **kwargs):
-        self.property_set.update(kwargs)
 
     @property
     def a(self) -> float:
@@ -86,4 +81,6 @@ class StepIndexFiberEnd(FiberEnd):
         V = nu0 * a * naf  # 归一化频率
         # empirically that the size w of the Gaussian approximation
         # to the fiber mode for V >~ 1.2 given by Marcuse
-        return a * (0.65 + 1.619 * V ** (-1.5) + 2.879 * V ** (-6))
+        if 'omegaf' not in self.property_set:
+            self.property_set['omegaf'] = a * (0.65 + 1.619 * V ** (-1.5) + 2.879 * V ** (-6))
+        return self.property_set['omegaf'] 
