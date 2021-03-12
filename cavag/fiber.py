@@ -13,7 +13,7 @@ class FiberEnd(PrintableObject):
     name = 'FiberEnd'
 
     def __init__(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd'):
-        super(PrintableObject, self).__init__()
+        super().__init__()
         self.name = name
 
         # 折射率，波长，模场半径，光纤端面

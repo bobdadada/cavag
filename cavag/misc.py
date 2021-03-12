@@ -4,7 +4,7 @@ class Position(PrintableObject):
     name = 'Position'
 
     def __init__(self, position=0, name='Position', **kwargs):
-        super(PrintableObject, self).__init__()
+        super().__init__()
         self.name = name
 
         # 主平面位置
