@@ -44,7 +44,7 @@ u_{mn}(x,y,z)=&\frac{j}{\lambda z}\int^{\infty}_{-\infty}dx_0\int^{\infty}_{-\in
 \end{aligned}
 $$
 
-**demostration of the characteristics of Hermite-Gaussian Modes**
+**demonstration of the characteristics of Hermite-Gaussian Modes**
 
 <div><img src="_assets/pics/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
 
@@ -62,7 +62,7 @@ $$
 
 <div style="text-align:center"><img src="_assets/pics/random_comb_hermite_gaussian.png" alt="random_comb_hermite_gaussian" style="height:400px;"><img src="_assets/pics/intensity_center_waist_normalized_hg.png" alt="intensity_center_waist_normalized_hg" style="height:400px;"></div>
 
-A waist of a random combinations of some mode are shown in the first figure above. It can be seen that the graph of a random combination of the Hermite-Gaussian modes becomes very weird. Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. And the second figure shows the intensity at the center of the waist of each normalized Hermite-Gaussian mode. We also found an oscillation characteristic in this figure.
+A waist of a random combinations of some mode are shown in the first figure above. It can be seen that the graph of a random combination of the Hermite-Gaussian modes becomes very weird. Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. And the second figure shows the intensity at the center of the waist of each normalized Hermite-Gaussian mode. We also find an oscillation characteristic in this figure.
 
 The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipynb](_assets/notes/hermite_gaussian_beam.ipynb ':ignore :class=download').
 
