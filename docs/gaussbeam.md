@@ -62,7 +62,7 @@ A waist of a random combinations of some mode are shown in the figure below
 
 <div style="text-align:center"><img src="_assets/pics/random_comb_hermite_gaussian.png" alt="random_comb_hermite_gaussian" style="height:400px;"></div>
 
-It can be seen that the graph of a random combination of the Hermite-Gaussian modes becomes very weird. Using the orthogonality of the Hermite-Gaussian modes can we expand this graph.
+It can be seen that the graph of a random combination of the Hermite-Gaussian modes becomes very weird. Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipynb](_assets/notes/hermite_gaussian_beam.ipynb ':ignore :class=download').
 
 ## Codes
 
