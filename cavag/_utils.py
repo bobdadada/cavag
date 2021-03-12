@@ -21,6 +21,20 @@ class PropertySet(UserDict):
             raise PropertyLost("property '%s' lost!"%item)
         return value
     
+    def change_params(self, **kwargs):
+        """
+        This function will firstly clear all other keys except the necessary keys.
+        And Then change the value in the input parameters **kwargs.
+        """
+
+        dt = {}
+        for prop in self.__required_props:
+            dt[prop] = self[prop]
+        dt.update(**kwargs)
+
+        self.clear()
+        self.update(dt)
+    
     def reset_required(self, props=()):
         self.clear_required()
         self.add_required(props=props)
@@ -56,11 +70,7 @@ class _Object(object):
         self.property_set = PropertySet()
     
     def change_params(self, **kwargs):
-        self.property_set.update(kwargs)
-
-
-class PrintableObject(_Object, PrintInfoMixin):
-    """subclass of _Object + PrintInfoMixin"""
+        self.property_set.change_params(**kwargs)
 
 
 class PrintInfoMixin(object):
@@ -76,7 +86,7 @@ class PrintInfoMixin(object):
     def get_attrs(self):
         attrs = []
         for item in dir(self):
-            if item is 'name':
+            if item == 'name':
                 continue
             if self._parse_property(item):
                 attrs.append(item)
@@ -88,7 +98,7 @@ class PrintInfoMixin(object):
         else:
             info = "{}:\n".format(self.__class__.__name__)
         for item in dir(self):
-            if item is 'name':
+            if item == 'name':
                 continue
             if self._parse_property(item):
                 num = getattr(self, item)
@@ -104,6 +114,10 @@ class PrintInfoMixin(object):
 
     def __repr__(self):
         return "<class '{}'>".format(self.__class__.__name__)
+
+
+class PrintableObject(_Object, PrintInfoMixin):
+    """subclass of _Object + PrintInfoMixin"""
 
 
 def str_half2full(ins):
