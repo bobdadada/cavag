@@ -12,7 +12,7 @@ class MirrorSurface(Position):
     name = "MirrorSurface"
 
     def __init__(self, roc, r=None, t=None, l=None, position=0, name='MirrorSurface'):
-        super(Position, self).__init__(position=position)
+        super().__init__(position=position)
         self.name = name
 
         r, t, l = RTLConverter.normalize(r=r, t=t, l=l)
@@ -148,7 +148,7 @@ class ThickLens(Position):
     name = "ThickLens"
 
     def __init__(self, d, fl, fr, position, name='ThickLens'):
-        super(Position, self).__init__(position=position)
+        super().__init__(position=position)
         self.name = name
 
         # 厚度, 左焦距, 右焦距
@@ -177,7 +177,7 @@ class ThinLens(ThickLens):
     name = "ThinLens"
 
     def __init__(self, f, position, name='ThinLens'):
-        super(ThickLens, self).__init__(self, d=0, fl=f, fr=f, position=position)
+        super().__init__(self, d=0, fl=f, fr=f, position=position)
         self.name = name
 
         # 焦距
