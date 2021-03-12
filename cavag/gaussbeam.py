@@ -13,9 +13,9 @@ __all__ = [
 
 
 class NormalizedHermiteGaussBeam1D(PrintableObject):
-    name = 'HermiteGaussBeam1D'
+    name = 'NormalizedHermiteGaussBeam1D'
 
-    def __init__(self, wavelength, omega0, p0, m, name='NormalizedHermiteGaussBeam1D', **kwargs):
+    def __init__(self, wavelength, omega0, p0, m, name='NormalizedHermiteGaussBeam1D'):
         self.name = name
 
         # 波长, 束腰半径, 束腰位置, 模式数
@@ -24,7 +24,6 @@ class NormalizedHermiteGaussBeam1D(PrintableObject):
         self.property_set['omega0'] = omega0
         self.property_set['p0'] = p0
         self.property_set['m'] = m
-        self.property_set.update(kwargs)
 
     @property
     def c(self):
@@ -75,32 +74,38 @@ class NormalizedHermiteGaussBeam1D(PrintableObject):
         return self.property_set['h_f']
     
     def A_f(self, z):
+        """振幅函数"""
         z0, p0 = self.z0, self.p0
         return 1/(1+((z-p0)/z0)**2)**(1/4)
 
     def omega_f(self, z):
+        """模场半径函数"""
         omega0, z0, p0 = self.omega0, self.z0, self.p0
         return omega0*sp.sqrt(1 + ((z-p0)/z0)**2)
     
     def R_f(self, z):
+        """波前曲率半径函数"""
         z0, p0 = self.z0, self.p0
         return (z-p0)*(1+(z0/(z-p0))**2)
     
     def phi_f(self, z):
+        """相位函数"""
         z0, p0 = self.z0, self.p0
         return sp.arctan((z-p0)/z0)
     
-    def psi_f(self, x, z):
+    def psi_f(self, z, x):
+        """Hermite-Gaussian模式"""
         h_f = self.h_f
         omega = self.omega_f(z)
         xi = sp.sqrt(2)*x/omega
 
         return h_f(xi)*sp.exp(-xi**2/2)
     
-    def u_f(self, x, z):
+    def u_f(self, z, x):
+        """强度函数"""
         c = self.c
         A = self.A_f(z)
-        psi = self.psi_f(x, z)
+        psi = self.psi_f(z, x)
         phi = self.phi_f(z)
         k = self.k
         R = self.R_f(z)
@@ -111,31 +116,94 @@ class NormalizedHermiteGaussBeam1D(PrintableObject):
 
         return ampl, phase
 
-class NormalizedHermiteGaussBeam(PrintableObject):
-    name = 'HermiteGaussBeam'
+class HermiteGaussBeam1D(NormalizedHermiteGaussBeam1D):
+    name = 'HermiteGaussBeam1D'
 
-    def __init__(self, A0, wavelength, omega0x, omega0y, cx, cy, name='HermiteGaussBeam1D', **kwargs):
+    def __init__(self, A0, wavelength, omega0, p0, m, name='NormalizedHermiteGaussBeam1D'):
+        super().__init__(wavelength, omega0, p0, m)
         self.name = name
 
-        # 振幅, 波长, x方向束腰半径, y方向束腰半径
-        self.property_set = PropertySet(('A0', 'wavelength', 'omega0x', 'omega0y', 'cx', 'cy'))
+        # 振幅
+        self.property_set.add_required('A0')
         self.property_set['A0'] = A0
-        self.property_set['wavelength'] = wavelength
-        self.property_set['omega0x'] = omega0x
-        self.property_set['omega0y'] = omega0y
-        self.property_set['cx'] = cx
-        self.property_set['cy'] = cy
-        self.property_set.update(kwargs)
 
     @property
     def A0(self):
         """振幅"""
         return self.property_set['A0']
 
+    def A_f(self, z):
+        """振幅函数"""
+        A0 = self.A0
+        A = super().A_f(z)
+        return A0*A
+
+
+class NormalizedHermiteGaussBeam2D(PrintableObject):
+    name = 'NormalizedHermiteGaussBeam2D'
+
+    def __init__(self, wavelength, omega0x, omega0y, p0x, p0y, mx, my, name='NormalizedHermiteGaussBeam2D'):
+        self.name = name
+
+        # 波长, x方向束腰半径, y方向束腰半径, x方向束腰位置, y方向束腰位置, x方向模式数, y方向模式数
+        self.property_set = PropertySet(('wavelength', 'omega0x', 'omega0y', 'p0x', 'p0y', 'mx', 'my'))
+        self.property_set['wavelength'] = wavelength
+        self.property_set['omega0x'] = omega0x
+        self.property_set['omega0y'] = omega0y
+        self.property_set['p0x'] = p0x
+        self.property_set['p0y'] = p0y
+        self.property_set['mx'] = mx
+        self.property_set['my'] = my
+
+        self.__attrs_class = (
+            ('wavelength', 'omega0x', 'p0x', 'mx'),  # x-direction
+            ('wavelength', 'omega0y', 'p0y', 'my'),  # y-direction
+        )
+
+        self.__beams = (
+            NormalizedHermiteGaussBeam1D(wavelength, omega0x, p0x, mx, 'x-direction'),
+            NormalizedHermiteGaussBeam1D(wavelength, omega0y, p0y, my, 'y-direction'),
+        )
+    
+    def change_params(self, **kwargs):
+        self.property_set.change_params(**kwargs)
+        xkw, ykw = {}, {}
+        for k, v in kwargs:
+            if k in self.__attrs_class[0]:
+                xkw[k] = v
+            if k in self.__attrs_class[1]:
+                ykw[k] = v
+        if xkw:
+            self.__beams[0].change_params(**xkw)
+        if ykw:
+            self.__beams[1].change_params(**xkw)
+        
+
+    @property
+    def cx(self):
+        """x方向归一化因子"""
+        if 'cx' not in self.property_set:
+            self.property_set['cx'] = self.__beams[0].c
+        return self.property_set['cx']
+    
+    @property
+    def cy(self):
+        """y方向归一化因子"""
+        if 'cy' not in self.property_set:
+            self.property_set['cy'] = self.__beams[1].c
+        return self.property_set['cy']
+
     @property
     def wavelength(self):
         """中心波长"""
         return self.property_set['wavelength']
+    
+    @property
+    def k(self):
+        """波矢"""
+        if 'k' not in self.property_set:
+            self.property_set['k'] = 2*constants.pi/self.wavelength
+        return self.property_set['k']
 
     @property
     def omega0x(self):
@@ -148,25 +216,98 @@ class NormalizedHermiteGaussBeam(PrintableObject):
         return self.property_set['omega0y']
     
     @property
-    def cx(self):
+    def p0x(self):
         """x方向束腰位置"""
-        return self.property_set['cx']
+        return self.property_set['p0x']
     
     @property
-    def cy(self):
+    def p0y(self):
         """y方向束腰位置"""
-        return self.property_set['cy']
+        return self.property_set['p0y']
+    
+    @property
+    def mx(self) -> int:
+        """x方向Hermite-Gaussian光的模式"""
+        return self.property_set['mx']
+    
+    @property
+    def my(self) -> int:
+        """y方向Hermite-Gaussian光的模式"""
+        return self.property_set['my']
 
     @property
     def z0x(self):
         """x方向瑞利长度"""
-        return sp.pi * (self.omega0x) ** 2 / self.wavelength
+        if 'z0x' not in self.property_set:
+            self.property_set['z0x'] = self.__beams[0].z0
+        return self.property_set['z0x']
     
     @property
     def z0y(self):
         """y方向瑞利长度"""
-        return sp.pi * (self.omega0y) ** 2 / self.wavelength
+        if 'z0y' not in self.property_set:
+            self.property_set['z0y'] = self.__beams[1].z0
+        return self.property_set['z0y']
+    
+    @property
+    def hx_f(self):
+        """x方向Hermite多项式"""
+        if 'hx_f' not in self.property_set:
+            self.property_set['hx_f'] = self.__beams[0].h_f
+        return self.property_set['h_f']
+    
+    @property
+    def hy_f(self):
+        """y方向Hermite多项式"""
+        if 'hy_f' not in self.property_set:
+            self.property_set['hy_f'] = self.__beams[1].h_f
+        return self.property_set['hy_f']
+    
+    def A_f(self, z):
+        """振幅函数"""
+        return self.__beams[0].A_f(z)*self.__beams[1].A_f(z)
 
+    def omegax_f(self, z):
+        """x方向模场半径函数"""
+        return self.__beams[0].omega_f(z)
+    
+    def omegax_f(self, z):
+        """y方向模场半径函数"""
+        return self.__beams[1].omega_f(z)
+    
+    def Rx_f(self, z):
+        """x方向波前曲率半径函数"""
+        return self.__beams[0].R_f(z)
+    
+    def Ry_f(self, z):
+        """y方向波前曲率半径函数"""
+        return self.__beams[1].R_f(z)
+    
+    def phix_f(self, z):
+        """x方向相位函数"""
+        return self.__beams[0].phi_f(z)
+    
+    def phiy_f(self, z):
+        """y方向相位函数"""
+        return self.__beams[1].phi_f(z)
+    
+    def psix_f(self, z, x):
+        """x方向Hermite-Gaussian模式"""
+        return self.__beams[0].psi_f(z, x)
+    
+    def psiy_f(self, z, y):
+        """x方向Hermite-Gaussian模式"""
+        return self.__beams[1].psi_f(z, y)
+    
+    def u_f(self, z, x, y):
+        """强度函数"""
+        amplx, phasex = self.__beams[0].u_f(z, x)
+        amply, phasey = self.__beams[1].u_f(z, y)
+        return amplx*amply, phasex+phasey
+
+
+#################################################################################
+## TO DO
 
 class HermiteGaussBeam(PrintableObject):
     name = 'HermiteGaussBeam'
@@ -230,7 +371,7 @@ class HermiteGaussBeam2D(Position):
     name = 'GaussBeam1D'
 
     def __init__(self, A0, wavelength, omega0, position, name='HermiteGaussBeam1D', **kwargs):
-        super(Position, self).__init__(position=position)
+        super().__init__(position=position)
         self.name = name
 
         # 振幅, 波长, 束腰半径
@@ -271,7 +412,7 @@ class SymmetricHermiteGaussBeam2D(Position):
     name = 'GaussBeam1D'
 
     def __init__(self, A0, wavelength, omega0, position, name='HermiteGaussBeam1D', **kwargs):
-        super(Position, self).__init__(position=position)
+        super().__init__(position=position)
         self.name = name
 
         # 振幅, 波长, 束腰半径
@@ -312,7 +453,7 @@ class GaussBeam1D(Position):
     name = 'GaussBeam1D'
 
     def __init__(self, A0, wavelength, omega0, position, name='GaussBeam1D', **kwargs):
-        super(Position, self).__init__(position=position)
+        super().__init__(position=position)
         self.name = name
 
         # 振幅, 波长, 束腰半径
@@ -352,7 +493,7 @@ class GaussBeam2D(Position):
     name = 'GaussBeam'
 
     def __init__(self, A0, wavelength, omega0, position, name='GaussBeam', **kwargs):
-        super(Position, self).__init__(position=position)
+        super().__init__(position=position)
         self.name = name
 
         # 振幅, 波长, 束腰半径
