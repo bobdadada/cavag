@@ -16,11 +16,13 @@ __all__ = [
 class NormalizedHermiteGaussBeam1D(PrintableObject):
     name = 'NormalizedHermiteGaussBeam1D'
 
+    # 波长, 束腰半径, 束腰位置, 模式数
+    modifiable_properties = ('wavelength', 'omega0', 'p0', 'm')
+
     def __init__(self, wavelength, omega0, p0, m, name='NormalizedHermiteGaussBeam1D'):
         self.name = name
 
-        # 波长, 束腰半径, 束腰位置, 模式数
-        self.property_set = PropertySet(('wavelength', 'omega0', 'p0', 'm'))
+        self.property_set = PropertySet(NormalizedHermiteGaussBeam1D.modifiable_properties)
         self.property_set['wavelength'] = wavelength
         self.property_set['omega0'] = omega0
         self.property_set['p0'] = p0
@@ -121,11 +123,13 @@ class NormalizedHermiteGaussBeam1D(PrintableObject):
 class HermiteGaussBeam1D(NormalizedHermiteGaussBeam1D):
     name = 'HermiteGaussBeam1D'
 
+    # 振幅, 波长, 束腰半径, 束腰位置, 模式数
+    modifiable_properties = ('A0', 'wavelength', 'omega0', 'p0', 'm')
+
     def __init__(self, A0, wavelength, omega0, p0, m, name='HermiteGaussBeam1D'):
         super().__init__(wavelength, omega0, p0, m)
         self.name = name
-
-        # 振幅
+        
         self.property_set.add_required('A0')
         self.property_set['A0'] = A0
 
@@ -144,6 +148,9 @@ class HermiteGaussBeam1D(NormalizedHermiteGaussBeam1D):
 class NormalizedGaussBeam1D(NormalizedHermiteGaussBeam1D):
     name = 'NormalizedGaussBeam1D'
 
+    # 波长, 束腰半径, 束腰位置
+    modifiable_properties = ('wavelength', 'omega0', 'p0')
+
     def __init__(self, wavelength, omega0, p0, name='NormalizedGaussBeam1D'):
         super().__init__(wavelength, omega0, p0, m=0)
         self.name = name
@@ -151,6 +158,9 @@ class NormalizedGaussBeam1D(NormalizedHermiteGaussBeam1D):
 
 class GaussBeam1D(HermiteGaussBeam1D):
     name = 'GaussBeam1D'
+
+    # 振幅, 波长, 束腰半径, 束腰位置
+    modifiable_properties = ('A0', 'wavelength', 'omega0', 'p0')
 
     def __init__(self, A0, wavelength, omega0, p0, name='GaussBeam1D'):
         super().__init__(A0, wavelength, omega0, p0, m=0)
@@ -160,11 +170,13 @@ class GaussBeam1D(HermiteGaussBeam1D):
 class NormalizedHermiteGaussBeam2D(PrintableObject):
     name = 'NormalizedHermiteGaussBeam2D'
 
+    # 波长, x方向束腰半径, y方向束腰半径, x方向束腰位置, y方向束腰位置, x方向模式数, y方向模式数
+    modifiable_properties = ('wavelength', 'omega0x', 'omega0y', 'p0x', 'p0y', 'mx', 'my')
+
     def __init__(self, wavelength, omega0x, omega0y, p0x, p0y, mx, my, name='NormalizedHermiteGaussBeam2D'):
         self.name = name
 
-        # 波长, x方向束腰半径, y方向束腰半径, x方向束腰位置, y方向束腰位置, x方向模式数, y方向模式数
-        self.property_set = PropertySet(('wavelength', 'omega0x', 'omega0y', 'p0x', 'p0y', 'mx', 'my'))
+        self.property_set = PropertySet(NormalizedHermiteGaussBeam2D.modifiable_properties)
         self.property_set['wavelength'] = wavelength
         self.property_set['omega0x'] = omega0x
         self.property_set['omega0y'] = omega0y
@@ -183,7 +195,10 @@ class NormalizedHermiteGaussBeam2D(PrintableObject):
             NormalizedHermiteGaussBeam1D(wavelength, omega0y, p0y, my, 'y-direction'),
         )
     
-    def change_params(self, **kwargs):
+    def change_params(self, _filter=True, **kwargs):
+        if _filter:
+            kwargs = self.filter_properties(kwargs)
+
         self.property_set.change_params(**kwargs)
         xkw, ykw = {}, {}
         for k, v in kwargs:
@@ -326,6 +341,9 @@ class NormalizedHermiteGaussBeam2D(PrintableObject):
 class HermiteGaussBeam2D(NormalizedHermiteGaussBeam2D):
     name = 'HermiteGaussBeam2D'
 
+    # 振幅, 波长, x方向束腰半径, y方向束腰半径, x方向束腰位置, y方向束腰位置, x方向模式数, y方向模式数
+    modifiable_properties = ('A0', 'wavelength', 'omega0x', 'omega0y', 'p0x', 'p0y', 'mx', 'my')
+
     def __init__(self, A0, wavelength, omega0x, omega0y, p0x, p0y, mx, my, name='HermiteGaussBeam2D'):
         super().__init__(wavelength, omega0x, omega0y, p0x, p0y, mx, my)
         self.name = name
@@ -349,6 +367,9 @@ class HermiteGaussBeam2D(NormalizedHermiteGaussBeam2D):
 class NormalizedGaussBeam2D(NormalizedHermiteGaussBeam2D):
     name = 'NormalizedGaussBeam2D'
 
+    # 波长, x方向束腰半径, y方向束腰半径, x方向束腰位置, y方向束腰位置
+    modifiable_properties = ('wavelength', 'omega0x', 'omega0y', 'p0x', 'p0y')
+
     def __init__(self, wavelength, omega0x, omega0y, p0x, p0y, name='NormalizedGaussBeam2D'):
         super().__init__(wavelength, omega0x, omega0y, p0x, p0y, mx=0, my=0)
         self.name = name
@@ -357,6 +378,9 @@ class NormalizedGaussBeam2D(NormalizedHermiteGaussBeam2D):
 class GaussBeam2D(HermiteGaussBeam2D):
     name = 'HermiteGaussBeam2D'
 
+    # 振幅, 波长, x方向束腰半径, y方向束腰半径, x方向束腰位置, y方向束腰位置
+    modifiable_properties = ('A0', 'wavelength', 'omega0x', 'omega0y', 'p0x', 'p0y')
+
     def __init__(self, A0, wavelength, omega0x, omega0y, p0x, p0y, name='HermiteGaussBeam2D'):
         super().__init__(A0, wavelength, omega0x, omega0y, p0x, p0y, mx=0, my=0)
         self.name = name
@@ -364,6 +388,9 @@ class GaussBeam2D(HermiteGaussBeam2D):
 
 class NormalizedSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam2D):
     name = 'NormalizedSymmetricHermiteGaussBeam'
+
+    # 波长, 束腰半径, 束腰位置, 模式数
+    modifiable_properties = ('wavelength', 'omega0', 'p0', 'm')
 
     def __init__(self, wavelength, omega0, p0, m, name='NormalizedSymmetricHermiteGaussBeam'):
         super().__init__(wavelength, omega0, omega0, p0, p0, m, m)
@@ -375,12 +402,15 @@ class NormalizedSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam2D):
         self.property_set['p0'] = p0
         self.property_set['m'] = m
         
-    def change_params(self, **kwargs):
+    def change_params(self, _filter=True, **kwargs)::
+        if _filter:
+            kwargs = self.filter_properties(kwargs)
+
         dt = dict(kwargs)
         for k, v in kwargs:
             if k in ('omega0', 'p0', 'm'):
                 dt[k+'x'] = dt[k+'y'] = v
-        super().change_params(**dt)
+        super().change_params(_filter=False, **dt)
     
     @property
     def c(self):
@@ -438,11 +468,13 @@ class NormalizedSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam2D):
 class SymmetricHermiteGaussBeam(NormalizedSymmetricHermiteGaussBeam):
     name = 'SymmetricHermiteGaussBeam'
 
+    # 振幅, 波长, 束腰半径, 束腰位置, 模式数
+    modifiable_properties = ('A0', 'wavelength', 'omega0', 'p0', 'm')
+
     def __init__(self, A0, wavelength, omega0, p0, m, name='SymmetricHermiteGaussBeam'):
         super().__init__(wavelength, omega0, p0, m)
         self.name = name
 
-        # 振幅
         self.property_set.add_required('A0')
         self.property_set['A0'] = A0
     
@@ -461,6 +493,9 @@ class SymmetricHermiteGaussBeam(NormalizedSymmetricHermiteGaussBeam):
 class NormalizedSymmetricGaussBeam(NormalizedSymmetricHermiteGaussBeam):
     name = 'NormalizedSymmetricGaussBeam'
 
+    # 波长, 束腰半径, 束腰位置
+    modifiable_properties = ('wavelength', 'omega0', 'p0')
+
     def __init__(self, wavelength, omega0, p0, name='NormalizedSymmetricGaussBeam'):
         super().__init__(wavelength, omega0, p0, m=0)
         self.name = name
@@ -468,6 +503,9 @@ class NormalizedSymmetricGaussBeam(NormalizedSymmetricHermiteGaussBeam):
 
 class SymmetricGaussBeam(SymmetricHermiteGaussBeam):
     name = 'SymmetricGaussBeam'
+
+    # 振幅, 波长, 束腰半径, 束腰位置
+    modifiable_properties = ('A0', 'wavelength', 'omega0', 'p0')
 
     def __init__(self, A0, wavelength, omega0, p0, name='SymmetricGaussBeam'):
         super().__init__(A0, wavelength, omega0, p0, m=0)

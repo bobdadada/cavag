@@ -63,13 +63,22 @@ class PropertySet(UserDict):
 
 class _Object(object):
     name = 'Object'
+    modifiable_properties = ()
     
     def __init__(self, name='Object', **kwargs):
+        self.property_set = PropertySet(_Object.modifiable_properties)
         self.name = name
-
-        self.property_set = PropertySet()
     
-    def change_params(self, **kwargs):
+    def filter_properties(self, kwargs):
+        dt = {}
+        for prop in self.modifiable_properties:
+            if prop in kwargs:
+                dt[prop] = kwargs[prop]
+        return dt
+
+    def change_params(self, _filter=True, **kwargs):
+        if _filter:
+            kwargs = self.filter_properties(kwargs)
         self.property_set.change_params(**kwargs)
 
 

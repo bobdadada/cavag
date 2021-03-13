@@ -3,14 +3,15 @@ from ._utils import PrintableObject
 class Position(PrintableObject):
     name = 'Position'
 
-    def __init__(self, position=0, name='Position', **kwargs):
-        super().__init__()
-        self.name = name
+    # 主平面位置
+    modifiable_properties = ('position', )
 
-        # 主平面位置
-        self.property_set.add_required('position')
+    def __init__(self, position=0, name='Position'):
+        super().__init__()
+        self.property_set.add_required(Position.modifiable_properties)
+        self.name = name
+        
         self.property_set['position'] = position
-        self.property_set.update(**kwargs)
     
     @property
     def position(self):

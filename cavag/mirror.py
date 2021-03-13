@@ -11,14 +11,16 @@ __all__ = [
 class MirrorSurface(Position):
     name = "MirrorSurface"
 
+    # 曲率半径, 反射率, 透射率, 损耗率, 位置
+    modifiable_properties = ('roc', 'r', 't', 'l', 'position')
+
     def __init__(self, roc, r=None, t=None, l=None, position=0, name='MirrorSurface'):
         super().__init__(position=position)
+        self.property_set.add_required(MirrorSurface.modifiable_properties)
         self.name = name
 
         r, t, l = RTLConverter.normalize(r=r, t=t, l=l)
 
-        # 曲率半径, 反射率, 透射率, 损耗率
-        self.property_set.add_required(('roc', 'r', 't', 'l'))
         self.property_set['roc'] = roc
         self.property_set['r'] = r
         self.property_set['t'] = t
@@ -147,12 +149,14 @@ class RTLConverter(object):
 class ThickLens(Position):
     name = "ThickLens"
 
+    # 厚度, 左焦距, 右焦距, 位置
+    modifiable_properties = ('d', 'fl', 'fr', 'position')
+
     def __init__(self, d, fl, fr, position, name='ThickLens'):
         super().__init__(position=position)
+        self.property_set.add_required(ThickLens.modifiable_properties)
         self.name = name
-
-        # 厚度, 左焦距, 右焦距
-        self.property_set.add_required(('d', 'fl', 'fr'))
+        
         self.property_set['d'] = d
         self.property_set['fl'] = fl
         self.property_set['fr'] = fr
@@ -176,12 +180,14 @@ class ThickLens(Position):
 class ThinLens(ThickLens):
     name = "ThinLens"
 
+    # 焦距
+    modifiable_properties = ('d', )
+
     def __init__(self, f, position, name='ThinLens'):
         super().__init__(self, d=0, fl=f, fr=f, position=position)
+        self.property_set.add_required(ThinLens.modifiable_properties)
         self.name = name
-
-        # 焦距
-        self.property_set.add_required('f')
+        
         self.property_set['f'] = f
 
     @property
