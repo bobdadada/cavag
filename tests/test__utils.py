@@ -60,6 +60,7 @@ class Test__Object(unittest.TestCase):
         _obj = _Object()
         self.assertEqual(_obj.name, 'Object')
         self.assertEqual(_obj.property_set, {})
+        self.assertEqual(_obj.modifiable_properties, ())
         self.assertIsInstance(_obj.property_set, PropertySet)
     
     def test_change_params(self):
