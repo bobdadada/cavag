@@ -29,22 +29,22 @@ class MirrorSurface(Position):
     @property
     def roc(self) -> float:
         """曲率半径"""
-        return self.property_set['roc']
+        return self.property_set.get_strictly('roc')
 
     @property
     def r(self) -> float:
         """反射率"""
-        return self.property_set['r']
+        return self.property_set.get_strictly('r')
 
     @property
     def t(self) -> float:
         """透射率"""
-        return self.property_set['t']
+        return self.property_set.get_strictly('t')
 
     @property
     def l(self) -> float:
         """损耗率"""
-        return self.property_set['l']
+        return self.property_set.get_strictly('l')
     
     def add_loss(self, loss):
         m = self.r, self.t, self.l
@@ -164,17 +164,17 @@ class ThickLens(Position):
     @property
     def d(self) -> float:
         """厚度"""
-        return self.property_set['d']
+        return self.property_set.get_strictly('d')
 
     @property
     def fl(self) -> float:
         """左焦距"""
-        return self.property_set['fl']
+        return self.property_set.get_strictly('fl')
 
     @property
     def fr(self) -> float:
         """右焦距"""
-        return self.property_set['fr']
+        return self.property_set.get_strictly('fr')
 
 
 class ThinLens(ThickLens):
@@ -193,5 +193,5 @@ class ThinLens(ThickLens):
     @property
     def f(self) -> float:
         """焦距"""
-        return self.property_set['f']
+        return self.property_set.get_strictly('f')
 

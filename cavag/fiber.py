@@ -28,22 +28,22 @@ class FiberEnd(PrintableObject):
     @property
     def nf(self) -> float:
         """折射率"""
-        return self.property_set['nf']
+        return self.property_set.get_strictly('nf')
 
     @property
     def wavelength(self) -> float:
         """中心波长"""
-        return self.property_set['wavelength']
+        return self.property_set.get_strictly('wavelength')
     
     @property
     def omegaf(self) -> float:
         """模场半径"""
-        return self.property_set['omegaf']
+        return self.property_set.get_strictly('omegaf')
 
     @property
     def roc(self) -> float:
         """端面曲率半径"""
-        return self.property_set['roc']
+        return self.property_set.get_strictly('roc')
 
     @property
     def nu0(self) -> float:
@@ -72,12 +72,12 @@ class StepIndexFiberEnd(FiberEnd):
     @property
     def a(self) -> float:
         """光纤纤芯半径"""
-        return self.property_set['a']
+        return self.property_set.get_strictly('a')
 
     @property
     def naf(self) -> float:
         """数值孔径"""
-        return self.property_set['naf']
+        return self.property_set.get_strictly('naf')
 
     @property
     def omegaf(self) -> float:

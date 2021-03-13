@@ -16,4 +16,4 @@ class Position(PrintableObject):
     @property
     def position(self):
         """主平面位置"""
-        return self.property_set['position']
+        return self.property_set.get_strictly('position')

@@ -15,10 +15,10 @@ class PropertySet(UserDict):
             if prop not in self:
                 self[prop] = None
     
-    def __getitem__(self, item):
-        value = super().__getitem__(item)
-        if (item in self.__required_props) and (value is None):
-            raise PropertyLost("property '%s' lost!"%item)
+    def get_strictly(self, key):
+        value = self[key]
+        if (key in self.__required_props) and (value is None):
+            raise PropertyLost("property '%s' lost!"%key)
         return value
     
     def change_params(self, **kwargs):
@@ -26,7 +26,6 @@ class PropertySet(UserDict):
         This function will firstly clear all other keys except the necessary keys.
         And Then change the value in the input parameters **kwargs.
         """
-
         dt = {}
         for prop in self.__required_props:
             dt[prop] = self[prop]
@@ -65,7 +64,7 @@ class _Object(object):
     name = 'Object'
     modifiable_properties = ()
     
-    def __init__(self, name='Object', **kwargs):
+    def __init__(self, name='Object'):
         self.property_set = PropertySet(_Object.modifiable_properties)
         self.name = name
     
