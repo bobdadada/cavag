@@ -1,5 +1,6 @@
 <!-- _sidebar.md --> 
 
+- [introduction](introduction.md)
 - [fiber](fiber.md)
 - [fpcavity](fpcavity)
 - [gaussbeam](gaussbeam.md)

@@ -68,9 +68,10 @@ class _Object(object):
         self.property_set = PropertySet(_Object.modifiable_properties)
         self.name = name
     
-    def filter_properties(self, kwargs):
+    @classmethod
+    def filter_properties(cls, kwargs):
         dt = {}
-        for prop in self.modifiable_properties:
+        for prop in cls.modifiable_properties:
             if prop in kwargs:
                 dt[prop] = kwargs[prop]
         return dt
