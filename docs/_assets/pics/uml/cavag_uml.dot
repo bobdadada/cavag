@@ -1,0 +1,20 @@
+digraph "packages_cavag" {
+charset="utf-8"
+rankdir=BT
+"1" [label="cavag._utils", shape="box"];
+"2" [label="cavag.fiber", shape="box"];
+"3" [label="cavag.fpcavity", shape="box"];
+"4" [label="cavag.gaussbeam", shape="box"];
+"5" [label="cavag.mirror", shape="box"];
+"6" [label="cavag.misc", shape="box"];
+"7" [label="cavag.utils", shape="box"];
+"2" -> "1" [arrowhead="open", arrowtail="none"];
+"3" -> "1" [arrowhead="open", arrowtail="none"];
+"3" -> "5" [arrowhead="open", arrowtail="none"];
+"4" -> "1" [arrowhead="open", arrowtail="none"];
+"5" -> "6" [arrowhead="open", arrowtail="none"];
+"6" -> "1" [arrowhead="open", arrowtail="none"];
+"7" -> "2" [arrowhead="open", arrowtail="none"];
+"7" -> "3" [arrowhead="open", arrowtail="none"];
+"7" -> "5" [arrowhead="open", arrowtail="none"];
+}
