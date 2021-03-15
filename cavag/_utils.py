@@ -60,12 +60,12 @@ class PropertySet(UserDict):
         self.__required_props.clear()
 
 
-class _Object(object):
+class Object(object):
     name = 'Object'
     modifiable_properties = ()
     
     def __init__(self, name='Object'):
-        self.property_set = PropertySet(_Object.modifiable_properties)
+        self.property_set = PropertySet(Object.modifiable_properties)
         self.name = name
     
     @classmethod
@@ -92,41 +92,39 @@ class PrintInfoMixin(object):
         else:
             return True
 
-    def get_attrs(self):
-        attrs = []
+    def get_props(self):
+        props = []
         for item in dir(self):
             if item == 'name':
                 continue
             if self._parse_property(item):
-                attrs.append(item)
-        return attrs        
+                props.append(item)
+        return props        
 
     def __str__(self):
+        # 名称
         if getattr(self, 'name', None):
             info = "{}:\n".format(self.name)
         else:
             info = "{}:\n".format(self.__class__.__name__)
-        for item in dir(self):
-            if item == 'name':
-                continue
-            if self._parse_property(item):
-                num = getattr(self, item)
-                doc = getattr(self.__class__, item).__doc__
-                if doc is None:
-                    doc = ''
-                # 格式化输出，中文对齐
-                try:
-                    info += "    {0:{3}<15}{1:<8} = {2:e}\n".format(str_half2full(doc), item, num, chr(12288))
-                except:
-                    info += "    {0:{3}<15}{1:<8} = {2:s}\n".format(str_half2full(doc), item, str(num), chr(12288))
+        
+        # 属性
+        for prop in self.get_props():
+            num = getattr(self, prop)
+            doc = getattr(self.__class__, prop).__doc__
+            if doc is None:
+                doc = ''
+            # 格式化输出，中文对齐
+            try:
+                info += "    {0:{3}<15}{1:<8} = {2:e}\n".format(str_half2full(doc), prop, num, chr(12288))
+            except:
+                info += "    {0:{3}<15}{1:<8} = {2:s}\n".format(str_half2full(doc), prop, str(num), chr(12288))
+        
         return info
 
-    def __repr__(self):
-        return "<class '{}'>".format(self.__class__.__name__)
 
-
-class PrintableObject(_Object, PrintInfoMixin):
-    """subclass of _Object + PrintInfoMixin"""
+class PrintableObject(Object, PrintInfoMixin):
+    """subclass of Object + PrintInfoMixin"""
 
 
 def str_half2full(ins):

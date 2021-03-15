@@ -1,6 +1,6 @@
 ## Physical Background
 
-<div class="float"><img src="_assets/pics/model_endface_step_fiber.svg" style="float:left;width:200px" alt="step-index fiber" title="step-index fiber"></div>
+<div class="float"><img src="_assets/pics/model/model_endface_step_fiber.svg" style="float:left;width:200px" alt="step-index fiber" title="step-index fiber"></div>
 
 Optical fiber is a fibrous solid used to transmit light in a certain frequency range. A typical model of the end face of a simple step-index fiber without coating is shown in the figure. It is a two-layer structure. The inner layer is called core with higher refractive index, and the outer layer is called the cladding with lower refractive index. For a single-mode fiber, the relative refractive index difference between the two layers is generally 0.02~0.005.
 
@@ -37,7 +37,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 All important properties are initialized in the constructor. Only by using the constructor can we generate a `FiberEnd` object.
 
 - <font color="red">\_\_init\_\_(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd')</font>  - Create a `FiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">omegaf</font>, <font color="red">roc</font> which defined above. `sp` is the abbreviation of package `scipy`.
-- <font color="red">change_params(self, \_filter=True, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters consistent with in `self.__init__` can be set.
+- <font color="red">change_params(self, \_filter=True, **kwargs)</font> - This method is provided by `_utils.Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters consistent with in `self.__init__` can be set.
 
 ----
 
@@ -61,7 +61,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 The constructor of `StepIndexFiberEnd` object is
 
 - <font color="red">\_\_init\_\_(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd')</font>  - Create a `StepIndexFiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">a</font>, <font color="red">naf</font>, <font color="red">roc</font> which defined above.
-- <font color="red">change_params(self, \_filter=True, **kwargs)</font> - This method is provided by `_utils._Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters consistent with in `self.__init__` can be set.
+- <font color="red">change_params(self, \_filter=True, **kwargs)</font> - This method is provided by `_utils.Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters consistent with in `self.__init__` can be set.
 
 ----
 

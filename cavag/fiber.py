@@ -1,7 +1,6 @@
 import scipy as sp
 from scipy import constants
 from ._utils import PrintableObject, PropertySet
-from .mirror import MirrorSurface
 
 __all__ = [
     'FiberEnd',

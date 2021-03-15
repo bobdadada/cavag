@@ -197,7 +197,7 @@ class NormalizedHermiteGaussBeam2D(PrintableObject):
         self.property_set.change_params(**kwargs)
         xkw, ykw = {}, {}
         for k, v in kwargs:
-            if k.endswith('x')
+            if k.endswith('x'):
                 xkw[k[:-1]] = v
             elif k.endswith('y'):
                 ykw[k[:-1]] = v
