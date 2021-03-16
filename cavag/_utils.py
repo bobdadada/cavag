@@ -76,6 +76,11 @@ class Object(object):
                 dt[prop] = kwargs[prop]
         return dt
 
+    def get_property(self, k, v_f):
+        if k not in self.property_set:
+            self.property_set[k] = v_f()
+        return self.property_set[k]
+
     def change_params(self, _filter=True, **kwargs):
         if _filter:
             kwargs = self.filter_properties(kwargs)
@@ -85,18 +90,17 @@ class Object(object):
 class PrintInfoMixin(object):
 
     def _parse_property(self, p):
-        if p.startswith('_'):
+        try:
+            if isinstance(getattr(self.__class__, p), property):
+                return True
+            else:
+                return False
+        except:
             return False
-        elif callable(getattr(self, p)):
-            return False
-        else:
-            return True
 
-    def get_props(self):
+    def get_proplist(self):
         props = []
         for item in dir(self):
-            if item == 'name':
-                continue
             if self._parse_property(item):
                 props.append(item)
         return props        
@@ -109,14 +113,14 @@ class PrintInfoMixin(object):
             info = "{}:\n".format(self.__class__.__name__)
         
         # 属性
-        for prop in self.get_props():
+        for prop in self.get_proplist():
             num = getattr(self, prop)
             doc = getattr(self.__class__, prop).__doc__
             if doc is None:
                 doc = ''
             # 格式化输出，中文对齐
             try:
-                info += "    {0:{3}<15}{1:<8} = {2:e}\n".format(str_half2full(doc), prop, num, chr(12288))
+                info += "    {0:{3}<15}{1:<8} = {2:s}\n".format(str_half2full(doc), prop, num, chr(12288))
             except:
                 info += "    {0:{3}<15}{1:<8} = {2:s}\n".format(str_half2full(doc), prop, str(num), chr(12288))
         
@@ -136,7 +140,7 @@ def str_half2full(ins):
             outs += c
         else:
             if code == 0x0020:
-                code += 0x3000
+                code == 0x3000
             else:
                 code += 0xFEE0
             outs += chr(code)

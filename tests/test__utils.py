@@ -1,6 +1,6 @@
 import unittest
 
-from cavag._utils import PropertySet, PropertyLost, _Object
+from cavag._utils import PropertySet, PropertyLost, Object
 
 class Test_PropertySet(unittest.TestCase):
 
@@ -54,32 +54,59 @@ class Test_PropertySet(unittest.TestCase):
         self.assertEqual(pset, {})
 
 
-class Test__Object(unittest.TestCase):
+class Test_Object(unittest.TestCase):
 
     def test_constructor(self):
-        _obj = _Object()
-        self.assertEqual(_obj.name, 'Object')
-        self.assertEqual(_obj.property_set, {})
-        self.assertEqual(_obj.modifiable_properties, ())
-        self.assertIsInstance(_obj.property_set, PropertySet)
+        obj = Object()
+        self.assertEqual(obj.name, 'Object')
+        self.assertEqual(obj.property_set, {})
+        self.assertEqual(obj.modifiable_properties, ())
+        self.assertIsInstance(obj.property_set, PropertySet)
     
     def test_change_params(self):
-        _obj = _Object()
-        _obj.change_params(a=1, b=2, _filter=False)
-        self.assertEqual(_obj.property_set, {'a':1, 'b':2})
-        _obj.change_params(a=3, b=4)
-        self.assertEqual(_obj.property_set, {})
-        _obj.property_set.add_required('a')
-        _obj.change_params(a=3, b=4, _filter=False)
-        self.assertEqual(_obj.property_set, {'a':3, 'b':4})
-        _obj.modifiable_properties = ('a', 'c')
-        _obj.change_params(a=7, _filter=True)
-        self.assertEqual(_obj.property_set, {'a':7})
-        _obj.property_set.add_required(('a', 'c'))
-        _obj.change_params(b=8)
-        self.assertEqual(_obj.property_set, {'a':7, 'c':None})
-        _obj.change_params(c=2)
-        self.assertEqual(_obj.property_set, {'a':7, 'c':2})
+        obj = Object()
+        obj.change_params(a=1, b=2, _filter=False)
+        self.assertEqual(obj.property_set, {'a':1, 'b':2})
+        obj.change_params(a=3, b=4)
+        self.assertEqual(obj.property_set, {})
+        obj.property_set.add_required('a')
+        obj.change_params(a=3, b=4, _filter=False)
+        self.assertEqual(obj.property_set, {'a':3, 'b':4})
+        obj.change_params(a=7, _filter=True)
+        self.assertEqual(obj.property_set, {'a': 3})
+        obj.property_set.add_required(('a', 'c'))
+        obj.change_params(b=8)
+        self.assertEqual(obj.property_set, {'a':3, 'c':None})
+        obj.change_params(c=2, _filter=False)
+        self.assertEqual(obj.property_set, {'a':3, 'c':2})
+
+    def test_inheritance(self):
+        class Example(Object):
+    
+            modifiable_properties = ('a', 'b')
+            
+            def __init__(self, a, b, name='Example'):
+                super().__init__()
+                self.name = name
+                
+                self.property_set.add_required(Example.modifiable_properties)
+                self.property_set['a'] = a
+                self.property_set['b'] = b
+            
+            @property
+            def a(self):
+                return self.property_set.get_strictly('a')
+            
+            @property
+            def b(self):
+                return self.property_set.get_strictly('b')
+            
+            @property
+            def c(self):
+                return self.get_property('c', lambda: self.a+self.b)
+        
+        exm = Example(1, 2)
+        self.assertEqual(exm.c, 3)
 
 
 if __name__ == '__main__':
