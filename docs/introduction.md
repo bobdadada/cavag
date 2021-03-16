@@ -57,3 +57,58 @@ In other modules, all abstract classes related to physical objects are subclasse
 
 An empty **property_set** is created if the subclass is constructed. It is a data type similar to the python dict. One can get and set the <font color="red">value</font> corresponding to <font color="red">key</font> by `value = property_set[key]` and `property_set[key] = value`. The private attribute **__required_props** of **property_set** is a set, when an instance of `PropertySet` is created, this attribute will be set to `set(props)` where <font color="red">props</font> is the input parameter of the constructor <font color="red">\_\_init\_\_(props=(), \*args, \*\*kwargs)</font>. **__required_props** contains all basic properties  that a physical object must have, and all other properties can be derived from these basic properties. These basic properties are initialized to `None`. The value of the property in **__required_props** can be normally obtained through `property_set[prop]`, but if the value of this property is `None`, obtaining the corresponding value through `property_set.get_strictly(prop)` will raise a `PropertyLost` exception.
 
+An example of a subclass of `PrintableObject` is shown below
+
+```python
+class Example(PrintableObject):
+    
+    # Set all modifiable parameters in a tuple.
+    modifiable_properties = ('a', 'b')
+    
+    def __init__(self, a, b, name='Example'):
+        # Execute the initialization function of the parent class,
+        # which define an empty property_set and add all necessary
+        # properties of parent classes.
+        super().__init__()
+        
+        self.name = name
+        
+        # Add the necessary own properties to property_set and set values.
+        self.property_set.add_required(Example.modifiable_properties)
+        self.property_set['a'] = a
+        self.property_set['b'] = b
+    
+    @property
+    def a(self):
+        """属性a"""
+        # Use get_strictly to get the value corresponding to 'a'.
+        # It will raise PropertyLost exception if the value is None.
+        return self.property_set.get_strictly('a')
+    
+    @property
+    def b(self):
+        """属性b"""
+        return self.property_set.get_strictly('b')
+    
+    @property
+    def c(self):
+        """属性c"""
+        # 'c' is an exported property, and its value will be calculated
+        # once with the function corresponding to the second parameter
+        # of get_property. In this example c = a + b.
+        return self.get_property('c', lambda: self.a+self.b)
+```
+
+Using the formatted output function provided by `PrintInfoMixin` to print out an instance of `Example` gives
+
+```python
+exm = Example(a=1, b=2)
+print(exm)
+"""
+Example:
+    属性ａ　　　　　　　　　　　　a        = 1
+    属性ｂ　　　　　　　　　　　　b        = 2
+    属性ｃ　　　　　　　　　　　　c        = 3
+"""
+```
+

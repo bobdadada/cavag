@@ -1,12 +1,13 @@
 # Cavag
 
+The documentation is available at [bobdadada.github.io/cavag](https://bobdadada.github.io/cavag).
+
 > This packages mainly used to
 >
 > 1. solve Gaussian optical transmission model
 > 2. solve the Fabry-Perot cavity
 > 3. solve the Fiber Fabry-Perot Cavity
 >
-> 
 
 **cavag** consists of the following modules:
 
