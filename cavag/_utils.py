@@ -1,7 +1,7 @@
 from copy import copy
 from collections import UserDict
 from collections.abc import Sequence
-
+import abc
 
 class PropertyLost(Exception):
     """Exception raised when necessary property are lost."""
@@ -29,7 +29,7 @@ class PropertySet(UserDict):
         dt = {}
         for prop in self.__required_props:
             dt[prop] = self[prop]
-        dt.update(**kwargs)
+        dt.update(kwargs)
 
         self.clear()
         self.update(dt)
@@ -64,7 +64,7 @@ class Object(object):
     name = 'Object'
     modifiable_properties = ()
     
-    def __init__(self, name='Object'):
+    def __init__(self, name='Object', **kwargs):
         self.property_set = PropertySet(Object.modifiable_properties)
         self.name = name
     
@@ -80,15 +80,22 @@ class Object(object):
         if k not in self.property_set:
             self.property_set[k] = v_f()
         return self.property_set[k]
+    
+    def _filter_params(self, kwargs):
+        dt = {}
+        for k, v in kwargs.items():
+            if not k.startswith('_'):
+                dt[k] = v
+        return dt
 
     def change_params(self, _filter=True, **kwargs):
         if _filter:
             kwargs = self.filter_properties(kwargs)
-        self.property_set.change_params(**kwargs)
-
-
-class PrintInfoMixin(object):
-
+        self.update_propset(**kwargs)
+    
+    def update_propset(self, **kwargs):
+        self.property_set.change_params(**self._filter_params(kwargs))
+    
     def _parse_property(self, p):
         try:
             if isinstance(getattr(self.__class__, p), property):
@@ -103,7 +110,14 @@ class PrintInfoMixin(object):
         for item in dir(self):
             if self._parse_property(item):
                 props.append(item)
-        return props        
+        return props    
+
+
+class PrintInfoMixin(object):
+
+    @abc.abstractmethod    
+    def get_proplist(self):
+        pass
 
     def __str__(self):
         # 名称

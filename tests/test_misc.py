@@ -1,12 +1,12 @@
 import unittest
 
 from scipy import constants
-from cavag.misc import Position, Wavelength
+from cavag.misc import *
 
 class Test_Position(unittest.TestCase):
 
     def test_constructor(self):
-        p = Position(1)
+        p = Position(position=1)
         self.assertEqual(p.position, 1)
         p.change_params(position=10)
         self.assertEqual(p.position, 10)
@@ -57,7 +57,7 @@ class Test_Position(unittest.TestCase):
 class Test_Wavelength(unittest.TestCase):
 
     def test_constructor(self):
-        w = Wavelength(1550)
+        w = Wavelength(wavelength=1550)
         self.assertEqual(w.wavelength, 1550)
         w.change_params(wavelength=980)
         self.assertEqual(w.wavelength, 980)

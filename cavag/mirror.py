@@ -1,35 +1,32 @@
+from ._utils import PrintableObject
 from .misc import Position
 
 __all__ = [
+    'RTL',
     'MirrorSurface',
-    'ThinLens',
-    'ThickLens',
+    'Mirror',
     'RTLConverter'
 ]
 
+class RTL(PrintableObject):
+    name = 'RTL'
 
-class MirrorSurface(Position):
-    name = "MirrorSurface"
+    # 反射率，透射率，损耗
+    modifiable_properties = ('r', 't', 'l')
 
-    # 曲率半径, 反射率, 透射率, 损耗率, 位置
-    modifiable_properties = ('roc', 'r', 't', 'l', 'position')
-
-    def __init__(self, roc, r=None, t=None, l=None, position=0, name='MirrorSurface'):
-        super().__init__(position=position)
-        self.property_set.add_required(MirrorSurface.modifiable_properties)
+    def __init__(self, name='RTL', **kwargs):
+        super().__init__(**kwargs)
+        self.property_set.add_required(RTL.modifiable_properties)
         self.name = name
 
-        r, t, l = RTLConverter.normalize(r=r, t=t, l=l)
+        dt = {}
+        for mp in RTL.modifiable_properties:
+            dt[mp] = kwargs.get(mp, None)
+        r, t, l = RTLConverter.normalize(r=dt['r'], t=dt['t'], l=dt['l'])
 
-        self.property_set['roc'] = roc
         self.property_set['r'] = r
         self.property_set['t'] = t
         self.property_set['l'] = l
-
-    @property
-    def roc(self) -> float:
-        """曲率半径"""
-        return self.property_set.get_strictly('roc')
 
     @property
     def r(self) -> float:
@@ -52,6 +49,57 @@ class MirrorSurface(Position):
         self.property_set['r'] = r
         self.property_set['t'] = t
         self.property_set['l'] = l
+    
+    def change_params(self, _norm=True, _filter=True, **kwargs):
+        super().change_params(_filter=_filter, **kwargs)
+
+        if _filter:
+            kwargs = self.filter_properties(kwargs)
+
+        if _norm and any(p in kwargs for p in RTL.modifiable_properties):
+            r, t, l = kwargs.get('r', None), kwargs.get('t', None), kwargs.get('l', None)
+            r, t, l = RTLConverter.normalize(r=r, t=t, l=l)
+            kwargs.update({'r':r, 't':t, 'l':l})
+            
+        self.update_propset(**kwargs)
+
+
+class MirrorSurface(RTL, Position):
+    name = "MirrorSurface"
+
+    # 曲率半径, 反射率, 透射率, 损耗率, 位置
+    modifiable_properties = ('roc', 'r', 't', 'l', 'position')
+
+    def __init__(self, name='MirrorSurface', **kwargs):
+        super().__init__(**kwargs)
+        self.property_set.add_required(MirrorSurface.modifiable_properties)
+        self.name = name
+
+        self.property_set['roc'] = kwargs.get('roc', None)
+
+    @property
+    def roc(self) -> float:
+        """曲率半径"""
+        return self.property_set.get_strictly('roc')
+
+
+class Mirror(RTL, Position):
+    name = "Mirror"
+
+    # 焦距, 反射率, 透射率, 损耗率, 位置
+    modifiable_properties = ('f', 'r', 't', 'l', 'position')
+
+    def __init__(self, name='Mirror', **kwargs):
+        super().__init__(**kwargs)
+        self.property_set.add_required(Mirror.modifiable_properties)
+        self.name = name
+        
+        self.property_set['f'] = kwargs.get('f', None)
+    
+    @property
+    def f(self) -> float:
+        """焦距"""
+        return self.property_set.get_strictly('f')
 
 
 class RTLConverter(object):
@@ -104,94 +152,44 @@ class RTLConverter(object):
         return r, t, l
 
     @staticmethod
-    def add_reflectivity(m0, r):
+    def add_reflectivity(m0, re):
         """
         计算增添反射率后的(反射率，透射率，损耗)
         :param m0: 原始的(反射率，透射率，损耗)
-        :param r: 添加的反射率
+        :param re: 添加的反射率
         :return: 反射率，透射率，损耗
         """
         r0, t0, l0 = m0
-        r = r0*(1-r)+r
-        t = t0*(1-r)
-        l = l0*(1-r)
+        r = r0*(1-re)+re
+        t = t0*(1-re)
+        l = l0*(1-re)
         return r, t, l
 
     @staticmethod
-    def add_transmittance(m0, t):
+    def add_transmittance(m0, te):
         """
         计算增添透射率后的(反射率，透射率，损耗)
         :param m0: 原始的(反射率，透射率，损耗)
-        :param t: 添加的透射率
+        :param te: 添加的透射率
         :return: 反射率，透射率，损耗
         """
         r0, t0, l0 = m0
-        r = r0*(1-t)
-        t = t0*(1-t)+t
-        l = l0*(1-t)
+        r = r0*(1-te)
+        t = t0*(1-te)+te
+        l = l0*(1-te)
         return r, t, l
 
     @staticmethod
-    def add_loss(m0, l):
+    def add_loss(m0, le):
         """
         计算增添损耗后的(反射率，透射率，损耗)
         :param m0: 原始的(反射率，透射率，损耗)
-        :param l: 添加的损耗
+        :param le: 添加的损耗
         :return: 反射率，透射率，损耗
         """
         r0, t0, l0 = m0
-        r = r0*(1-l)
-        t = t0*(1-l)
-        l = l0*(1-l)+l
+        r = r0*(1-le)
+        t = t0*(1-le)
+        l = l0*(1-le)+le
         return r, t, l
-
-
-class ThickLens(Position):
-    name = "ThickLens"
-
-    # 厚度, 左焦距, 右焦距, 位置
-    modifiable_properties = ('d', 'fl', 'fr', 'position')
-
-    def __init__(self, d, fl, fr, position, name='ThickLens'):
-        super().__init__(position=position)
-        self.property_set.add_required(ThickLens.modifiable_properties)
-        self.name = name
-        
-        self.property_set['d'] = d
-        self.property_set['fl'] = fl
-        self.property_set['fr'] = fr
-
-    @property
-    def d(self) -> float:
-        """厚度"""
-        return self.property_set.get_strictly('d')
-
-    @property
-    def fl(self) -> float:
-        """左焦距"""
-        return self.property_set.get_strictly('fl')
-
-    @property
-    def fr(self) -> float:
-        """右焦距"""
-        return self.property_set.get_strictly('fr')
-
-
-class ThinLens(ThickLens):
-    name = "ThinLens"
-
-    # 焦距
-    modifiable_properties = ('d', )
-
-    def __init__(self, f, position, name='ThinLens'):
-        super().__init__(self, d=0, fl=f, fr=f, position=position)
-        self.property_set.add_required(ThinLens.modifiable_properties)
-        self.name = name
-        
-        self.property_set['f'] = f
-
-    @property
-    def f(self) -> float:
-        """焦距"""
-        return self.property_set.get_strictly('f')
 

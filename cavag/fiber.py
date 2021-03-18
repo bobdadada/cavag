@@ -1,3 +1,4 @@
+import logging
 import scipy as sp
 from scipy import constants
 from ._utils import PrintableObject, PropertySet
@@ -86,6 +87,11 @@ class StepIndexFiberEnd(FiberEnd):
             a = self.a
             naf = self.naf
             V = nu0 * a * naf  # 归一化频率
+            if V < 1.2:
+                logging.warning('Normalized frequency for {}:{} is less than 1.2, ' \
+                                'the approximate radius of mode field may be not ' \
+                                'correct'.format(self.name, repr(self))
+                        )
             # empirically that the size w of the Gaussian approximation
             # to the fiber mode for V >~ 1.2 given by Marcuse
             self.property_set['omegaf'] = a * (0.65 + 1.619 * V ** (-1.5) + 2.879 * V ** (-6))
