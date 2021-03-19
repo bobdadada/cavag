@@ -16,7 +16,15 @@ Following classes are defined in the module:
 
 ----
 
-**RTLConverter**: `class RTLConverter(object)`
+**RTL**: `class RTL(PrintableObject)`
+
+This class define an abstract class describing $R,T,L$. The attributes are defined as follows:
+
+- 
+
+----
+
+**RTLConverter**: `class RTLConverter`
 
 A helper class for the $R,T,L$ conversion. This class is mainly used to define a namespace, and all methods of the class are decorated as `@staticmethod`.
 
@@ -40,9 +48,9 @@ Following classes are defined in the module:
 
 ----
 
-**MirrorSurface**: `class MirrorSurface(misc.Position)`
+**MirrorSurface**: `class MirrorSurface(RTL, misc.Position)`
 
-This class defines a mirror surface and is a subclass of `misc.Position` which provides attribute <font color="red">position</font>.  Almost all attributes cannot be assigned by `self.attr = value`. The attributes are defined as follows:
+This class defines a mirror surface and is a subclass of `RTL` and `misc.Position` which provide attributes <font color="red">r</font>, <font color="red">t</font>, <font color="red">l</font> and <font color="red">position</font>. The attributes are defined as follows:
 
 - <font color="red">name</font> - The name of instances or classes. The default is *MirrorSurface*, which can be modified as required. 
 - <font color="red">property_set</font> - A dict-like object contains all the properties necessary for the class. It is an instance of `_utils.PropertySet` and is initialized in `self.__init__`. It should not be artificially modified at runtime. If the value of any property is `None` when used, it will cause a `_utils.PropertyLost` exception.
@@ -62,21 +70,19 @@ The methods are defined as follows:
 
 #### 3. Mirror ## TO DO
 
-This module is not mainly for designing optical systems, so we only define simple lens classes.
+This module is not mainly for designing optical systems, so we only define simple mirror classes.
 
 Following classes are defined in the module:
 
 ----
 
-**ThickLens**: `class ThickLens(misc.Position)`
+**Mirror**: `class Mirror(RTL, misc.Position)`
 
-A class for thick lens. For thick lenses, the left focal length is not equal to the right focal length. Almost all attributes cannot be assigned by `self.attr = value`. The attributes are defined as follows:
+A class for a thin mirror. In cavity-related applications, thin lens or `zero` aberration approximation can give good experimental results. Therefore, we only consider the effect of focal length $f$ of a mirror. The attributes are defined as follows:
 
-- <font color="red">name</font> - The name of instances or classes. The default is *ThickLens*, which can be modified as required.
+- <font color="red">name</font> - The name of instances or classes. The default is *Mirror*, which can be modified as required.
 - <font color="red">property_set</font> - A dict-like object contains all the properties necessary for the class. It is an instance of `_utils.PropertySet` and is initialized in `self.__init__`. It should not be artificially modified at runtime. If the value of any property is `None` when used, it will cause a `_utils.PropertyLost` exception.
-- <font color="red">d</font> - $d$, Lens thickness, cannot be assigned directly.
-- <font color="red">fl</font> - $f_l$, left focal distance, cannot be assigned directly.
-- <font color="red">fr</font> - $f_r$, left focal distance, cannot be assigned directly.
+- <font color="red">f</font> - $f$, focal distance, cannot be assigned directly.
 - <font color="red">position</font> - The position of the mirror, provided by `misc.Position`.
 
 The methods are defined as follows:

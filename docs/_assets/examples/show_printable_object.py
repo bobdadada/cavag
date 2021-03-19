@@ -1,106 +1,5 @@
-### Modules
+from cavag._utils import PrintableObject
 
-The modules in cavag are organized as shown below
-
-<div style="text-align: center"><img src="_assets/pics/uml/cavag_uml.svg" alt="UML of cavag"></div>
-
-**Module Content:**
-
-<!-- tabs:start -->
-
-<!-- tab:fiber -->
-
-Source Page: [fiber](fiber.md)
-
-**Class[es]**
-
-- `FiberEnd`
-- `StepIndexFiberEnd`
-
-<!-- tab:fpcavity -->
-
-Source Page: [fpcavity](fpcavity)
-
-<!-- tab:gaussbeam -->
-
-Source Page: [gaussbeam](gaussbeam.md)
-
-
-<!-- tab:mirror -->
-
-Source Page: [mirror](mirror.md)
-
-**Class[es]**
-
-- `RTL`
-- `RTLConverter`
-- `MirrorSurface`
-- `Mirror`
-
-<!-- tab:misc -->
-
-Source Page: [misc](misc.md) 
-
-<!-- tab:utils -->
-
-Source Page: [utils](utils.md)
-
-<!-- tabs:end -->
-
-
-
-### Core Implementation
-
-The core functions of cavag are provided by `Object` and `PropertySet` in *_utils.py*. The UML diagram of this file is shown below
-
-<div style="text-align: center"><img src="_assets/pics/uml/_utils_uml.svg" alt="UML of _utils"></div>
-
-1. **Usage**
-
-In other modules, all abstract classes related to physical objects are subclasses of `PrintableObject`. A mature subclass needs to define its own **modifiable_properties** class attribute, which can be used in class method `cls.filter_properties(propdict)` to filter modifiable physical properties in the dict, <font color="red">kwargs</font>. In general, **modifiable_properties** contains the names of all input parameters defined in the constructor of the subclass, other than the <font color="red">name</font>.
-
-An empty **property_set** is created if the subclass is constructed. It is a data type similar to the python dict. One can get and set the <font color="red">value</font> corresponding to <font color="red">key</font> by `value = property_set[key]` and `property_set[key] = value`. The private attribute **__required_props** of **property_set** is a set, when an instance of `PropertySet` is created, this attribute will be set to `set(props)` where <font color="red">props</font> is the input parameter of the constructor <font color="red">\_\_init\_\_(props=(), \*args, \*\*kwargs)</font>. **__required_props** contains all basic properties that a physical object must have, and all other properties can be derived from these basic properties. These basic properties are initialized to `None`. The value of a property `prop` in **__required_props** can be normally obtained through `property_set[prop]`, but if the value of this property is `None`, obtaining the corresponding value through `property_set.get_strictly(prop)` will raise a `PropertyLost` exception.
-
-The detailed definitions are as follows:
-
-----
-
-**Object**: `class Object`
-
-This class defines an abstraction of real object. The attributes are defined as follows:
-
-- <font color="red">modifiable_properties</font> - 
-- <font color="red">name</font> - 
-- <font color="red">property_set</font> - 
-
-The methods are defined as follows:
-
-- <font color="red">\_\_init\_\_</font> - 
-- <font color="red">get_property</font> - 
-- <font color="red">get_proplist</font> - 
-- <font color="red">change_params</font> - 
-- <font color="red">update_propset</font> - 
-- <font color="red">filter_properties</font> - 
-
-----
-
-**PropertySet**
-
-This class define a data structure which store all properties of a physical object. The attributes are defined as follows:
-
-- <font color="red">__required_props</font> - 
-
-The methods are defined as follows:
-
-- <font color="red">\_\_init\_\_</font> - 
-
-----
-
-2. **Example**
-
-Implement a subclass `Example` of `PrintableObject`
-
-```python
 class Example(PrintableObject):
     
     # Set all modifiable parameters in a tuple.
@@ -139,11 +38,7 @@ class Example(PrintableObject):
         # once with the function corresponding to the second parameter
         # of get_property. In this example c = a + b.
         return self.get_property('c', lambda: self.a+self.b)
-```
 
-Using the formatted output function provided by `PrintInfoMixin` to print out an instance of `Example` gives
-
-```python
 exm = Example(a=1, b=2)
 print(exm)
 """
@@ -153,11 +48,7 @@ Example:
     属性ｃ　　　　　　　　　　　　c        = 3
 
 """
-```
 
-Get and change the properties
-
-```python
 # Get the name of each property
 proplist = exm.get_proplist()
 print(proplist)
@@ -248,6 +139,3 @@ Example:
     属性ｃ　　　　　　　　　　　　c        = 4
 
 """
-```
-
-*This example is stored in [show_printable_object](_assets/examples/show_printable_object.py ':ignore :class=download')*

@@ -36,16 +36,17 @@ class Test_Position(unittest.TestCase):
     def test_inheritance_2(self):
         class A(Position):
             modifiable_properties = ('a', )
-            def __init__(self, a, position):
-                super().__init__(position=position)
+            def __init__(self, **kwargs):
+                super().__init__(**kwargs)
+
                 self.property_set.add_required('a')
-                self.property_set['a'] = a
+                self.property_set['a'] = kwargs.get('a', None)
             
             @property
             def a(self):
                 return self.property_set.get_strictly('a')
         
-        a = A(1, 2)
+        a = A(a=1, position=2)
         self.assertEqual(a.a, 1)
         self.assertEqual(a.position, 2)
 
