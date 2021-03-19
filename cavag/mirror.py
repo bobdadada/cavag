@@ -2,10 +2,10 @@ from ._utils import PrintableObject
 from .misc import Position
 
 __all__ = [
+    'RTLConverter',
     'RTL',
     'MirrorSurface',
-    'Mirror',
-    'RTLConverter'
+    'Mirror'
 ]
 
 class RTL(PrintableObject):

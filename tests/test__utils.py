@@ -85,13 +85,14 @@ class Test_Object(unittest.TestCase):
     
             modifiable_properties = ('a', 'b')
             
-            def __init__(self, a, b, name='Example'):
-                super().__init__()
+            def __init__(self, name='Example', **kwargs):
+                super().__init__(**kwargs)
                 self.name = name
                 
                 self.property_set.add_required(Example.modifiable_properties)
-                self.property_set['a'] = a
-                self.property_set['b'] = b
+
+                for prop in Example.modifiable_properties:
+                    self.property_set[prop] = kwargs.get(prop, None)
             
             @property
             def a(self):
@@ -105,7 +106,7 @@ class Test_Object(unittest.TestCase):
             def c(self):
                 return self.get_property('c', lambda: self.a+self.b)
         
-        exm = Example(1, 2)
+        exm = Example(a=1, b=2)
         self.assertEqual(exm.c, 3)
 
 

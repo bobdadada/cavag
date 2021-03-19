@@ -69,11 +69,11 @@ class Object(object):
         self.name = name
     
     @classmethod
-    def filter_properties(cls, kwargs):
+    def filter_properties(cls, propdict):
         dt = {}
         for prop in cls.modifiable_properties:
-            if prop in kwargs:
-                dt[prop] = kwargs[prop]
+            if prop in propdict:
+                dt[prop] = propdict[prop]
         return dt
 
     def get_property(self, k, v_f):
@@ -81,9 +81,9 @@ class Object(object):
             self.property_set[k] = v_f()
         return self.property_set[k]
     
-    def _filter_params(self, kwargs):
+    def _filter_params(self, dp):
         dt = {}
-        for k, v in kwargs.items():
+        for k, v in dp.items():
             if not k.startswith('_'):
                 dt[k] = v
         return dt

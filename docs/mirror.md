@@ -8,7 +8,31 @@
 
 ### Classes
 
-#### 1. The surface of a single mirror
+#### 1. $R,T,L$
+
+Since reflectivity $R$, transmittance $T$, and loss $L$ are important in the mirror-related applications and often given in an equivalent form in practical applications, we need $RTL$ abstract class and a helper class for $R,T,L$ conversion. 
+
+Following classes are defined in the module:
+
+----
+
+**RTLConverter**: `class RTLConverter(object)`
+
+A helper class for the $R,T,L$ conversion. This class is mainly used to define a namespace, and all methods of the class are decorated as `@staticmethod`.
+
+The methods are defined as follows:
+
+- <font color="red">@(staticmethod): normalize(r=None, t=None, l=None)</font> - The method is used to normalize the $R,T,L$, i.e. $R+T+L=1$. One can only provide only two of the parameters reflectivity - $R$ - <font color="red">r</font>, transmittance - $T$ - <font color="red">t</font>, loss - $L$ - <font color="red">l</font>. Then this method will return the normalized $R,T,L$ in a tuple.
+- <font color="red">@(staticmethod): rtl_by_r_t2l(r, t2l)</font> - By parameters reflectivity - $R$ - <font color="red">r</font> and the ratio of transmittance to loss - $T/L$ - <font color="red">t2l</font>, this method returns the normalized $R,T,L$ in a tuple.
+- <font color="red">@(staticmethod): rtl_by_t_r2l(t, r2l)</font> - By parameters transmittance - $T$ - <font color="red">t</font> and the ratio of reflectivity to loss - $R/L$ - <font color="red">r2l</font>, this method returns the normalized $R,T,L$ in a tuple.
+- <font color="red">@(staticmethod): add_reflectivity(m0, re)</font> - This method adds extra reflectivity - <font color="red">re</font> to the original (reflectivity, transmittance, loss) tuple - <font color="red">m0</font>, and returns the normalized $R,T,L$ in a tuple.
+- <font color="red">@(staticmethod): add_transmittance(m0, te)</font> - This method adds extra transmittance - <font color="red">te</font> to the original (reflectivity, transmittance, loss) tuple - <font color="red">m0</font>, and returns the normalized $R,T,L$ in a tuple.
+- <font color="red">@(staticmethod): add_loss(m0, le)</font> - This method adds extra loss - <font color="red">le</font> to the original (reflectivity, transmittance, loss) tuple - <font color="red">m0</font>, and returns the normalized $R,T,L$ in a tuple.
+
+----
+
+
+#### 2. The surface of a single mirror
 
 In many cases, we need the optical properties of the surface of  an object. The most easily measured optical properties are reflectivity $R$, transmittance $T$, and loss $L$. Here, we define classes related to the mirror surface, which can be regarded as a surface with a thickness of $0$.
 
@@ -36,7 +60,7 @@ The methods are defined as follows:
 
 ----
 
-#### 2. Mirror ## TO DO
+#### 3. Mirror ## TO DO
 
 This module is not mainly for designing optical systems, so we only define simple lens classes.
 
@@ -59,29 +83,6 @@ The methods are defined as follows:
 
 - <font color="red">\_\_init\_\_(self, d, fl, fr, position, name='ThickLens')</font> - Create a `ThickLens` object by parameters shown above.
 - <font color="red">change_params(self, \_filter=True, **kwargs)</font> - This method is provided by `_utils.Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters consistent with in `self.__init__` can be set.
-
-----
-
-#### 3. $R,T,L$ converter
-
-Since $R,T.L$ is often given in an equivalent form in applications, we need a helper class for $R,T,L$ conversion. 
-
-Following classes are defined in the module:
-
-----
-
-**RTLConverter**: `class RTLConverter(object)`
-
-A helper class for the $R,T,L$ conversion. This class is mainly used to define a namespace, and all methods of the class are decorated as `@staticmethod`.
-
-The methods are defined as follows:
-
-- <font color="red">@(staticmethod): normalize(r=None, t=None, l=None)</font> - The method is used to normalize the $R,T,L$, i.e. $R+T+L=1$. One can only provide only two of the parameters reflectivity - $R$ - <font color="red">r</font>, transmittance - $T$ - <font color="red">t</font>, loss - $L$ - <font color="red">l</font>. Then this method will return the normalized $R,T,L$ in a tuple.
-- <font color="red">@(staticmethod): rtl_by_r_t2l(r, t2l)</font> - By parameters reflectivity - $R$ - <font color="red">r</font> and the ratio of transmittance to loss - $T/L$ - <font color="red">t2l</font>, this method returns the normalized $R,T,L$ in a tuple.
-- <font color="red">@(staticmethod): rtl_by_t_r2l(t, r2l)</font> - By parameters transmittance - $T$ - <font color="red">t</font> and the ratio of reflectivity to loss - $R/L$ - <font color="red">r2l</font>, this method returns the normalized $R,T,L$ in a tuple.
-- <font color="red">@(staticmethod): add_reflectivity(m0, re)</font> - This method adds extra reflectivity - <font color="red">re</font> to the original (reflectivity, transmittance, loss) tuple - <font color="red">m0</font>, and returns the normalized $R,T,L$ in a tuple.
-- <font color="red">@(staticmethod): add_transmittance(m0, te)</font> - This method adds extra transmittance - <font color="red">te</font> to the original (reflectivity, transmittance, loss) tuple - <font color="red">m0</font>, and returns the normalized $R,T,L$ in a tuple.
-- <font color="red">@(staticmethod): add_loss(m0, le)</font> - This method adds extra loss - <font color="red">le</font> to the original (reflectivity, transmittance, loss) tuple - <font color="red">m0</font>, and returns the normalized $R,T,L$ in a tuple.
 
 ----
 
