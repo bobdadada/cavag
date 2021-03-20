@@ -69,30 +69,36 @@ The detailed definitions are as follows:
 
 This class defines an abstraction of real object. The attributes are defined as follows:
 
-- <font color="red">modifiable_properties</font> - 
-- <font color="red">name</font> - 
-- <font color="red">property_set</font> - 
+- <font color="red">modifiable_properties</font> - Iterable object, contains all the names of modifiable properties.
+- <font color="red">name</font> - The name of instances or classes. The default is *Object*, which can be modified as required. 
+- <font color="red">property_set</font> - Property collection, which is an instance of `PropertySet`.
 
 The methods are defined as follows:
 
-- <font color="red">\_\_init\_\_</font> - 
-- <font color="red">get_property</font> - 
-- <font color="red">get_proplist</font> - 
-- <font color="red">change_params</font> - 
-- <font color="red">update_propset</font> - 
-- <font color="red">filter_properties</font> - 
+- <font color="red">\_\_init\_\_(name="Object", **kwargs)</font> - Create an instance of `Object`, the name is set to be <font color="red">name</font>. In <font color="red">kwargs</font>, only the key name consistent with the property name in <font color="red">modifiable_properties</font> will be set.
+- <font color="red">get_property(k, v_f)</font> - Use the property name <font color="red">k</font> to get the property value saved in the <font color="red">property_set</font>. If the property does not exist, use the function <font color="red">v_f</font> to calculate its value and save it in the <font color="red">property_set</font>. Usually we don't use this method directly, but define a method decorated with `@property` in the subclass, and call the <font color="red">get_property</font> in this method.
+- <font color="red">get_proplist()</font> - Get all the method names decorated with `@property` in the class. It is a concrete implementation of an abstract method <font color="red">get_proplist</font> in `PrintInfoMixin`. 
+- <font color="red">change_params(\_filter=True, **kwargs)</font> - This method is used to modify the value of parameters in <font color="red">property_set</font>. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters in <font color="red">kwargs</font> consistent with the properties in <font color="red">modifiable_properties</font> will be filtered out by method <font color="red">filter_properties</font>. This method uses <font color="red">update_propset</font> to update <font color="red">property_set</font>. 
+- <font color="red">update_propset(**kwargs)</font> - This method directly update properties in <font color="red">property_set</font> by <font color="red">kwargs</font>. Not recommended to use this method directly, use <font color="red">change_params</font> instead.
+- <font color="red">filter_properties(propdict)</font> - This method filters the <font color="red">propdict</font> and returns the corresponding sub-dictionary in the <font color="red">propdict</font> with only properties in the <font color="red">modifiable_properties</font>.
 
 ----
 
-**PropertySet**
+**PropertySet**: `class PropertySet(collection.UserDict)`
 
-This class define a data structure which store all properties of a physical object. The attributes are defined as follows:
+This class define a data structure which store all properties of a physical object. It is a dict-like object, subclass of `collection.UserDict`. The attributes are defined as follows:
 
-- <font color="red">__required_props</font> - 
+- <font color="red">\_\_required_props</font> - Set object, contains all the names of the necessary properties. All the other properties not in <font color="red">\_\_required_props</font> will be cleared when the <font color="red">change_params</font> method of this class is called, see <font color="red">change_params</font> for more details. Only <font color="red">reset_required</font>, <font color="red">add_required</font>, <font color="red">del_required</font>, and <font color="red">clear_required</font> can modify <font color="red">\_\_required_props</font>.
 
 The methods are defined as follows:
 
-- <font color="red">\_\_init\_\_</font> - 
+- <font color="red">\_\_init\_\_(required\_props=(), *args, **kwargs)</font> - 
+- <font color="red">get_strictly(key)</font> -
+- <font color="red">change_params(**kwargs)</font> -
+- <font color="red">reset_required</font> -
+- <font color="red">add_required</font> -
+- <font color="red">del_required</font> - 
+- <font color="red">clear_required</font> - 
 
 ----
 

@@ -8,10 +8,10 @@ class PropertyLost(Exception):
 
 
 class PropertySet(UserDict):
-    def __init__(self, props=(), *args, **kwargs):
-        self.__required_props = set(props)
+    def __init__(self, required_props=(), *args, **kwargs):
+        self.__required_props = set(required_props)
         super().__init__(*args, **kwargs)
-        for prop in props:
+        for prop in self.__required_props:
             if prop not in self:
                 self[prop] = None
     
@@ -67,6 +67,9 @@ class Object(object):
     def __init__(self, name='Object', **kwargs):
         self.property_set = PropertySet(Object.modifiable_properties)
         self.name = name
+        
+        for prop in Object.modifiable_properties:
+            self.property_set[prop] = kwargs.get(prop, None)
     
     @classmethod
     def filter_properties(cls, propdict):
