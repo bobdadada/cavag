@@ -22,46 +22,90 @@ Following classes are defined in the module:
 
 ----
 
-**FiberEnd**: `class FiberEnd(_utils.PrintableObject)`
+<strong id="FiberEnd">FiberEnd</strong>: `class FiberEnd(Wavelength)`
 
-This class define a fiber end face object. Almost all attributes cannot be assigned by `self.attr = value`. The attributes are defined as follows:
+This class define a fiber end face object. Almost all attributes cannot be assigned by `self.attr = value`.
+
+<font color="blue">The attributes are defined as follows</font>:
+
+- <font color="red">modifiable_properties</font> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'omegaf', 'roc')` where
+  
+  - <font color="red">nf</font> - $n_f$, core refractive index
+  - <font color="red">wavelength</font> - $\lambda$, wavelength of transmitted light
+  - <font color="red">omegaf</font> - $w_f$, radius of mode field of fiber
+  - <font color="red">roc</font> - $roc$, radius of curvature, default to `inf`
+  
+  These attributes are also input parameters of the constructor. 
 
 - <font color="red">name</font> - The name of instances or classes. The default is *FiberEnd*, which can be modified as required. 
-- <font color="red">property_set</font> - A dict-like object contains all the properties necessary for the class. It is an instance of `_utils.PropertySet` and is initialized in `self.__init__`. It should not be artificially modified at runtime. If the value of any property is `None` when used, it will cause a `_utils.PropertyLost` exception.
-- <font color="red">nf</font> - $n_f$, core refractive index, cannot be assigned directly.
-- <font color="red">wavelength</font> - $\lambda$, wavelength of transmitted light, cannot be assigned directly.
-- <font color="red">omegaf</font> - $w_f$, radius of mode field of fiber, cannot be assigned directly.
-- <font color="red">nu</font> - $\nu$, frequency of transmitted light, cannot be assigned directly, which equal to $c/\lambda$.
-- <font color="red">roc</font> - $roc$, radius of curvature, cannot be assigned directly. 
 
-All important properties are initialized in the constructor. Only by using the constructor can we generate a `FiberEnd` object.
+- <font color="red">property_set</font> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
 
-- <font color="red">\_\_init\_\_(self, nf, wavelength, omegaf, roc=sp.inf, name='FiberEnd')</font>  - Create a `FiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">omegaf</font>, <font color="red">roc</font> which defined above. `sp` is the abbreviation of package `scipy`.
-- <font color="red">change_params(self, \_filter=True, **kwargs)</font> - This method is provided by `_utils.Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters consistent with in `self.__init__` can be set.
+- The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
+
+  - properties provided by this class
+
+    - <font color="red">nf</font> - $n_f$, core refractive index
+    - <font color="red">omegaf</font> - $w_f$, radius of mode field of fiber
+    - <font color="red">roc</font> - $roc$, radius of curvature
+
+  - properties provided by parent class
+
+    - see <a class="class-refer">misc.Wavelength</a> for details
+
+<font color="blue">The methods are defined as follows</font>:
+
+- <font color="red">\_\_init\_\_(name='FiberEnd', **kwargs)</font>  - Create a `FiberEnd` object by named parameters consistent with <font color="red">modifiable_properties</font>. 
+
+- See <a class="class-refer">misc.Wavelength</a> and <a class="class-refer">introduction.Object</a> for other methods.
 
 ----
 
-**StepIndexFiberEnd**: `class StepIndexFiberEnd(FiberEnd)`
+<strong id="StepIndexFiberEnd">StepIndexFiberEnd</strong>: `class StepIndexFiberEnd(FiberEnd)`
 
-This class is a subclass of `FiberEnd` and particularly used to describe a step-index fiber. The attributes are defined as follows:
+This class is a subclass of `FiberEnd` and particularly used to describe a step-index fiber.
+
+<font color="blue">The attributes are defined as follows</font>:
+
+- <font color="red">modifiable_properties</font> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'a', 'naf', 'roc')` where
+  
+  - <font color="red">nf</font> - $n_f$, core refractive index
+  - <font color="red">wavelength</font> - $\lambda$, wavelength of transmitted light
+  - <font color="red">a</font> - $a$, radius of fiber core
+  - <font color="red">naf</font> - $NA_f$, numerical aperture
+  - <font color="red">roc</font> - $roc$, radius of curvature, default to `inf`
+  
+  These attributes are also input parameters of the constructor. 
 
 - <font color="red">name</font> - The name of instances or classes. The default is *StepIndexFiberEnd*, which can be modified as required.
-- <font color="red">a</font> - $a$ radius of fiber core,  cannot be assigned directly.
-- <font color="red">naf</font> - $NA_f$ numerical aperture,  cannot be assigned directly. the numerical aperture by definition is given by $NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
-- <font color="red">omegaf</font> - $w_f$ radius of mode field of fiber. For the step-index fiber, we can compute $w_f$ by approximation of Gaussian light. 
-  $$
-  w_f=a(0.65 +1.619V^{-1.5}+2.879V^{-6})
-  $$
-  for $V\gtrsim 1.2$ where
-  $$
-  V=\frac{2\pi a}{\lambda}\cdot NA_{f}
-  $$
-  is the normalized frequency. This is an empirical formula given by Marcuse<a class="refer">[2]</a>. The normalized frequency of single-mode fiber satisfies $V<2.405$.
 
-The constructor of `StepIndexFiberEnd` object is
+- <font color="red">property_set</font> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
 
-- <font color="red">\_\_init\_\_(self, nf, wavelength, a, naf, roc=sp.inf, name='StepIndexFiberEnd')</font>  - Create a `StepIndexFiberEnd` object by positional parameters <font color="red">nf</font>, <font color="red">wavelength</font>, <font color="red">a</font>, <font color="red">naf</font>, <font color="red">roc</font> which defined above.
-- <font color="red">change_params(self, \_filter=True, **kwargs)</font> - This method is provided by `_utils.Object`, used to modify the value of parameters in `self.property_set`. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters consistent with in `self.__init__` can be set.
+- The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
+
+  - properties provided by this class
+  
+    - <font color="red">a</font> - $a$, radius of fiber core
+    - <font color="red">naf</font> - $NA_f$, numerical aperture. the numerical aperture by definition is given by $NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
+    - <font color="red">omegaf</font> - $w_f$, radius of mode field of fiber. For the step-index fiber, we can compute $w_f$ by approximation of Gaussian light. 
+      $$
+      w_f=a(0.65 +1.619V^{-1.5}+2.879V^{-6})
+      $$
+      for $V\gtrsim 1.2$ where
+      $$
+      V=\frac{2\pi a}{\lambda}\cdot NA_{f}
+      $$
+      is the normalized frequency. This is an empirical formula given by Marcuse<a class="refer">[2]</a>. The normalized frequency of single-mode fiber satisfies $V<2.405$.
+
+  - properties provided by parent class
+
+    - see <a class="class-refer">fiber.FiberEnd</a> for details
+
+<font color="blue">The methods are defined as follows</font>:
+
+- <font color="red">\_\_init\_\_(name='StepIndexFiberEnd', **kwargs)</font>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <font color="red">modifiable_properties</font>. 
+
+- See <a class="class-refer">fiber.FiberEnd</a> and <a class="class-refer">introduction.Object</a> for other methods.
 
 ----
 

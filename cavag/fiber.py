@@ -17,12 +17,13 @@ class FiberEnd(Wavelength):
     modifiable_properties = ('nf', 'wavelength', 'omegaf', 'roc')
 
     def __init__(self, name='FiberEnd', **kwargs):
+        if kwargs.get('roc') is None:
+            kwargs['roc'] = sp.inf
+
         super().__init__(**kwargs)
         self.property_set.add_required(FiberEnd.modifiable_properties)
         self.name = name
 
-        if kwargs.get('roc') is None:
-            kwargs['roc'] = sp.inf
         for prop in FiberEnd.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
 
