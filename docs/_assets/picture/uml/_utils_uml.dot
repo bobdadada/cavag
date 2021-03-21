@@ -8,7 +8,7 @@ rankdir=BT
             __init__(required_props=(), *args, **kwargs)\lget_strictly(key, default=None)\lchange_params(**kwargs)\l
             reset_required(Union[tuple[str],str] props=())\ladd_required(props=())\ldel_required(props=())\lclear_required()\l}", shape="record"];
 "4" [label="{Object|(class) modifiable_properties : tuple[str]\lname : str\lproperty_set\l|
-            get_property(k, v_f)\lget_proplist()\lchange_params(_filter=True, **kwargs)\lupdate_propset(**kwargs)\l(classmethod) filter_properties(propdict)\l}", shape="record"];
+            get_property(k, v_f=None)\lget_proplist()\lchange_params(_filter=True, **kwargs)\lupdate_propset(**kwargs)\l(classmethod) filter_properties(propdict)\l}", shape="record"];
 "1" -> "0" [arrowhead="empty", arrowtail="none"];
 "1" -> "4" [arrowhead="empty", arrowtail="none"];
 "3" -> "4" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="property_set", style="solid"];

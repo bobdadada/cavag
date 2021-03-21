@@ -10,7 +10,7 @@ __all__ = [
 class Position(PrintableObject):
     name = 'Position'
 
-    # 主平面位置
+    # 位置
     modifiable_properties = ('position', )
 
     def __init__(self, name='Position', **kwargs):
@@ -22,8 +22,8 @@ class Position(PrintableObject):
     
     @property
     def position(self):
-        """位置"""
-        return self.property_set.get_strictly('position')
+        """位置[L]"""
+        return self.get_property('position')
 
 
 class Wavelength(PrintableObject):
@@ -41,10 +41,20 @@ class Wavelength(PrintableObject):
     
     @property
     def wavelength(self):
-        """波长"""
-        return self.property_set.get_strictly('wavelength')
+        """波长[L]"""
+        return self.get_property('wavelength')
     
     @property
     def k(self):
-        """波矢"""
+        """波矢[L^(-1)]"""
         return self.get_property('k', lambda: 2*constants.pi/self.wavelength)
+
+    @property
+    def nu(self):
+        """频率[T^(-1)]"""
+        return self.get_property('nu', lambda: constants.c/self.wavelength)
+    
+    @property
+    def nu_angular(self):
+        """角频率[T^(-1)]"""
+        return self.get_property('nu_angular', lambda: 2*constants.pi*self.nu)

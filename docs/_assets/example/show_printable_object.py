@@ -24,12 +24,12 @@ class Example(PrintableObject):
         """属性a"""
         # Use get_strictly to get the value corresponding to 'a'.
         # It will raise PropertyLost exception if the value is None.
-        return self.property_set.get_strictly('a')
+        return self.get_property('a')
     
     @property
     def b(self):
         """属性b"""
-        return self.property_set.get_strictly('b')
+        return self.get_property('b')
     
     @property
     def c(self):

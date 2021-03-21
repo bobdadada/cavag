@@ -79,10 +79,13 @@ class Object(object):
                 dt[prop] = propdict[prop]
         return dt
 
-    def get_property(self, k, v_f):
-        if k not in self.property_set:
-            self.property_set[k] = v_f()
-        return self.property_set[k]
+    def get_property(self, k, v_f=None):
+        if (k not in self.property_set) or (self.property_set[k] is None):
+            if v_f is None:
+                raise PropertyLost("cannot calculate property '%s'"%k)
+            else:
+                self.property_set[k] = v_f()
+        return self.property_set.get_strictly(k)
 
     def change_params(self, _filter=True, **kwargs):
         if _filter:

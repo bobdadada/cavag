@@ -44,7 +44,7 @@
 <text text-anchor="start" x="241" y="-317.3" font-family="Times New Roman,serif" font-size="14.00">name : str</text>
 <text text-anchor="start" x="241" y="-302.3" font-family="Times New Roman,serif" font-size="14.00">property_set</text>
 <polyline fill="none" stroke="black" points="233,-294.5 478,-294.5 "/>
-<text text-anchor="start" x="241" y="-279.3" font-family="Times New Roman,serif" font-size="14.00">get_property(k, v_f)</text>
+<text text-anchor="start" x="241" y="-279.3" font-family="Times New Roman,serif" font-size="14.00">get_property(k, v_f=None)</text>
 <text text-anchor="start" x="241" y="-264.3" font-family="Times New Roman,serif" font-size="14.00">get_proplist()</text>
 <text text-anchor="start" x="241" y="-249.3" font-family="Times New Roman,serif" font-size="14.00">change_params(_filter=True, **kwargs)</text>
 <text text-anchor="start" x="241" y="-234.3" font-family="Times New Roman,serif" font-size="14.00">update_propset(**kwargs)</text>
