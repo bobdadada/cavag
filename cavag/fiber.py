@@ -42,9 +42,14 @@ class Fiber(PrintInfoMixin):
         return self._property['wavelength']
 
     @property
-    def nu0(self):
-        """中心频率"""
+    def k(self):
+        """波矢"""
         return 2 * constants.pi / self.wavelength
+    
+    @property
+    def nu(self):
+        """中心频率"""
+        return constants.c / self.wavelength
 
 class StepFiber(PrintInfoMixin):
     name = 'StepFiber'
@@ -92,16 +97,21 @@ class StepFiber(PrintInfoMixin):
     @property
     def omegaf(self):
         """光纤模场半径"""
-        nu0 = self.nu0
+        k = self.k
         a = self.a
         NAf = self.NAf
-        V = nu0 * a * NAf  # 归一化频率 <2.4单模
+        V = k * a * NAf  # 归一化频率 <2.4单模
         return a * (0.65 + 1.619 * V ** (-1.5) + 2.879 * V ** (-6))
 
     @property
-    def nu0(self):
-        """中心频率"""
+    def k(self):
+        """波矢"""
         return 2 * constants.pi / self.wavelength
+    
+    @property
+    def nu(self):
+        """中心频率"""
+        return constants.c / self.wavelength
 
     @property
     def ROC(self):
