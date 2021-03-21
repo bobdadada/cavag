@@ -31,7 +31,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 - <font color="red">nf</font> - $n_f$, core refractive index, cannot be assigned directly.
 - <font color="red">wavelength</font> - $\lambda$, wavelength of transmitted light, cannot be assigned directly.
 - <font color="red">omegaf</font> - $w_f$, radius of mode field of fiber, cannot be assigned directly.
-- <font color="red">nu0</font> - $\nu_0$, circular frequency of transmitted light, cannot be assigned directly, which equal to $2\pi/\lambda$.
+- <font color="red">nu</font> - $\nu$, frequency of transmitted light, cannot be assigned directly, which equal to $c/\lambda$.
 - <font color="red">roc</font> - $roc$, radius of curvature, cannot be assigned directly. 
 
 All important properties are initialized in the constructor. Only by using the constructor can we generate a `FiberEnd` object.
@@ -56,7 +56,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
   $$
   V=\frac{2\pi a}{\lambda}\cdot NA_{f}
   $$
-  is the normalized frequency. This is an empirical formula given by Marcuse<a class="refer">[2]</a>.
+  is the normalized frequency. This is an empirical formula given by Marcuse<a class="refer">[2]</a>. The normalized frequency of single-mode fiber satisfies $V<2.405$.
 
 The constructor of `StepIndexFiberEnd` object is
 
