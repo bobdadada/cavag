@@ -74,11 +74,11 @@
 <text text-anchor="start" x="226.5" y="-121.3" font-family="Times New Roman,serif" font-size="14.00">__required_props: set[str]</text>
 <polyline fill="none" stroke="black" points="218.5,-113.5 492.5,-113.5 "/>
 <text text-anchor="start" x="226.5" y="-98.3" font-family="Times New Roman,serif" font-size="14.00">__init__(required_props=(), *args, **kwargs)</text>
-<text text-anchor="start" x="226.5" y="-83.3" font-family="Times New Roman,serif" font-size="14.00">get_strictly(key)</text>
+<text text-anchor="start" x="226.5" y="-83.3" font-family="Times New Roman,serif" font-size="14.00">get_strictly(key, default=None)</text>
 <text text-anchor="start" x="226.5" y="-68.3" font-family="Times New Roman,serif" font-size="14.00">change_params(**kwargs)</text>
-<text text-anchor="start" x="226.5" y="-53.3" font-family="Times New Roman,serif" font-size="14.00">reset_required(Union[tuple[str],str] props)</text>
-<text text-anchor="start" x="226.5" y="-38.3" font-family="Times New Roman,serif" font-size="14.00">add_required(props)</text>
-<text text-anchor="start" x="226.5" y="-23.3" font-family="Times New Roman,serif" font-size="14.00">del_required(props)</text>
+<text text-anchor="start" x="226.5" y="-53.3" font-family="Times New Roman,serif" font-size="14.00"> reset_required(Union[tuple[str],str] props=())</text>
+<text text-anchor="start" x="226.5" y="-38.3" font-family="Times New Roman,serif" font-size="14.00">add_required(props=())</text>
+<text text-anchor="start" x="226.5" y="-23.3" font-family="Times New Roman,serif" font-size="14.00">del_required(props=())</text>
 <text text-anchor="start" x="226.5" y="-8.3" font-family="Times New Roman,serif" font-size="14.00">clear_required()</text>
 </g>
 <!-- 3&#45;&gt;4 -->

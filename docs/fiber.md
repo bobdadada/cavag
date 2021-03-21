@@ -1,6 +1,6 @@
 ## Physical Background
 
-<div class="float"><img src="_assets/pics/model/model_endface_step_fiber.svg" style="float:left;width:200px" alt="step-index fiber" title="step-index fiber"></div>
+<div class="float"><img src="_assets/picture/model/model_endface_step_fiber.svg" style="float:left;width:200px" alt="step-index fiber" title="step-index fiber"></div>
 
 Optical fiber is a fibrous solid used to transmit light in a certain frequency range. A typical model of the end face of a simple step-index fiber without coating is shown in the figure. It is a two-layer structure. The inner layer is called core with higher refractive index, and the outer layer is called the cladding with lower refractive index. For a single-mode fiber, the relative refractive index difference between the two layers is generally 0.02~0.005.
 
@@ -71,7 +71,7 @@ The constructor of `StepIndexFiberEnd` object is
 
 ## References
 
-[1]: W. B. Joyce and B. C. DeLoach, "[Alignment of Gaussian beams](_assets/papers/alignment_of_gaussian_beams.pdf ':ignore :target=_blank')," APPLIED OPTICS 23, 23 (1984).
+[1]: W. B. Joyce and B. C. DeLoach, "[Alignment of Gaussian beams](_assets/paper/alignment_of_gaussian_beams.pdf ':ignore :target=_blank')," APPLIED OPTICS 23, 23 (1984).
 
 [2]: D. Marcuse, "Loss Analysis of Single-Mode Fiber Splices," Bell Syst. Tech. J. 56, 703 (1977).
 

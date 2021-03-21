@@ -2,9 +2,9 @@
 
 The modules in cavag are organized as shown below
 
-<div style="text-align: center"><img src="_assets/pics/uml/cavag_uml.svg" alt="UML of cavag"></div>
+<div style="text-align: center"><img src="_assets/picture/uml/cavag_uml.svg" alt="UML of cavag"></div>
 
-**Module Content:**
+**Module Contents:**
 
 <!-- tabs:start -->
 
@@ -53,13 +53,13 @@ Source Page: [utils](utils.md)
 
 The core functions of cavag are provided by `Object` and `PropertySet` in *_utils.py*. The UML diagram of this file is shown below
 
-<div style="text-align: center"><img src="_assets/pics/uml/_utils_uml.svg" alt="UML of _utils"></div>
+<div style="text-align: center"><img src="_assets/picture/uml/_utils_uml.svg" alt="UML of _utils"></div>
 
 1. **Usage**
 
-In other modules, all abstract classes related to physical objects are subclasses of `PrintableObject`. A mature subclass needs to define its own **modifiable_properties** class attribute, which can be used in class method `cls.filter_properties(propdict)` to filter modifiable physical properties in the dict, <font color="red">kwargs</font>. In general, **modifiable_properties** contains the names of all input parameters defined in the constructor of the subclass, other than the <font color="red">name</font>.
+In other modules, all abstract classes related to physical objects are subclasses of `PrintableObject`. A mature subclass needs to define its own **modifiable_properties** class attribute, which can be used in class method `cls.filter_properties(propdict)` to filter modifiable physical properties in the `dict`, <font color="red">kwargs</font>. In general, **modifiable_properties** contains the names of all input parameters defined in the constructor of the subclass, other than the <font color="red">name</font>.
 
-An empty **property_set** is created if the subclass is constructed. It is a data type similar to the python dict. One can get and set the <font color="red">value</font> corresponding to <font color="red">key</font> by `value = property_set[key]` and `property_set[key] = value`. The private attribute **__required_props** of **property_set** is a set, when an instance of `PropertySet` is created, this attribute will be set to `set(props)` where <font color="red">props</font> is the input parameter of the constructor <font color="red">\_\_init\_\_(props=(), \*args, \*\*kwargs)</font>. **__required_props** contains all basic properties that a physical object must have, and all other properties can be derived from these basic properties. These basic properties are initialized to `None`. The value of a property `prop` in **__required_props** can be normally obtained through `property_set[prop]`, but if the value of this property is `None`, obtaining the corresponding value through `property_set.get_strictly(prop)` will raise a `PropertyLost` exception.
+An empty **property_set** is created if the subclass is constructed. It is a data type similar to the python `dict`. One can get and set the <font color="red">value</font> corresponding to <font color="red">key</font> by `value = property_set[key]` and `property_set[key] = value`. The private attribute **__required_props** of **property_set** is a set, when an instance of `PropertySet` is created, this attribute will be set to `set(props)` where <font color="red">props</font> is the input parameter of the constructor <font color="red">\_\_init\_\_(props=(), \*args, \*\*kwargs)</font>. **__required_props** contains all basic properties that a physical object must have, and all other properties can be derived from these basic properties. These basic properties are initialized to `None`. The value of a property `prop` in **__required_props** can be normally obtained through `property_set[prop]`, but if the value of this property is `None`, obtaining the corresponding value through `property_set.get_strictly(prop)` will raise a `PropertyLost` exception.
 
 The detailed definitions are as follows:
 
@@ -79,26 +79,26 @@ The methods are defined as follows:
 - <font color="red">get_property(k, v_f)</font> - Use the property name <font color="red">k</font> to get the property value saved in the <font color="red">property_set</font>. If the property does not exist, use the function <font color="red">v_f</font> to calculate its value and save it in the <font color="red">property_set</font>. Usually we don't use this method directly, but define a method decorated with `@property` in the subclass, and call the <font color="red">get_property</font> in this method.
 - <font color="red">get_proplist()</font> - Get all the method names decorated with `@property` in the class. It is a concrete implementation of an abstract method <font color="red">get_proplist</font> in `PrintInfoMixin`. 
 - <font color="red">change_params(\_filter=True, **kwargs)</font> - This method is used to modify the value of parameters in <font color="red">property_set</font>. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters in <font color="red">kwargs</font> consistent with the properties in <font color="red">modifiable_properties</font> will be filtered out by method <font color="red">filter_properties</font>. This method uses <font color="red">update_propset</font> to update <font color="red">property_set</font>. 
-- <font color="red">update_propset(**kwargs)</font> - This method directly update properties in <font color="red">property_set</font> by <font color="red">kwargs</font>. Not recommended to use this method directly, use <font color="red">change_params</font> instead.
+- <font color="red">update_propset(**kwargs)</font> - This method directly uses <font color="red">kwargs</font> to update properties in <font color="red">property_set</font>. Note that any key-value pair in <font color="red">kwargs</font> with key starting "\_" will be ignored. Not recommended to use this method directly, use <font color="red">change_params</font> instead.
 - <font color="red">filter_properties(propdict)</font> - This method filters the <font color="red">propdict</font> and returns the corresponding sub-dictionary in the <font color="red">propdict</font> with only properties in the <font color="red">modifiable_properties</font>.
 
 ----
 
-**PropertySet**: `class PropertySet(collection.UserDict)`
+**PropertySet**: `class PropertySet(collections.UserDict)`
 
-This class define a data structure which store all properties of a physical object. It is a dict-like object, subclass of `collection.UserDict`. The attributes are defined as follows:
+This class define a data structure which store all properties of a physical object. It is a `dict`-like object, subclass of `collections.UserDict`. The attributes are defined as follows:
 
 - <font color="red">\_\_required_props</font> - Set object, contains all the names of the necessary properties. All the other properties not in <font color="red">\_\_required_props</font> will be cleared when the <font color="red">change_params</font> method of this class is called, see <font color="red">change_params</font> for more details. Only <font color="red">reset_required</font>, <font color="red">add_required</font>, <font color="red">del_required</font>, and <font color="red">clear_required</font> can modify <font color="red">\_\_required_props</font>.
 
 The methods are defined as follows:
 
-- <font color="red">\_\_init\_\_(required\_props=(), *args, **kwargs)</font> - 
-- <font color="red">get_strictly(key)</font> -
-- <font color="red">change_params(**kwargs)</font> -
-- <font color="red">reset_required</font> -
-- <font color="red">add_required</font> -
-- <font color="red">del_required</font> - 
-- <font color="red">clear_required</font> - 
+- <font color="red">\_\_init\_\_(required\_props=(), *args, **kwargs)</font> - Create an instance of `PropertySet`. The <font color="red">required\_props</font> is used to set the attribute <font color="red">\_\_required_props</font> of this instance. And <font color="red">args</font>, <font color="red">kwargs</font> are parameters which are consistent with the input parameters of python's `dict`.
+- <font color="red">get_strictly(key, default=None)</font> - Similar to method `self.get(key, default=None)` provided by `collections.UserDict`. But if <font color="red">key</font> is a property in <font color="red">\_\_required_props</font> and the value of this property is `None`, then a `PropertyLost` exception will be raised.
+- <font color="red">change_params(**kwargs)</font> - 
+- <font color="red">reset_required(props=())</font> - Reset <font color="red">\_\_required_props</font> by <font color="red">props</font>, where <font color="red">props</font> must be an iterable object containing the necessary properties.
+- <font color="red">add_required(props=())</font> - If <font color="red">props</font> is of type `str`, add this as a necessary property to <font color="red">\_\_required_props</font>; if <font color="red">props</font> is an iterable object with elements of `str` type, add these elements Into <font color="red">\_\_required_props</font>.
+- <font color="red">del_required(props=())</font> - If <font color="red">props</font> is of type `str`, remove this element from <font color="red">\_\_required_props</font>; if <font color="red">props</font> is an iterable object with elements of `str` type, remove these elements from <font color="red">\_\_required_props</font>. If the element is not a member, do nothing.
+- <font color="red">clear_required()</font> - Remove all elements from <font color="red">\_\_required_props</font>.
 
 ----
 
@@ -256,4 +256,4 @@ Example:
 """
 ```
 
-*This example is stored in [show_printable_object](_assets/examples/show_printable_object.py ':ignore :class=download')*
+*This example is stored in [show_printable_object](_assets/example/show_printable_object.py ':ignore :class=download')*

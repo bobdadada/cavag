@@ -15,8 +15,8 @@ class PropertySet(UserDict):
             if prop not in self:
                 self[prop] = None
     
-    def get_strictly(self, key):
-        value = self[key]
+    def get_strictly(self, key, default=None):
+        value = self.get(key, default=default)
         if (key in self.__required_props) and (value is None):
             raise PropertyLost("property '%s' lost!"%key)
         return value
@@ -83,23 +83,23 @@ class Object(object):
         if k not in self.property_set:
             self.property_set[k] = v_f()
         return self.property_set[k]
-    
-    def _filter_params(self, dp):
-        dt = {}
-        for k, v in dp.items():
-            if not k.startswith('_'):
-                dt[k] = v
-        return dt
 
     def change_params(self, _filter=True, **kwargs):
         if _filter:
             kwargs = self.filter_properties(kwargs)
         self.update_propset(**kwargs)
     
+    def __filter_params(self, dp):
+        dt = {}
+        for k, v in dp.items():
+            if not k.startswith('_'):
+                dt[k] = v
+        return dt
+
     def update_propset(self, **kwargs):
-        self.property_set.change_params(**self._filter_params(kwargs))
+        self.property_set.change_params(**self.__filter_params(kwargs))
     
-    def _parse_property(self, p):
+    def __parse_property(self, p):
         try:
             if isinstance(getattr(self.__class__, p), property):
                 return True
@@ -111,7 +111,7 @@ class Object(object):
     def get_proplist(self):
         props = []
         for item in dir(self):
-            if self._parse_property(item):
+            if self.__parse_property(item):
                 props.append(item)
         return props    
 
