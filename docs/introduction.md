@@ -14,8 +14,8 @@ Source Page: [fiber](fiber.md)
 
 **Class[es]**
 
-- `FiberEnd`
-- `StepIndexFiberEnd`
+- <a class="class-refer-to" module="fiber">FiberEnd</a>
+- <a class="class-refer-to" module="fiber">StepIndexFiberEnd</a>
 
 <!-- tab:fpcavity -->
 
@@ -32,10 +32,10 @@ Source Page: [mirror](mirror.md)
 
 **Class[es]**
 
-- `RTL`
-- `RTLConverter`
-- `MirrorSurface`
-- `Mirror`
+- <a class="class-refer-to" module="mirror">RTL</a>
+- <a class="class-refer-to" module="mirror">RTLConverter</a>
+- <a class="class-refer-to" module="mirror">MirrorSurface</a>
+- <a class="class-refer-to" module="mirror">Mirror</a>
 
 <!-- tab:misc -->
 

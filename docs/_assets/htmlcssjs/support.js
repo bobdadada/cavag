@@ -121,7 +121,13 @@
                 let els = DOM.querySelectorAll('a.class-refer');
                 for (let i=els.length; i--; ) {
                     let el = els[i];
-                    el.onclick = () => {scrollIntoClassnameRefer(el.innerHTML)};
+                    el.onclick = () => {scrollIntoClassnameRefer(el.text)};
+                    el.href = "javascript:void(0);";
+                }
+                els = DOM.querySelectorAll('a.class-refer-to');
+                for (let i=els.length; i--; ) {
+                    let el = els[i];
+                    el.onclick = () => {scrollIntoClassnameRefer(el.attributes['module'].value+'.'+el.text)};
                     el.href = "javascript:void(0);";
                 }
             }
