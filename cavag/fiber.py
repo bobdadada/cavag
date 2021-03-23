@@ -2,7 +2,6 @@ import logging
 import scipy as sp
 from scipy import constants
 from .misc import Wavelength
-from ._utils import PrintableObject, PropertySet
 
 __all__ = [
     'FiberEnd',

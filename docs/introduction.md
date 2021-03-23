@@ -1,6 +1,6 @@
 ### Modules
 
-The modules in cavag are organized as shown below
+The modules in `cavag` are organized as shown below
 
 <div style="text-align: center"><img src="_assets/picture/uml/cavag_uml.svg" alt="UML of cavag"></div>
 
@@ -25,21 +25,25 @@ Source Page: [fpcavity](fpcavity)
 
 Source Page: [gaussbeam](gaussbeam.md)
 
-
 <!-- tab:mirror -->
 
 Source Page: [mirror](mirror.md)
 
 **Class[es]**
 
-- <a class="class-refer-to" module="mirror">RTL</a>
-- <a class="class-refer-to" module="mirror">RTLConverter</a>
 - <a class="class-refer-to" module="mirror">MirrorSurface</a>
 - <a class="class-refer-to" module="mirror">Mirror</a>
 
 <!-- tab:misc -->
 
 Source Page: [misc](misc.md) 
+
+**Class[es]**
+
+- <a class="class-refer-to" module="misc">RTL</a>
+- <a class="class-refer-to" module="misc">RTLConverter</a>
+- <a class="class-refer-to" module="misc">Position</a>
+- <a class="class-refer-to" module="misc">Wavelength</a>
 
 <!-- tab:utils -->
 
@@ -51,7 +55,7 @@ Source Page: [utils](utils.md)
 
 ### Core Implementation
 
-The core functions of cavag are provided by `Object` and `PropertySet` in *_utils.py*. The UML diagram of this file is shown below
+The core functions of `cavag` are provided by `Object` and `PropertySet` in *_utils.py*. The UML diagram of this file is shown below
 
 <div style="text-align: center"><img src="_assets/picture/uml/_utils_uml.svg" alt="UML of _utils"></div>
 

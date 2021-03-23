@@ -22,7 +22,7 @@ Following classes are defined in the module:
 
 ----
 
-<strong id="FiberEnd">FiberEnd</strong>: `class FiberEnd(Wavelength)`
+<strong id="FiberEnd">FiberEnd</strong>: `class FiberEnd(misc.Wavelength)`
 
 This class define a fiber end face object. Almost all attributes cannot be assigned by `self.attr = value`.
 
@@ -99,13 +99,13 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
   - properties provided by parent class
 
-    - see <a class="class-refer">fiber.FiberEnd</a> for details
+    - see <a class="class-refer-to" module="fiber">FiberEnd</a> for details
 
 <font color="blue">The methods are defined as follows</font>:
 
 - <font color="red">\_\_init\_\_(name='StepIndexFiberEnd', **kwargs)</font>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <font color="red">modifiable_properties</font>. 
 
-- See <a class="class-refer">fiber.FiberEnd</a>, <a class="class-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
+- See <a class="class-refer-to" module="fiber">FiberEnd</a>, <a class="class-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
 ----
 

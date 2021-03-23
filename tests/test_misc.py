@@ -3,6 +3,80 @@ import unittest
 from scipy import constants
 from cavag.misc import *
 
+
+class Test_RTL(unittest.TestCase):
+
+    def test_constructor(self):
+        rtl = RTL(r=1, t=2, l=3)
+        self.assertEqual(rtl.r, 1/6)
+        self.assertEqual(rtl.t, 2/6)
+        self.assertEqual(rtl.l, 3/6)
+        self.assertEqual(rtl.property_set, {'r':1/6, 't':2/6, 'l':3/6})
+    
+    def test_change_properties(self):
+        rtl = RTL(r=1, t=1, l=1)
+
+        r, t, l = rtl.r, rtl.t, rtl.l
+        rtl.add_loss(0.1)
+        self.assertEqual(rtl.l, 0.9*l+0.1)
+        self.assertEqual(rtl.r, 0.9*r)
+
+        rtl.change_params(r=1, t=2, l=3)
+        self.assertEqual(rtl.r, 1/6)
+        self.assertEqual(rtl.t, 2/6)
+        self.assertEqual(rtl.l, 3/6)
+
+
+class Test_RTLConverter(unittest.TestCase):
+
+    def test_normalize(self):
+        r, t, l = None, None, None
+        for o in RTLConverter.normalize(r, t, l):
+            self.assertIsNone(o)
+        
+        r, t, l = 1, 4, 5
+        d = RTLConverter.normalize(r, t, l)
+        self.assertTupleEqual(d, (0.1, 0.4, 0.5))
+
+        r, t = 0.2, 0.1
+        d = RTLConverter.normalize(r=r, t=t)
+        self.assertEqual(d[2], 1-r-t)
+    
+    def test_rtlconverter(self):
+        r = 0.1
+        t2l = 10
+        r, t, l = RTLConverter.rtl_by_r_t2l(r, t2l)
+        self.assertEqual(r, 0.1)
+        self.assertEqual(t, 0.9*10/11)
+        self.assertEqual(l, 0.9*1/11)
+
+        t = 0.1
+        r2l = 10
+        r, t, l = RTLConverter.rtl_by_t_r2l(t, r2l)
+        self.assertEqual(t, 0.1)
+        self.assertEqual(r, 0.9*10/11)
+        self.assertEqual(l, 0.9*1/11)
+    
+    def test_add_rtl(self):
+        m0 = (0.1, 0.2, 0.7)
+        print(m0)
+        r, t, l = RTLConverter.add_reflectivity(m0, 0.1)
+        print(r, t, l)
+        self.assertEqual(r, 0.1*0.9+0.1)
+        self.assertEqual(t, 0.2*0.9)
+        self.assertEqual(l, 0.7*0.9)
+
+        r, t, l = RTLConverter.add_transmittance(m0, 0.1)
+        self.assertEqual(r, 0.1*0.9)
+        self.assertEqual(t, 0.2*0.9+0.1)
+        self.assertEqual(l, 0.7*0.9)
+
+        r, t, l = RTLConverter.add_loss(m0, 0.1)
+        self.assertEqual(r, 0.1*0.9)
+        self.assertEqual(t, 0.2*0.9)
+        self.assertEqual(l, 0.7*0.9+0.1)
+
+
 class Test_Position(unittest.TestCase):
 
     def test_constructor(self):
