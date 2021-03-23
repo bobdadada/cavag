@@ -175,9 +175,12 @@ exm = Example(a=1, b=2)
 print(exm)
 """
 Example:
-    属性ａ　　　　　　　　　　　　a        = 1
-    属性ｂ　　　　　　　　　　　　b        = 2
-    属性ｃ　　　　　　　　　　　　c        = 3
+    属性ａ　　　　　　　　　　　　a          =
+        1
+    属性ｂ　　　　　　　　　　　　b          =
+        2
+    属性ｃ　　　　　　　　　　　　c          =
+        3
 
 """
 ```
@@ -203,9 +206,12 @@ exm.change_params(_filter=True, a=2)
 print(exm)
 """
 Example:
-    属性ａ　　　　　　　　　　　　a        = 2
-    属性ｂ　　　　　　　　　　　　b        = 2
-    属性ｃ　　　　　　　　　　　　c        = 4
+    属性ａ　　　　　　　　　　　　a          =
+        2
+    属性ｂ　　　　　　　　　　　　b          =
+        2
+    属性ｃ　　　　　　　　　　　　c          =
+        4
 
 """
 
@@ -214,9 +220,12 @@ exm.change_params(_filter=True, k=1)
 print(exm)
 """
 Example:
-    属性ａ　　　　　　　　　　　　a        = 2
-    属性ｂ　　　　　　　　　　　　b        = 2
-    属性ｃ　　　　　　　　　　　　c        = 4
+    属性ａ　　　　　　　　　　　　a          =
+        2
+    属性ｂ　　　　　　　　　　　　b          =
+        2
+    属性ｃ　　　　　　　　　　　　c          =
+        4
 
 """
 
@@ -234,9 +243,12 @@ print(exm.property_set)
 print(exm)
 """
 Example:
-    属性ａ　　　　　　　　　　　　a        = 2
-    属性ｂ　　　　　　　　　　　　b        = 2
-    属性ｃ　　　　　　　　　　　　c        = 4
+    属性ａ　　　　　　　　　　　　a          =
+        2
+    属性ｂ　　　　　　　　　　　　b          =
+        2
+    属性ｃ　　　　　　　　　　　　c          =
+        4
 
 """
 print(exm.property_set)
@@ -253,9 +265,12 @@ print(exm.property_set)
 print(exm)
 """
 Example:
-    属性ａ　　　　　　　　　　　　a        = 2
-    属性ｂ　　　　　　　　　　　　b        = 2
-    属性ｃ　　　　　　　　　　　　c        = 4
+    属性ａ　　　　　　　　　　　　a          =
+        2
+    属性ｂ　　　　　　　　　　　　b          =
+        2
+    属性ｃ　　　　　　　　　　　　c          =
+        4
 
 """
 print(exm.property_set)
@@ -270,9 +285,12 @@ print(exm.property_set)
 print(exm)
 """
 Example:
-    属性ａ　　　　　　　　　　　　a        = 2
-    属性ｂ　　　　　　　　　　　　b        = 2
-    属性ｃ　　　　　　　　　　　　c        = 4
+    属性ａ　　　　　　　　　　　　a          =
+        2
+    属性ｂ　　　　　　　　　　　　b          =
+        2
+    属性ｃ　　　　　　　　　　　　c          =
+        4
 
 """
 ```

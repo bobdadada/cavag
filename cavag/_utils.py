@@ -1,4 +1,5 @@
 from copy import copy
+import textwrap
 from collections import UserDict
 from collections.abc import Sequence
 import abc
@@ -139,11 +140,11 @@ class PrintInfoMixin(object):
             if doc is None:
                 doc = ''
             # 格式化输出，中文对齐
-            try:
-                info += "    {0:{3}<15}{1:<8} = {2:s}\n".format(str_half2full(doc), prop, num, chr(12288))
-            except:
-                info += "    {0:{3}<15}{1:<8} = {2:s}\n".format(str_half2full(doc), prop, str(num), chr(12288))
-        
+            info += "    {0:{3}<15}{1:<11}=\n{2:s}\n".format(str_half2full(textwrap.dedent(doc)),
+                                                        prop,
+                                                        textwrap.indent(str(num), ' '*8),
+                                                        chr(12288))
+            
         return info
 
 
