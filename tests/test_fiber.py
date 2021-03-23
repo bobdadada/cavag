@@ -1,6 +1,6 @@
 import unittest
 
-import scipy as sp
+import numpy as np
 from scipy import constants
 from cavag.fiber import *
 
@@ -21,7 +21,7 @@ class Test_FiberEnd(unittest.TestCase):
         self.assertEqual(fe.nf, 1.4)
         self.assertEqual(fe.wavelength, 980)
         self.assertEqual(fe.omegaf, 1.2)
-        self.assertEqual(fe.roc, sp.inf)
+        self.assertEqual(fe.roc, np.inf)
         self.assertEqual(fe.k, 2*constants.pi/fe.wavelength)
 
 class Test_StepIndexFiberEnd(unittest.TestCase):
@@ -30,7 +30,7 @@ class Test_StepIndexFiberEnd(unittest.TestCase):
         nf = 1.4
         wavelength = 980e-9
         a = 3e-6
-        naf = sp.sqrt(0.01)
+        naf = np.sqrt(0.01)
         roc = 600e-6
 
         V = 2*constants.pi*a*naf/wavelength

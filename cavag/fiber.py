@@ -1,5 +1,5 @@
 import logging
-import scipy as sp
+import numpy as np
 from scipy import constants
 from .misc import Wavelength
 
@@ -17,7 +17,7 @@ class FiberEnd(Wavelength):
 
     def __init__(self, name='FiberEnd', **kwargs):
         if kwargs.get('roc') is None:
-            kwargs['roc'] = sp.inf
+            kwargs['roc'] = np.inf
 
         super().__init__(**kwargs)
         self.property_set.add_required(FiberEnd.modifiable_properties)

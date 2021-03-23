@@ -1,4 +1,4 @@
-import scipy as sp
+import numpy as np
 from scipy import constants
 from scipy import special
 from .misc import Wavelength
@@ -34,7 +34,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         def v_f():
             omega0 = self.omega0
             m = self.m
-            return (2/constants.pi)**(1/4)/sp.sqrt(omega0*(2**m)*special.factorial(m))
+            return (2/constants.pi)**(1/4)/np.sqrt(omega0*(2**m)*special.factorial(m))
         return self.get_property('c', v_f)
 
     @property
@@ -49,7 +49,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
     
     @property
     def m(self) -> int:
-        """Hermite-Gaussian光的模式"""
+        """光的模式数"""
         return self.get_property('m')
 
     @property
@@ -70,7 +70,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
     def omega_f(self, z):
         """模场半径函数"""
         omega0, z0, p0 = self.omega0, self.z0, self.p0
-        return omega0*sp.sqrt(1 + ((z-p0)/z0)**2)
+        return omega0*np.sqrt(1 + ((z-p0)/z0)**2)
     
     def R_f(self, z):
         """波前曲率半径函数"""
@@ -78,17 +78,17 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         return (z-p0)*(1+(z0/(z-p0))**2)
     
     def phi_f(self, z):
-        """相位函数"""
+        """phi相位函数"""
         z0, p0 = self.z0, self.p0
-        return sp.arctan((z-p0)/z0)
+        return np.arctan((z-p0)/z0)
     
     def psi_f(self, z, x):
-        """Hermite-Gaussian模式"""
+        """HG函数"""
         hm = self.hm
         omega = self.omega_f(z)
-        xi = sp.sqrt(2)*x/omega
+        xi = np.sqrt(2)*x/omega
 
-        return hm(xi)*sp.exp(-xi**2/2)
+        return hm(xi)*np.exp(-xi**2/2)
     
     def u_f(self, z, x):
         """强度函数"""
@@ -128,6 +128,7 @@ class HermiteGaussBeam1D(NormalizedHermiteGaussBeam1D):
         """振幅函数"""
         A0 = self.A0
         A = super().A_f(z)
+        print(A)
         return A0*A
 
 
@@ -148,8 +149,10 @@ class GaussBeam1D(HermiteGaussBeam1D):
 
     modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0')
 
-    def __init__(self, A0, wavelength, omega0, p0, name='GaussBeam1D'):
-        super().__init__(A0, wavelength, p0, omega0, m=0)
+    def __init__(self, name='GaussBeam1D', **kwargs):
+        kwargs.update(m=0)
+
+        super().__init__(**kwargs)
         self.name = name
 
 
@@ -167,16 +170,16 @@ class NormalizedHermiteGaussBeam2D(Wavelength):
 
         for prop in NormalizedHermiteGaussBeam2D.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
-        
+
         __kwarg_beams = ({
             'wavelength': kwargs.get('wavelength', None),
             'p0': kwargs.get('p0', None),
-            'omega': kwargs.get('omega0x', None),
+            'omega0': kwargs.get('omega0x', None),
             'm': kwargs.get('mx', None),
         },{
             'wavelength': kwargs.get('wavelength', None),
             'p0': kwargs.get('p0', None),
-            'omega': kwargs.get('omega0y', None),
+            'omega0': kwargs.get('omega0y', None),
             'm': kwargs.get('my', None),
         })
 
@@ -186,7 +189,7 @@ class NormalizedHermiteGaussBeam2D(Wavelength):
         )
     
     def change_params(self, _filter=True, **kwargs):
-        super().__init__(_filter=_filter, **kwargs)
+        super().change_params(_filter=_filter, **kwargs)
 
         if _filter:
             kwargs = self.filter_properties(kwargs)
@@ -194,7 +197,7 @@ class NormalizedHermiteGaussBeam2D(Wavelength):
         self.update_propset(**kwargs)
 
         xkw, ykw = {}, {}
-        for k, v in kwargs:
+        for k, v in kwargs.items():
             if k.endswith('x'):
                 xkw[k[:-1]] = v
             elif k.endswith('y'):
@@ -205,17 +208,17 @@ class NormalizedHermiteGaussBeam2D(Wavelength):
         if xkw:
             self.__beams[0].change_params(**xkw)
         if ykw:
-            self.__beams[1].change_params(**xkw)
+            self.__beams[1].change_params(**ykw)
 
     @property
     def cx(self):
         """x方向归一化因子"""
-        return self.get_property('cx', self.__beams[0].c)
+        return self.get_property('cx', lambda: self.__beams[0].c)
     
     @property
     def cy(self):
         """y方向归一化因子"""
-        return self.get_property('cy', self.__beams[1].c)
+        return self.get_property('cy', lambda: self.__beams[1].c)
     
     @property
     def c(self):
@@ -239,12 +242,12 @@ class NormalizedHermiteGaussBeam2D(Wavelength):
     
     @property
     def mx(self) -> int:
-        """x方向Hermite-Gaussian光的模式"""
+        """x方向光的模式数"""
         return self.get_property('mx')
     
     @property
     def my(self) -> int:
-        """y方向Hermite-Gaussian光的模式"""
+        """y方向光的模式数"""
         return self.get_property('my')
 
     @property
@@ -288,19 +291,19 @@ class NormalizedHermiteGaussBeam2D(Wavelength):
         return self.__beams[1].R_f(z)
     
     def phix_f(self, z):
-        """x方向相位函数"""
+        """x方向phi相位函数"""
         return self.__beams[0].phi_f(z)
     
     def phiy_f(self, z):
-        """y方向相位函数"""
+        """y方向phi相位函数"""
         return self.__beams[1].phi_f(z)
     
     def psix_f(self, z, x):
-        """x方向Hermite-Gaussian模式"""
+        """x方向HG函数"""
         return self.__beams[0].psi_f(z, x)
     
     def psiy_f(self, z, y):
-        """x方向Hermite-Gaussian模式"""
+        """y方向HG函数"""
         return self.__beams[1].psi_f(z, y)
     
     def u_f(self, z, x, y):
@@ -377,7 +380,7 @@ class NormalizedSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
     @property
     def c(self):
         """总归一化因子"""
-        return self.get_property('c', lambda: (super().c)**2)
+        return self.get_property('c', lambda: (super(NormalizedSymmetricHermiteGaussBeam, self).c)**2)
     
     def A_f(self, z):
         """振幅函数"""
@@ -464,14 +467,14 @@ def convert_through_mirror(beam, mirror):
 
 def local2remote(omega0, s, wavelength):
     zr = constants.pi * omega0 ** 2 / wavelength
-    omega = omega0 * sp.sqrt(1 + (s / zr) ** 2)
+    omega = omega0 * np.sqrt(1 + (s / zr) ** 2)
     R = s * (1 + (zr / s) ** 2)
     return omega, R
 
 
 def remote2local(omega, R, wavelength):
     zrp = constants.pi * omega ** 2 / wavelength
-    omega0 = omega / sp.sqrt(1 + (zrp / R) ** 2)
+    omega0 = omega / np.sqrt(1 + (zrp / R) ** 2)
     s = R / (1 + (R / zrp) ** 2)
     return omega0, s
 
@@ -479,7 +482,7 @@ def remote2local(omega, R, wavelength):
 def get_spot_info_after_deviation(beam, z):
     zr = constants.pi * beam.omega0 ** 2 / beam.wavelength
     R = z * (1 + (zr / z) ** 2)
-    omega = beam.omega0 * sp.sqrt(1 + (z / zr) ** 2)
+    omega = beam.omega0 * np.sqrt(1 + (z / zr) ** 2)
     A = beam.A0 * beam.omega0 / omega
     return omega, R, A
 
