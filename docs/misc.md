@@ -136,7 +136,7 @@ Light Wavelength Abstract Class.
 
     - <font color="red">wavelength</font> - $\lambda$, wavelength of transmitted light
     - <font color="red">k</font> - $k$, wave vector of transmitted light, where $k=2\pi/\lambda$.
-    - <font color="red">nu</font> - $\nu$, frequency of transmitted light, wheres $\nu=c/\lambda$.
+    - <font color="red">nu</font> - $\nu$, frequency of transmitted light, wheres $\nu=c/\lambda$, where $c$ is speed of light in vacuum.
     - <font color="red">nu_angular</font> - $\nu_{angular}$, angular frequency of transmitted light, wheres $\nu_{angular}=2\pi \nu=2\pi c/\lambda=ck$.
 
 <font color="blue">The methods are defined as follows</font>:
