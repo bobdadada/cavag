@@ -1,20 +1,20 @@
 from .misc import Position, RTL
 
 __all__ = [
-    'MirrorSurface',
+    'Mirror',
     'Lens'
 ]
 
 
-class MirrorSurface(RTL, Position):
-    name = "MirrorSurface"
+class Mirror(RTL, Position):
+    name = "Mirror"
 
     # 曲率半径, 反射率, 透射率, 损耗率, 位置
     modifiable_properties = ('roc', 'r', 't', 'l', 'position')
 
-    def __init__(self, name='MirrorSurface', **kwargs):
+    def __init__(self, name='Mirror', **kwargs):
         super().__init__(**kwargs)
-        self.property_set.add_required(MirrorSurface.modifiable_properties)
+        self.property_set.add_required(Mirror.modifiable_properties)
         self.name = name
 
         self.property_set['roc'] = kwargs.get('roc', None)

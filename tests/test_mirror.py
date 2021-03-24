@@ -3,26 +3,26 @@ import unittest
 from cavag.mirror import *
 
 
-class Test_MirrorSurface(unittest.TestCase):
+class Test_Mirror(unittest.TestCase):
     
     def test_constructor(self):
-        ms = MirrorSurface(roc=300, r=1, t=2, l=3)
-        self.assertEqual(ms.roc, 300)
-        self.assertEqual(ms.r, 1/6)
-        self.assertEqual(ms.t, 1/3)
-        self.assertEqual(ms.l, 1/2)
-        self.assertEqual(ms.position, 0)
-        self.assertEqual(ms.property_set, {'roc':300, 'r':1/6, 't':1/3, 'l':1/2, 'position': 0})
+        m = Mirror(roc=300, r=1, t=2, l=3)
+        self.assertEqual(m.roc, 300)
+        self.assertEqual(m.r, 1/6)
+        self.assertEqual(m.t, 1/3)
+        self.assertEqual(m.l, 1/2)
+        self.assertEqual(m.position, 0)
+        self.assertEqual(m.property_set, {'roc':300, 'r':1/6, 't':1/3, 'l':1/2, 'position': 0})
 
     def test_change_properties(self):
-        ms = MirrorSurface(roc=300, r=1/3, t=1/3, l=1/3, position=2)
-        self.assertEqual(ms.property_set, {'roc':300, 'r':1/3, 't':1/3, 'l':1/3, 'position': 2})
-        ms.change_params(_norm=False, r=1)
-        self.assertEqual(ms.property_set, {'roc':300, 'r':1, 't':1/3, 'l':1/3, 'position': 2})
-        ms.change_params(_norm=True, r=1, t=2, l=3)
-        self.assertEqual(ms.property_set, {'roc':300, 'r':1/6, 't':1/3, 'l':1/2, 'position': 2})
-        ms.change_params(position=4)
-        self.assertEqual(ms.property_set, {'roc':300, 'r':1/6, 't':1/3, 'l':1/2, 'position': 4})
+        m = Mirror(roc=300, r=1/3, t=1/3, l=1/3, position=2)
+        self.assertEqual(m.property_set, {'roc':300, 'r':1/3, 't':1/3, 'l':1/3, 'position': 2})
+        m.change_params(_norm=False, r=1)
+        self.assertEqual(m.property_set, {'roc':300, 'r':1, 't':1/3, 'l':1/3, 'position': 2})
+        m.change_params(_norm=True, r=1, t=2, l=3)
+        self.assertEqual(m.property_set, {'roc':300, 'r':1/6, 't':1/3, 'l':1/2, 'position': 2})
+        m.change_params(position=4)
+        self.assertEqual(m.property_set, {'roc':300, 'r':1/6, 't':1/3, 'l':1/2, 'position': 4})
 
 
 class Test_Lens(unittest.TestCase):
