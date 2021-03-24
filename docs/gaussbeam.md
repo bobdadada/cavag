@@ -122,7 +122,7 @@ A unfolded mirror acts like a lens with a focal distance $f'=R_0/2$.
 
 If we move the origin of the coordinates to the position of the mirror surface, change the definition of symbols, then the features of unfold mirror gives
 
-!> The definitions of symbols have changed.
+!> The definitions of symbols $R',R,R_0$ have changed.
 $$
 w' = w \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{13}
 $$
@@ -151,3 +151,5 @@ In the last expression, the optical axis has undergone an axis-symmetric transfo
 <div id="refer-anchor"></div>
 
 ## References
+
+[1]: Hermann A. Haus, "[WAVES AND FIELDS IN OPTOELECTRONICS](_assets/paper/waves-and-fields-in-optoelectronics.djvu ":ignore :class=download")," Prentice-Hall, Inc., Englewood Cliffs, New Jersey 07632.
