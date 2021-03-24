@@ -8,10 +8,10 @@ rankdir=BT
 "5" [label="cavag.mirror", shape="box"];
 "6" [label="cavag.misc", shape="box"];
 "7" [label="cavag.utils", shape="box"];
-"2" -> "1" [arrowhead="open", arrowtail="none"];
+"2" -> "6" [arrowhead="open", arrowtail="none"];
 "3" -> "1" [arrowhead="open", arrowtail="none"];
 "3" -> "5" [arrowhead="open", arrowtail="none"];
-"4" -> "1" [arrowhead="open", arrowtail="none"];
+"4" -> "6" [arrowhead="open", arrowtail="none"];
 "5" -> "6" [arrowhead="open", arrowtail="none"];
 "6" -> "1" [arrowhead="open", arrowtail="none"];
 "7" -> "2" [arrowhead="open", arrowtail="none"];
