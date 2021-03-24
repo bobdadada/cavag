@@ -9,9 +9,10 @@ from cavag.gaussbeam import *
 class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
     
     def test_constructor(self):
-        wavelength, p0, omega0, m = 980e-9, 0, 1e-6, 3
+        wavelength, p0, omega0, m = 1550e-9, 0, 4e-6, 3
         c = (2/constants.pi)**(1/4)/np.sqrt(omega0*(2**m)*special.factorial(m))
         z0 = constants.pi*omega0**2/wavelength
+        theta = np.arctan(omega0/z0)
 
         nhgb1d = NormalizedHermiteGaussBeam1D(wavelength=wavelength, p0=p0, omega0=omega0, m=m)
         
@@ -20,6 +21,7 @@ class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
         self.assertEqual(nhgb1d.omega0, omega0)
         self.assertEqual(nhgb1d.m, m)
         self.assertEqual(nhgb1d.z0, z0)
+        self.assertAlmostEqual(nhgb1d.theta, theta)
 
         self.assertAlmostEqual(nhgb1d.A_f(10), 1/(1+(10-p0)**2/z0**2)**(1/4))  # 振幅
         self.assertAlmostEqual(nhgb1d.omega_f(10), omega0*np.sqrt(1+(10-p0)**2/z0**2))  # 模场半径

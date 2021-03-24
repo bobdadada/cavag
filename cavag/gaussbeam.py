@@ -46,6 +46,11 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
     def omega0(self):
         """束腰半径"""
         return self.get_property('omega0')
+
+    @property
+    def theta(self):
+        """半发散角"""
+        return self.get_property('theta', lambda:np.arctan(self.wavelength/(constants.pi*self.omega0)))
     
     @property
     def m(self) -> int:
@@ -239,6 +244,16 @@ class NormalizedHermiteGaussBeam2D(Wavelength):
     def omega0y(self):
         """y方向束腰半径"""
         return self.get_property('omega0y')
+    
+    @property
+    def thetax(self):
+        """x方向半发散角"""
+        return self.get_property('thetax', lambda: self.__beams[0].theta)
+    
+    @property
+    def thetay(self):
+        """y方向半发散角"""
+        return self.get_property('thetay', lambda: self.__beams[1].theta)
     
     @property
     def mx(self) -> int:
