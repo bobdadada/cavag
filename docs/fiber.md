@@ -51,13 +51,13 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
   - properties provided by parent class
 
-    - see <a class="class-refer">misc.Wavelength</a> for details
+    - see <a class="module-object-refer">misc.Wavelength</a> for details
 
 <font color="blue">The methods are defined as follows</font>:
 
 - <font color="red">\_\_init\_\_(name='FiberEnd', **kwargs)</font>  - Create a `FiberEnd` object by named parameters consistent with <font color="red">modifiable_properties</font>. 
 
-- See <a class="class-refer">misc.Wavelength</a>, <a class="class-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
+- See <a class="module-object-refer">misc.Wavelength</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
 ----
 
@@ -99,13 +99,13 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
   - properties provided by parent class
 
-    - see <a class="class-refer-to" module="fiber">FiberEnd</a> for details
+    - see <a class="module-object-refer-to" module="fiber">FiberEnd</a> for details
 
 <font color="blue">The methods are defined as follows</font>:
 
 - <font color="red">\_\_init\_\_(name='StepIndexFiberEnd', **kwargs)</font>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <font color="red">modifiable_properties</font>. 
 
-- See <a class="class-refer-to" module="fiber">FiberEnd</a>, <a class="class-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
+- See <a class="module-object-refer-to" module="fiber">FiberEnd</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
 ----
 
