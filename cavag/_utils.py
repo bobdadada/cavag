@@ -9,6 +9,7 @@ class PropertyLost(Exception):
 
 
 class PropertySet(UserDict):
+    
     def __init__(self, required_props=(), *args, **kwargs):
         self.__required_props = set(required_props)
         super().__init__(*args, **kwargs)
@@ -135,14 +136,14 @@ class PrintInfoMixin(object):
         
         # 属性
         for prop in self.get_proplist():
-            num = getattr(self, prop)
+            val = getattr(self, prop)
             doc = getattr(self.__class__, prop).__doc__
             if doc is None:
                 doc = ''
             # 格式化输出，中文对齐
             info += "    {0:{3}<15}{1:<11}=\n{2:s}\n".format(str_half2full(textwrap.dedent(doc)),
                                                         prop,
-                                                        textwrap.indent(str(num), ' '*8),
+                                                        textwrap.indent(str(val), ' '*8),
                                                         chr(12288))
             
         return info
