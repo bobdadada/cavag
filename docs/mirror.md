@@ -43,13 +43,13 @@ This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Po
   
   - properties provided by parent class
     
-    - see <a class="class-refer">misc.RTL</a> and <a class="class-refer">misc.Position</a> for details
+    - see <a class="module-object-refer">misc.RTL</a> and <a class="module-object-refer">misc.Position</a> for details
 
 <font color="blue">The methods are defined as follows</font>:
 
 - <font color="red">\_\_init\_\_(name='Mirror', **kwargs)</font>  - Create a `Mirror` object by named parameters consistent with <font color="red">modifiable_properties</font>.
   
--  See <a class="class-refer">misc.RTL</a>, <a class="class-refer">misc.PosItion</a>, <a class="class-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
+-  See <a class="module-object-refer">misc.RTL</a>, <a class="module-object-refer">misc.PosItion</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
 ----
 
@@ -87,13 +87,13 @@ A class for a thin lens. In cavity-related applications, thin lens or `zero` abe
 
   - properties provided by parent class
 
-    - see <a class="class-refer">misc.RTL</a> and <a class="class-refer">misc.Position</a> for details
+    - see <a class="module-object-refer">misc.RTL</a> and <a class="module-object-refer">misc.Position</a> for details
 
 <font color="blue">The methods are defined as follows</font>:
 
 - <font color="red">\_\_init\_\_(name='Lens', **kwargs)</font>  - Create a `Lens` object by named parameters consistent with <font color="red">modifiable_properties</font>.
 
-- See <a class="class-refer">misc.RTL</a>, <a class="class-refer">misc.Position</a>, <a class="class-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
+- See <a class="module-object-refer">misc.RTL</a>, <a class="module-object-refer">misc.Position</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
 ----
 

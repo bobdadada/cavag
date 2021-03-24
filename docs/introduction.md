@@ -14,8 +14,8 @@ Source Page: [fiber](fiber.md)
 
 **Class[es]**
 
-- <a class="class-refer-to" module="fiber">FiberEnd</a>
-- <a class="class-refer-to" module="fiber">StepIndexFiberEnd</a>
+- <a class="module-object-refer-to" module="fiber">FiberEnd</a>
+- <a class="module-object-refer-to" module="fiber">StepIndexFiberEnd</a>
 
 <!-- tab:fpcavity -->
 
@@ -31,8 +31,8 @@ Source Page: [mirror](mirror.md)
 
 **Class[es]**
 
-- <a class="class-refer-to" module="mirror">Mirror</a>
-- <a class="class-refer-to" module="Lens">Lens</a>
+- <a class="module-object-refer-to" module="mirror">Mirror</a>
+- <a class="module-object-refer-to" module="Lens">Lens</a>
 
 <!-- tab:misc -->
 
@@ -40,10 +40,10 @@ Source Page: [misc](misc.md)
 
 **Class[es]**
 
-- <a class="class-refer-to" module="misc">RTL</a>
-- <a class="class-refer-to" module="misc">RTLConverter</a>
-- <a class="class-refer-to" module="misc">Position</a>
-- <a class="class-refer-to" module="misc">Wavelength</a>
+- <a class="module-object-refer-to" module="misc">RTL</a>
+- <a class="module-object-refer-to" module="misc">RTLConverter</a>
+- <a class="module-object-refer-to" module="misc">Position</a>
+- <a class="module-object-refer-to" module="misc">Wavelength</a>
 
 <!-- tab:utils -->
 

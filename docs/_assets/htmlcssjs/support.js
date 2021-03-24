@@ -108,9 +108,9 @@
     }
 
     // 使用scrollIntoView对class进行跳转
-    function docsifyPythonClassRefer(hook, vm) {
-        function scrollIntoClassnameRefer(classname, f) {
-            let path = classname.split('.');
+    function docsifyModuleObjectRefer(hook, vm) {
+        function scrollIntoModuleObject(name, f) {
+            let path = name.split('.');
             window.location.href = DOM.location.origin + '/#/' + path[0];
             scrollIntoViewById(path[1], f)
             return false;
@@ -118,16 +118,16 @@
 
         hook.doneEach(function(){
             if (DOM) {
-                let els = DOM.querySelectorAll('a.class-refer');
+                let els = DOM.querySelectorAll('a.module-object-refer');
                 for (let i=els.length; i--; ) {
                     let el = els[i];
-                    el.onclick = () => {scrollIntoClassnameRefer(el.text)};
+                    el.onclick = () => {scrollIntoModuleObject(el.text)};
                     el.href = "javascript:void(0);";
                 }
-                els = DOM.querySelectorAll('a.class-refer-to');
+                els = DOM.querySelectorAll('a.module-object-refer-to');
                 for (let i=els.length; i--; ) {
                     let el = els[i];
-                    el.onclick = () => {scrollIntoClassnameRefer(el.attributes['module'].value+'.'+el.text)};
+                    el.onclick = () => {scrollIntoModuleObject(el.attributes['module'].value+'.'+el.text)};
                     el.href = "javascript:void(0);";
                 }
             }
@@ -143,7 +143,7 @@
             docsifyAppendPath,
             docsifyDownload,
             docsifyRefer,
-            docsifyPythonClassRefer
+            docsifyModuleObjectRefer
         );
     }
 
