@@ -9,8 +9,8 @@ plt.rcParams['font.sans-serif'] = ['KaiTi']  # 指定默认字体
 plt.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
 
 from typing import Union
-from ._utils import PrintInfoMixin
-from .mirror import MirrorSurface
+from ._utils import PrintInfoMixin, PrintableObject
+from .mirror import Mirror
 
 __all__ = [
     'Cavity', 'SymmetricCavity', 'CavityGaussMode', 'SymmetricCavity',
@@ -22,97 +22,154 @@ __all__ = [
 ]
 
 
-class Cavity(PrintInfoMixin):
+
+class Cavity(PrintableObject):
     name = "Cavity"
 
-    def __init__(self, ROCl, ROCr, L, Rl, Rr, name="Cavity", **kwargs):
-        self._property = {
-            'mirrorsurface': [],  # 腔镜
-            'L': None  # 腔长
-        }
+    modifiable_properties = ('length', 'rocl', 'rl', 'tl', 'll', 'rocr', 'rr', 'tr', 'lr')
+
+    def __init__(self, name="Cavity", **kwargs):
+        super().__init__(**kwargs)
         self.name = name
-        self._property.update(kwargs)
-        self._property['mirrorsurface'] = (MirrorSurface(ROC=ROCl, R=Rl, name='leftmirror'),
-                                           MirrorSurface(ROC=ROCr, R=Rr, name='rightmirror'))
-        self._property['L'] = L
 
-    def change_params(self, **kwargs):
-        pass
+        self.property_set.add_required(Cavity.modifiable_properties)
 
-    def isStable(self):
-        return judge_stable_cavity(self.L, self.ROCl, self.ROCr)
+        __kwarg_mirrors = [{}, {}]
+        for prop in Cavity.modifiable_properties:
+            val = kwargs.get(prop, None)
+            self.property_set[prop] = val
+            if prop.endswith('l'):
+                __kwarg_mirrors[0][prop] = val
+            elif prop.endswith('r'):
+                __kwarg_mirrors[1][prop] = val
+            else:
+                __kwarg_mirrors[0][prop] = __kwarg_mirrors[1][prop] = val
 
-    @classmethod
-    def create_symmetric_cavity(cls, ROC, L, Rl, Rr, name=None, **kwargs):
-        if not name:
-            name = 'SymmetricCavity'
-        return cls(ROC, ROC, L, Rl, Rr, name, **kwargs)
+        self.__mirrors = (Mirror(name='leftmirror', **(__kwarg_mirrors[0])),
+                        Mirror(name='rightmirror', **(__kwarg_mirrors[1])))
+
+    def change_params(self, _filter=True, **kwargs):
+        super().change_params(_filter=_filter, **kwargs)
+
+        if _filter:
+            kwargs = self.filter_properties(kwargs)
+        
+        self.update_propset(**kwargs)
+
+        lkw, rkw = {}, {}
+        for k, v in kwargs.items():
+            if k.endswith('l'):
+                lkw[k[:-1]] = v
+            elif k.endswith('r'):
+                rkw[k[:-1]] = v
+            else:
+                lkw[k] = rkw[k] = v
+            
+        if lkw:
+            self.__mirrors[0].change_params(**lkw)
+        if rkw:
+            self.__mirrors[1].change_params(**rkw)        
 
     @property
-    def Rl(self):
-        """左腔镜反射率"""
-        return self._property['mirrorsurface'][0].R
-
-    @property
-    def Rr(self):
-        """右腔镜反射率"""
-        return self._property['mirrorsurface'][1].R
-
-    @property
-    def L(self):
+    def length(self):
         """腔长"""
-        return self._property['L']
-
+        return self.get_property('length')
+    
     @property
-    def ROCl(self):
+    def rocl(self):
         """左腔镜曲率半径"""
-        return self._property['mirrorsurface'][0].ROC
+        return self.get_property('rocl', lambda: self.__mirrors[0].roc)
 
     @property
-    def ROCr(self):
-        """右腔镜曲率半径"""
-        return self._property['mirrorsurface'][1].ROC
+    def rl(self):
+        """左腔镜反射率"""
+        return self.get_property('rl', lambda: self.__mirrors[0].r)
 
+    @property
+    def tl(self):
+        """左腔镜透射率"""
+        return self.get_property('tl', lambda: self.__mirrors[0].t)
+    
+    @property
+    def ll(self):
+        """左腔镜损耗"""
+        return self.get_property('ll', lambda: self.__mirrors[0].l)
+    
+    @property
+    def rocr(self):
+        """右腔镜曲率半径"""
+        return self.get_property('rocr', lambda: self.__mirrors[1].roc)
+
+    @property
+    def rr(self):
+        """右腔镜反射率"""
+        return self.get_property('rr', lambda: self.__mirrors[1].r)
+
+    @property
+    def tr(self):
+        """右腔镜透射率"""
+        return self.get_property('tr', lambda: self.__mirrors[1].t)
+    
+    @property
+    def lr(self):
+        """右腔镜损耗"""
+        return self.get_property('lr', lambda: self.__mirrors[1].l)
+    
     @property
     def gl(self):
         """左腔镜g因子"""
-        return 1 - self.L / self.ROCl
+        return self.get_property('gl', lambda: 1-self.length/self.rocl)
 
     @property
     def gr(self):
         """右腔镜g因子"""
-        return 1 - self.L / self.ROCr
+        return self.get_property('gr', lambda: 1-self.length/self.rocr)
 
     @property
     def kappa(self):
         """半波半宽(圆频率)"""
-        return constants.c * (2 - self.Rr - self.Rl) / (4 * self.L)
-
+        return self.get_property('kappa', lambda: constants.c*(2-self.rr-self.rl)/(4*self.length))
+    
     @property
-    def FSR(self):
+    def fsr(self):
         """FSR(圆频率)"""
-        return 2 * constants.pi * constants.c / (2 * self.L)
+        return self.get_property('fsr', lambda: 2*constants.pi*constants.c/(2*self.length))
 
     @property
     def finesse(self):
         """精细度"""
-        return self.FSR / (2 * self.kappa)
+        return self.get_property('finesse', lambda: self.fsr/(2*self.kappa))
+
+    def isStable(self):
+        return judge_stable_cavity(self.length, self.rocl, self.rocr)
 
 
-class SymmetricCavity(Cavity, PrintInfoMixin):
+class SymmetricCavity(Cavity):
 
-    def __init__(self, ROC, L, Rr, Rl, *args, **kwargs):
-        super().__init__(ROC, ROC, L, Rr, Rl, *args, **kwargs)
+    modifiable_properties = ('length', 'roc', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
+
+    def __init__(self, name="SymmetricCavity", **kwargs):
+        roc = kwargs.get('roc', None)
+        kwargs.update(rocl=roc, rocr=roc)
+
+        super().__init__(**kwargs)
+        self.name = name
+
+        self.property_set['roc'] = roc
 
     @property
-    def ROC(self):
+    def roc(self):
         """对称腔曲率半径"""
-        return self.ROCl
+        return self.get_property('roc')
 
     @property
     def g(self):
         """对称腔g因子"""
-        return self.gl
+        return self.get_property('g', lambda: self.gl)
+
+
+#################################################################################
+## TO DO
 
 
 # 高斯模式
