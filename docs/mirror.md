@@ -53,17 +53,17 @@ This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Po
 
 ----
 
-#### 2. Mirror
+#### 2. Lens
 
-This module is not mainly for designing optical systems, so we only define simple mirror classes.
+This module is not mainly for designing optical systems, so we only define simple Lens classes.
 
 Following classes are defined in the module:
 
 ----
 
-<strong id="Mirror">Mirror</strong>: `class Mirror(misc.RTL, misc.Position)`
+<strong id="Lens">Lens</strong>: `class Lens(misc.RTL, misc.Position)`
 
-A class for a thin mirror. In cavity-related applications, thin lens or `zero` aberration approximation can give good experimental results. Therefore, we only consider the effect of focal length $f$ of a mirror.
+A class for a thin lens. In cavity-related applications, thin lens or `zero` aberration approximation can give good experimental results. Therefore, we only consider the effect of focal length $f$ of a mirror.
 
 <font color="blue">The attributes are defined as follows</font>:
 
@@ -73,9 +73,9 @@ A class for a thin mirror. In cavity-related applications, thin lens or `zero` a
   - <font color="red">r</font> - $R$, optical reflectivity
   - <font color="red">t</font> - $T$, optical transmittance
   - <font color="red">l</font> - $L$, optical loss
-  - <font color="red">position</font> - the position of the mirror
+  - <font color="red">position</font> - the position of the lens
 
-- <font color="red">name</font> - The name of instances or classes. The default is *Mirror*, which can be modified as required. 
+- <font color="red">name</font> - The name of instances or classes. The default is *Lens*, which can be modified as required. 
 
 - <font color="red">property_set</font> - Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -91,9 +91,9 @@ A class for a thin mirror. In cavity-related applications, thin lens or `zero` a
 
 <font color="blue">The methods are defined as follows</font>:
 
-- <font color="red">\_\_init\_\_(name='Mirror', **kwargs)</font>  - Create a `Mirror` object by named parameters consistent with <font color="red">modifiable_properties</font>.
+- <font color="red">\_\_init\_\_(name='Lens', **kwargs)</font>  - Create a `Lens` object by named parameters consistent with <font color="red">modifiable_properties</font>.
 
-- See <a class="class-refer">misc.RTL</a>, <a class="class-refer">misc.PosItion</a>, <a class="class-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
+- See <a class="class-refer">misc.RTL</a>, <a class="class-refer">misc.Position</a>, <a class="class-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
 ----
 

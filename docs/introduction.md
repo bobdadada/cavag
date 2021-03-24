@@ -32,7 +32,7 @@ Source Page: [mirror](mirror.md)
 **Class[es]**
 
 - <a class="class-refer-to" module="mirror">MirrorSurface</a>
-- <a class="class-refer-to" module="mirror">Mirror</a>
+- <a class="class-refer-to" module="Lens">Lens</a>
 
 <!-- tab:misc -->
 
