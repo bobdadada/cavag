@@ -61,65 +61,65 @@ The core functions of `cavag` are provided by `Object` and `PropertySet` in *_ut
 
 1. **Usage**
 
-In other modules, all abstract classes related to physical objects are subclasses of `PrintableObject`. A mature subclass needs to define its own **modifiable_properties** class attribute, which can be used in class method `cls.filter_properties(propdict)` to filter modifiable physical properties in the `dict`, <font color="red">kwargs</font>. In general, **modifiable_properties** contains the names of all input parameters defined in the constructor of the subclass, other than the <font color="red">name</font>.
+In other modules, all abstract classes related to physical objects are subclasses of `PrintableObject`. A mature subclass needs to define its own **modifiable_properties** class attribute, which can be used in class method `cls.filter_properties(propdict)` to filter modifiable physical properties in the `dict`, <span class="prop" style="color:red;">kwargs</span>. In general, **modifiable_properties** contains the names of all input parameters defined in the constructor of the subclass, other than the <span class="prop" style="color:red;">name</span>.
 
-An empty **property_set** is created if the subclass is constructed. It is a data type similar to the python `dict`. One can get and set the <font color="red">value</font> corresponding to <font color="red">key</font> by `value = property_set[key]` and `property_set[key] = value`. The private attribute **__required_props** of **property_set** is a set, when an instance of `PropertySet` is created, this attribute will be set to `set(props)` where <font color="red">props</font> is the input parameter of the constructor <font color="red">\_\_init\_\_(props=(), \*args, \*\*kwargs)</font>. **__required_props** contains all basic properties that a physical object must have, and all other properties can be derived from these basic properties. These basic properties are initialized to `None`. The value of a property `prop` in **__required_props** can be normally obtained through `property_set[prop]`, but if the value of this property is `None`, obtaining the corresponding value through `property_set.get_strictly(prop)` will raise a `PropertyLost` exception.
+An empty **property_set** is created if the subclass is constructed. It is a data type similar to the python `dict`. One can get and set the <span class="prop" style="color:red;">value</span> corresponding to <span class="prop" style="color:red;">key</span> by `value = property_set[key]` and `property_set[key] = value`. The private attribute **__required_props** of **property_set** is a set, when an instance of `PropertySet` is created, this attribute will be set to `set(props)` where <span class="prop" style="color:red;">props</span> is the input parameter of the constructor <span class="prop" style="color:red;">\_\_init\_\_(props=(), \*args, \*\*kwargs)</span>. **__required_props** contains all basic properties that a physical object must have, and all other properties can be derived from these basic properties. These basic properties are initialized to `None`. The value of a property `prop` in **__required_props** can be normally obtained through `property_set[prop]`, but if the value of this property is `None`, obtaining the corresponding value through `property_set.get_strictly(prop)` will raise a `PropertyLost` exception.
 
 The detailed definitions are as follows:
 
 ----
 
-<strong id="Object">Object</strong>: `class Object`
+<strong class="object" id="Object">Object</strong>: `class Object`
 
 This class defines an abstraction of real object.
 
-<font color="blue">The attributes are defined as follows</font>:
+<p style="color:blue">The attributes are defined as follows:</p>
 
-- <font color="red">modifiable_properties</font> - Iterable object, contains all the names of modifiable properties.
+- <span class="prop" style="color:red;">modifiable_properties</span> - Iterable object, contains all the names of modifiable properties.
 
-- <font color="red">name</font> - The name of instances or classes. The default is *Object*, which can be modified as required. 
+- <span class="prop" style="color:red;">name</span> - The name of instances or classes. The default is *Object*, which can be modified as required. 
 
-- <font color="red">property_set</font> - Property collection, which is an instance of `PropertySet`.
+- <span class="prop" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`.
 
-<font color="blue">The methods are defined as follows</font>:
+<p style="color:blue;">The methods are defined as follows:</p>
 
-- <font color="red">\_\_init\_\_(name="Object", **kwargs)</font> - Create an instance of `Object`, the name is set to be <font color="red">name</font>. In <font color="red">kwargs</font>, only the key name consistent with the property name in <font color="red">modifiable_properties</font> will be set.
+- <span class="prop" style="color:red;">\_\_init\_\_(name="Object", **kwargs)</span> - Create an instance of `Object`, the name is set to be <span class="prop" style="color:red;">name</span>. In <span class="prop" style="color:red;">kwargs</span>, only the key name consistent with the property name in <span class="prop" style="color:red;">modifiable_properties</span> will be set.
 
-- <font color="red">get_property(k, v_f=None)</font> - Use the property name <font color="red">k</font> to get the property value saved in the <font color="red">property_set</font>. If the property does not exist, use the function <font color="red">v_f</font> to calculate its value and save it in the <font color="red">property_set</font>. Then this method use <font color="red">get_strictly</font> of `PropertySet` to get the value of this property. Usually we don't use this method directly, but define a method decorated with `@property` in the subclass, and call the <font color="red">get_property</font> in this method.
+- <span class="prop" style="color:red;">get_property(k, v_f=None)</span> - Use the property name <span class="prop" style="color:red;">k</span> to get the property value saved in the <span class="prop" style="color:red;">property_set</span>. If the property does not exist, use the function <span class="prop" style="color:red;">v_f</span> to calculate its value and save it in the <span class="prop" style="color:red;">property_set</span>. Then this method use <span class="prop" style="color:red;">get_strictly</span> of `PropertySet` to get the value of this property. Usually we don't use this method directly, but define a method decorated with `@property` in the subclass, and call the <span class="prop" style="color:red;">get_property</span> in this method.
 
-- <font color="red">get_proplist()</font> - Get all the method names decorated with `@property` in the class. It is a concrete implementation of an abstract method <font color="red">get_proplist</font> in `PrintInfoMixin`. 
+- <span class="prop" style="color:red;">get_proplist()</span> - Get all the method names decorated with `@property` in the class. It is a concrete implementation of an abstract method <span class="prop" style="color:red;">get_proplist</span> in `PrintInfoMixin`. 
 
-- <font color="red">change_params(\_filter=True, **kwargs)</font> - This method is used to modify the value of parameters in <font color="red">property_set</font>. The input of the method must be named parameters. If <font color="red">\_filter</font> is set to `True`, then only parameters in <font color="red">kwargs</font> consistent with the properties in <font color="red">modifiable_properties</font> will be filtered out by method <font color="red">filter_properties</font>. This method uses <font color="red">update_propset</font> to update <font color="red">property_set</font>. 
+- <span class="prop" style="color:red;">change_params(\_filter=True, **kwargs)</span> - This method is used to modify the value of parameters in <span class="prop" style="color:red;">property_set</span>. The input of the method must be named parameters. If <span class="prop" style="color:red;">\_filter</span> is set to `True`, then only parameters in <span class="prop" style="color:red;">kwargs</span> consistent with the properties in <span class="prop" style="color:red;">modifiable_properties</span> will be filtered out by method <span class="prop" style="color:red;">filter_properties</span>. This method uses <span class="prop" style="color:red;">update_propset</span> to update <span class="prop" style="color:red;">property_set</span>. 
 
-- <font color="red">update_propset(**kwargs)</font> - This method directly uses <font color="red">kwargs</font> to update properties in <font color="red">property_set</font> with method <font color="red">change_params</font> of <font color="red">property_set</font>. Note that any key-value pair in <font color="red">kwargs</font> with key starting "\_" will be ignored. Not recommended to use this method directly, use <font color="red">change_params</font> of this class instead.
+- <span class="prop" style="color:red;">update_propset(**kwargs)</span> - This method directly uses <span class="prop" style="color:red;">kwargs</span> to update properties in <span class="prop" style="color:red;">property_set</span> with method <span class="prop" style="color:red;">change_params</span> of <span class="prop" style="color:red;">property_set</span>. Note that any key-value pair in <span class="prop" style="color:red;">kwargs</span> with key starting "\_" will be ignored. Not recommended to use this method directly, use <span class="prop" style="color:red;">change_params</span> of this class instead.
 
-- <font color="red">filter_properties(propdict)</font> - This method filters the <font color="red">propdict</font> and returns the corresponding sub-dictionary in the <font color="red">propdict</font> with only properties in the <font color="red">modifiable_properties</font>.
+- <span class="prop" style="color:red;">filter_properties(propdict)</span> - This method filters the <span class="prop" style="color:red;">propdict</span> and returns the corresponding sub-dictionary in the <span class="prop" style="color:red;">propdict</span> with only properties in the <span class="prop" style="color:red;">modifiable_properties</span>.
 
 ----
 
-<strong id="PropertySet">PropertySet</strong>: `class PropertySet(collections.UserDict)`
+<strong class="object" id="PropertySet">PropertySet</strong>: `class PropertySet(collections.UserDict)`
 
 This class define a data structure which store all properties of a physical object. It is a `dict`-like object, subclass of `collections.UserDict`.
 
-<font color="blue">The attributes are defined as follows</font>:
+<p style="color:blue;">The attributes are defined as follows:</p>
 
-- <font color="red">\_\_required_props</font> - `set` object, contains all the names of the necessary properties. All the other properties not in <font color="red">\_\_required_props</font> will be cleared when the <font color="red">change_params</font> method of this class is called, see <font color="red">change_params</font> for more details. Only <font color="red">reset_required</font>, <font color="red">add_required</font>, <font color="red">del_required</font>, and <font color="red">clear_required</font> can modify <font color="red">\_\_required_props</font>.
+- <span class="prop" style="color:red;">\_\_required_props</span> - `set` object, contains all the names of the necessary properties. All the other properties not in <span class="prop" style="color:red;">\_\_required_props</span> will be cleared when the <span class="prop" style="color:red;">change_params</span> method of this class is called, see <span class="prop" style="color:red;">change_params</span> for more details. Only <span class="prop" style="color:red;">reset_required</span>, <span class="prop" style="color:red;">add_required</span>, <span class="prop" style="color:red;">del_required</span>, and <span class="prop" style="color:red;">clear_required</span> can modify <span class="prop" style="color:red;">\_\_required_props</span>.
 
-<font color="blue">The methods are defined as follows</font>:
+<p style="color:blue;">The methods are defined as follows:</p>
 
-- <font color="red">\_\_init\_\_(required\_props=(), *args, **kwargs)</font> - Create an instance of `PropertySet`. The <font color="red">required\_props</font> is used to set the attribute <font color="red">\_\_required_props</font> of this instance. And <font color="red">args</font>, <font color="red">kwargs</font> are parameters which are consistent with the input parameters of python's `dict`.
+- <span class="prop" style="color:red;">\_\_init\_\_(required\_props=(), *args, **kwargs)</span> - Create an instance of `PropertySet`. The <span class="prop" style="color:red;">required\_props</span> is used to set the attribute <span class="prop" style="color:red;">\_\_required_props</span> of this instance. And <span class="prop" style="color:red;">args</span>, <span class="prop" style="color:red;">kwargs</span> are parameters which are consistent with the input parameters of python's `dict`.
 
-- <font color="red">get_strictly(key, default=None)</font> - Similar to method `get(key, default=None)` provided by `collections.UserDict`. But if <font color="red">key</font> is a property in <font color="red">\_\_required_props</font> and the value of this property is `None`, then a `PropertyLost` exception will be raised.
+- <span class="prop" style="color:red;">get_strictly(key, default=None)</span> - Similar to method `get(key, default=None)` provided by `collections.UserDict`. But if <span class="prop" style="color:red;">key</span> is a property in <span class="prop" style="color:red;">\_\_required_props</span> and the value of this property is `None`, then a `PropertyLost` exception will be raised.
 
-- <font color="red">change_params(**kwargs)</font> - This method updates the value of properties in the instance, and all saved properties except the properties in <font color="red">\_\_required_props</font> will be deleted. 
+- <span class="prop" style="color:red;">change_params(**kwargs)</span> - This method updates the value of properties in the instance, and all saved properties except the properties in <span class="prop" style="color:red;">\_\_required_props</span> will be deleted. 
 
-- <font color="red">reset_required(props=())</font> - Reset <font color="red">\_\_required_props</font> by <font color="red">props</font>, where <font color="red">props</font> must be an iterable object containing the necessary properties.
+- <span class="prop" style="color:red;">reset_required(props=())</span> - Reset <span class="prop" style="color:red;">\_\_required_props</span> by <span class="prop" style="color:red;">props</span>, where <span class="prop" style="color:red;">props</span> must be an iterable object containing the necessary properties.
 
-- <font color="red">add_required(props=())</font> - If <font color="red">props</font> is of type `str`, add this as a necessary property to <font color="red">\_\_required_props</font>; if <font color="red">props</font> is an iterable object with elements of `str` type, add these elements Into <font color="red">\_\_required_props</font>.
+- <span class="prop" style="color:red;">add_required(props=())</span> - If <span class="prop" style="color:red;">props</span> is of type `str`, add this as a necessary property to <span class="prop" style="color:red;">\_\_required_props</span>; if <span class="prop" style="color:red;">props</span> is an iterable object with elements of `str` type, add these elements Into <span class="prop" style="color:red;">\_\_required_props</span>.
 
-- <font color="red">del_required(props=())</font> - If <font color="red">props</font> is of type `str`, remove this element from <font color="red">\_\_required_props</font>; if <font color="red">props</font> is an iterable object with elements of `str` type, remove these elements from <font color="red">\_\_required_props</font>. If the element is not a member, do nothing.
+- <span class="prop" style="color:red;">del_required(props=())</span> - If <span class="prop" style="color:red;">props</span> is of type `str`, remove this element from <span class="prop" style="color:red;">\_\_required_props</span>; if <span class="prop" style="color:red;">props</span> is an iterable object with elements of `str` type, remove these elements from <span class="prop" style="color:red;">\_\_required_props</span>. If the element is not a member, do nothing.
 
-- <font color="red">clear_required()</font> - Remove all elements from <font color="red">\_\_required_props</font>.
+- <span class="prop" style="color:red;">clear_required()</span> - Remove all elements from <span class="prop" style="color:red;">\_\_required_props</span>.
 
 ----
 

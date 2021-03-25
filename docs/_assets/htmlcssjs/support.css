@@ -10,3 +10,20 @@ h1, h2, h3 {
     float: left;
     margin-right: 5px;
 }
+
+/* object对象强调 */
+.object {
+    font-size: 1.5em;
+}
+
+/* 属性文字强调 */
+.prop {
+    font-family: "Times New Roman",Georgia,Serif;
+    font-size: 1.2em;
+    color: red;
+}
+
+/* docsify-tabs__content字体 */
+.docsify-tabs__content {
+    font-size: 1.4em;
+}
