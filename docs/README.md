@@ -13,12 +13,12 @@ The documentation is available at [bobdadada.github.io/cavag](https://bobdadada.
 
 **cavag** consists of the following modules:
 
-- <font color="limegreen">fiber</font>
-- <font color="limegreen">fpcavity</font>
-- <font color="limegreen">gaussbeam</font>
-- <font color="limegreen">mirror</font>
-- <font color="limegreen">misc</font>
-- <font color="limegreen">utils</font>
+- <span style="color:limegreen;">fiber</span>
+- <span style="color:limegreen;">fpcavity</span>
+- <span style="color:limegreen;">gaussbeam</span>
+- <span style="color:limegreen;">mirror</span>
+- <span style="color:limegreen;">misc</span>
+- <span style="color:limegreen;">utils</span>
 
 Each modules define lots of useful classes and functions about Fiber, Fabry-Perot Cavity, Gaussian Beam and Mirror. Through the combined use of various modules, one can solve specific problems about cavity quantum mechanics. Each module is easy to simplify and expand.
 
