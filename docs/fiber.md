@@ -32,7 +32,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
   
   - <span class="prop" style="color:red;">nf</span> - $n_f$, core refractive index
   - <span class="prop" style="color:red;">wavelength</span> - $\lambda$, wavelength of transmitted light
-  - <span class="prop" style="color:red;">omegaf</span> - $w_f$, radius of mode field of fiber
+  - <span class="prop" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
   - <span class="prop" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
   
   These attributes are also input parameters of the constructor. 
@@ -46,7 +46,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
   - properties provided by this class
 
     - <span class="prop" style="color:red;">nf</span> - $n_f$, core refractive index
-    - <span class="prop" style="color:red;">omegaf</span> - $w_f$, radius of mode field of fiber
+    - <span class="prop" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
     - <span class="prop" style="color:red;">roc</span> - $roc$, radius of curvature
 
   - properties provided by parent class
@@ -87,9 +87,9 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
   
     - <span class="prop" style="color:red;">a</span> - $a$, radius of fiber core
     - <span class="prop" style="color:red;">naf</span> - $NA_f$, numerical aperture. the numerical aperture by definition is given by $NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
-    - <span class="prop" style="color:red;">omegaf</span> - $w_f$, radius of mode field of fiber. For the step-index fiber, we can compute $w_f$ by approximation of Gaussian light. 
+    - <span class="prop" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber. For the step-index fiber, we can compute $w_f$ by approximation of Gaussian light. 
       $$
-      w_f=a(0.65 +1.619V^{-1.5}+2.879V^{-6})
+      \omega_f=a(0.65 +1.619V^{-1.5}+2.879V^{-6})
       $$
       for $V\gtrsim 1.2$ where
       $$

@@ -66,7 +66,7 @@ $$
 
 <div><img src="_assets/picture/res/gaussbeam/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
 
-The figure on the left shows the waist shape of some modes. It is easy to find that although the equation (3) is equivalently satisfied for each mode, the beam waist of different modes cannot be represented by $w_0$ only, and only the waist radius of fundamental Gaussian mode can be represented by $w_0$.
+The figure on the left shows the waist shape of some modes. It is easy to find that although the equation (3) is equivalently satisfied for each mode, the beam waist of different modes cannot be represented by $\omega_0$ only, and only the waist radius of fundamental Gaussian mode can be represented by $\omega_0$.
 
 In addition, as $m$ or $n$ increases, the number of nodes increases and the range of the waist becomes larger and larger. 
 
