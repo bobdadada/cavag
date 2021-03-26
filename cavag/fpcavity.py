@@ -17,7 +17,7 @@ __all__ = [
     'AxisymmetricCavityStructure', 'SymmetricAxisymmetricCavityStructure',
     'AxisymmetricCavity', 'SymmetricAxisymmetricCavity',
     'AxisymmetricCavityHerimiteGaussMode', 'SymmetricAxisymmetricCavityHerimiteGaussMode'
-    'judge_stable_cavity',
+    'judge_cavity_type',
     'calculate_loss_clipping', 'calculate_loss_scattering',
     'calculate_g', 'calculate_C1', 'calculate_neta_e',
     'calculate_neta_ext', 'calculate_neta_mode', 'calculate_neta_trans',
@@ -60,6 +60,19 @@ class AxisymmetricCavityStructure(PrintableObject):
     def gr(self):
         """右腔镜g因子"""
         return self.get_property('gr', lambda: 1-self.length/self.rocr)
+    
+    def isStable(self):
+        r1, r2 = judge_cavity_type(self.length, self.rocl, self.rocr)
+        if r1 is True:
+            if r2 is False:
+                return True
+            else:
+                return None
+        else:
+            return False
+
+    def isCritical(self):
+        return judge_cavity_type(self.length, self.rocl, self.rocr)[1]
 
 
 class SymmetricAxisymmetricCavityStructure(AxisymmetricCavityStructure):
@@ -187,9 +200,6 @@ class AxisymmetricCavity(AxisymmetricCavityStructure):
     def finesse(self):
         """精细度"""
         return self.get_property('finesse', lambda: self.fsr/(2*self.kappa))
-
-    def isStable(self):
-        return judge_stable_cavity(self.length, self.rocl, self.rocr)
 
 
 class SymmetricAxisymmetricCavity(AxisymmetricCavity, SymmetricAxisymmetricCavityStructure):
@@ -342,53 +352,57 @@ class SymmetricAxisymmetricCavityHerimiteGaussMode(SymmetricAxisymmetricCavitySt
         return self.get_property('omegam', self.omega0*np.sqrt(1+(self.length/2/ self.z0)**2))
 
 
-#################################################################################
-## TO DO
-
-
-def judge_stable_cavity(L, ROCl, ROCr):
+def judge_cavity_type(length, rocl, rocr):
     """
-    判断腔是否稳定
-    :param L: 腔长
-    :param ROCl: 左边腔镜ROC
-    :param ROCr: 右边腔镜ROC
-    :return: True-腔稳定，False-腔不稳定
+    判断腔是否满足稳定条件，且判断是否为临界腔。注意临界腔虽然满足稳定条件，但是否稳定需要
+    看具体结构。
+    :param length: 腔长
+    :param rocl: 左边腔镜ROC
+    :param rocr: 右边腔镜ROC
+    :return: (r1, r2)   r1: True-腔满足稳定条件，False-腔不满足稳定条件;
+                        r2: True-临界腔，False-非临界腔
     """
-    glgr = (1 - L / ROCl)*(1 - L / ROCr)
-    if glgr >=0 and glgr<=1:
-        return True
-    else:
-        return False
+    r1 = False
+    r2 = False
+
+    glgr = (1-length/rocl)*(1-length/rocr)
+    if glgr >= 0 and glgr <= 1:
+        r1 = True
+        if g1gr == 0 or glgr == 1:
+            r2 = True
+
+    return r1, r2
 
 
-def calculate_loss_clipping(D, omegam):
+def calculate_loss_clipping(d, omegam):
     """
     计算腔面单次反射的clipping损耗
-    :param D: 腔面有效直径
+    :param d: 腔面有效直径
     :param omegam: 模场半径
     :return: clipping损耗
     """
-    return np.exp(-2 * (D / 2) ** 2 / omegam ** 2)
+    return np.exp(-2*(d/2)**2/omegam**2)
 
 
 def calculate_loss_scattering(sigmasc, wavelength):
     """
-    计算腔面的散射损耗
+    计算腔面的散射损耗。若计算的损耗大于1，则可认为光被完全散射掉，没有光能原路返回。
     :param sigmasc: 腔面的粗糙度，通常为0.2nm左右
     :param wavelength: 光波波长
     :return: 腔面的散射损耗
     """
-    return (4 * constants.pi * sigmasc / wavelength) ** 2
+    return (4*constants.pi*sigmasc/wavelength)**2
 
 
-def calculate_g(gaussmode, gamma):
+def calculate_g(v, nu, gamma):
     """
-    计算腔模-离子耦合效率
-    :param gaussmode: 高斯驻波场
+    计算腔模-离子耦合系数g因子
+    :param v: 高斯驻波场模式体积
+    :param nu: 光频率 = 光速/波长
     :param gamma: 驻波场对应频率跃迁的真空自发辐射速率
     :return: 耦合系数g
     """
-    return np.sqrt((3 * gamma * np.pi * constants.c ** 3) / (2 * gaussmode.V * (2 * np.pi * gaussmode.nu) ** 2))
+    return np.sqrt((3*gamma*constants.pi*constants.c**3)/(2*v*(2*np.pi*nu)**2))
 
 
 def calculate_C1(g, kappa, gamma):
@@ -399,7 +413,7 @@ def calculate_C1(g, kappa, gamma):
     :param gamma: 总自发辐射速率
     :return: 耦合因子
     """
-    return g ** 2 / (kappa * gamma)
+    return g**2/(kappa*gamma)
 
 
 def calculate_neta_e(C1):
@@ -408,7 +422,7 @@ def calculate_neta_e(C1):
     :param C1: 耦合因子
     :return: 光子发射几率
     """
-    return 2 * C1 / (2 * C1 + 1)
+    return 2*C1/(2*C1+1)
 
 
 def calculate_neta_ext(kappa, gamma):
@@ -418,7 +432,11 @@ def calculate_neta_ext(kappa, gamma):
     :param gamma: 总自发辐射速率
     return: 腔耦合提取几率
     """
-    return 2 * kappa / (2 * kappa + gamma)
+    return 2*kappa/(2*kappa+gamma)
+
+
+#################################################################################
+## TO DO
 
 
 def calculate_neta_mode(fiber, gaussmode, direction='l'):
