@@ -6,10 +6,10 @@ from .misc import Wavelength
 __all__ = [
     'NormalizedHermiteGaussBeam1D', 'HermiteGaussBeam1D',
     'NormalizedGaussBeam1D', 'GaussBeam1D',
-    'NormalizedHermiteGaussBeam2D', 'HermiteGaussBeam2D',
-    'NormalizedGaussBeam2D', 'GaussBeam2D',
-    'NormalizedSymmetricHermiteGaussBeam', 'SymmetricHermiteGaussBeam',
-    'NormalizedSymmetricGaussBeam', 'SymmetricGaussBeam'
+    'NormalizedHermiteGaussBeam', 'HermiteGaussBeam',
+    'NormalizedGaussBeam', 'GaussBeam',
+    'NormalizedAxisymmetricHermiteGaussBeam', 'AxisymmetricHermiteGaussBeam',
+    'NormalizedAxisymmetricGaussBeam', 'AxisymmetricGaussBeam'
 ]
 
 
@@ -161,19 +161,19 @@ class GaussBeam1D(HermiteGaussBeam1D):
         self.name = name
 
 
-class NormalizedHermiteGaussBeam2D(Wavelength):
-    name = 'NormalizedHermiteGaussBeam2D'
+class NormalizedHermiteGaussBeam(Wavelength):
+    name = 'NormalizedHermiteGaussBeam'
 
     # 波长, 束腰位置, x方向束腰半径, y方向束腰半径, x方向束腰位置, x方向模式数, y方向模式数
     modifiable_properties = ('wavelength', 'p0', 'omega0x', 'omega0y', 'mx', 'my')
 
-    def __init__(self, name='NormalizedHermiteGaussBeam2D', **kwargs):
+    def __init__(self, name='NormalizedHermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
-        self.property_set.add_required(NormalizedHermiteGaussBeam2D.modifiable_properties)
+        self.property_set.add_required(NormalizedHermiteGaussBeam.modifiable_properties)
 
-        for prop in NormalizedHermiteGaussBeam2D.modifiable_properties:
+        for prop in NormalizedHermiteGaussBeam.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
 
         __kwarg_beams = ({
@@ -328,13 +328,13 @@ class NormalizedHermiteGaussBeam2D(Wavelength):
         return amplx*amply, phasex+phasey
 
 
-class HermiteGaussBeam2D(NormalizedHermiteGaussBeam2D):
-    name = 'HermiteGaussBeam2D'
+class HermiteGaussBeam(NormalizedHermiteGaussBeam):
+    name = 'HermiteGaussBeam'
 
     # 振幅, 波长, 束腰位置, x方向束腰半径, y方向束腰半径, x方向模式数, y方向模式数
     modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0x', 'omega0y', 'mx', 'my')
 
-    def __init__(self, name='HermiteGaussBeam2D', **kwargs):
+    def __init__(self, name='HermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
@@ -353,49 +353,49 @@ class HermiteGaussBeam2D(NormalizedHermiteGaussBeam2D):
         return A0*A
 
 
-class NormalizedGaussBeam2D(NormalizedHermiteGaussBeam2D):
-    name = 'NormalizedGaussBeam2D'
+class NormalizedGaussBeam(NormalizedHermiteGaussBeam):
+    name = 'NormalizedGaussBeam'
 
     modifiable_properties = ('wavelength', 'p0', 'omega0x', 'omega0y')
 
-    def __init__(self, name='NormalizedGaussBeam2D', **kwargs):
+    def __init__(self, name='NormalizedGaussBeam', **kwargs):
         kwargs.update(mx=0, my=0)
 
         super().__init__(**kwargs)
         self.name = name
 
 
-class GaussBeam2D(HermiteGaussBeam2D):
-    name = 'HermiteGaussBeam2D'
+class GaussBeam(HermiteGaussBeam):
+    name = 'HermiteGaussBeam'
 
     modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0x', 'omega0y')
 
-    def __init__(self, name='HermiteGaussBeam2D', **kwargs):
+    def __init__(self, name='HermiteGaussBeam', **kwargs):
         kwargs.update(mx=0, my=0)
 
         super().__init__(**kwargs)
         self.name = name
 
 
-class NormalizedSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
-    name = 'NormalizedSymmetricHermiteGaussBeam'
+class NormalizedAxisymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
+    name = 'NormalizedAxisymmetricHermiteGaussBeam'
 
     # 波长, 束腰半径, 束腰位置, 模式数
     modifiable_properties = ('wavelength', 'p0', 'omega0', 'm')
 
-    def __init__(self, name='NormalizedSymmetricHermiteGaussBeam', **kwargs):
+    def __init__(self, name='NormalizedAxisymmetricHermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
-        self.property_set.add_required(NormalizedSymmetricHermiteGaussBeam.modifiable_properties)
+        self.property_set.add_required(NormalizedAxisymmetricHermiteGaussBeam.modifiable_properties)
 
-        for prop in NormalizedSymmetricHermiteGaussBeam.modifiable_properties:
+        for prop in NormalizedAxisymmetricHermiteGaussBeam.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
     
     @property
     def c(self):
         """总归一化因子"""
-        return self.get_property('c', lambda: (super(NormalizedSymmetricHermiteGaussBeam, self).c)**2)
+        return self.get_property('c', lambda: (super(NormalizedAxisymmetricHermiteGaussBeam, self).c)**2)
     
     def A_f(self, z):
         """振幅函数"""
@@ -417,12 +417,12 @@ class NormalizedSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
         return ampl, phase
 
 
-class SymmetricHermiteGaussBeam(NormalizedSymmetricHermiteGaussBeam):
-    name = 'SymmetricHermiteGaussBeam'
+class AxisymmetricHermiteGaussBeam(NormalizedAxisymmetricHermiteGaussBeam):
+    name = 'AxisymmetricHermiteGaussBeam'
 
     modifiable_properties = ('A0', 'p0', 'wavelength', 'omega0', 'm')
 
-    def __init__(self, name='SymmetricHermiteGaussBeam', **kwargs):
+    def __init__(self, name='AxisymmetricHermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
@@ -441,24 +441,24 @@ class SymmetricHermiteGaussBeam(NormalizedSymmetricHermiteGaussBeam):
         return A0*A
 
 
-class NormalizedSymmetricGaussBeam(NormalizedSymmetricHermiteGaussBeam):
-    name = 'NormalizedSymmetricGaussBeam'
+class NormalizedAxisymmetricGaussBeam(NormalizedAxisymmetricHermiteGaussBeam):
+    name = 'NormalizedAxisymmetricGaussBeam'
 
     modifiable_properties = ('wavelength', 'p0', 'omega0')
 
-    def __init__(self, name='NormalizedSymmetricGaussBeam', **kwargs):
+    def __init__(self, name='NormalizedAxisymmetricGaussBeam', **kwargs):
         kwargs.update(m=0)
 
         super().__init__(**kwargs)
         self.name = name
 
 
-class SymmetricGaussBeam(SymmetricHermiteGaussBeam):
-    name = 'SymmetricGaussBeam'
+class AxisymmetricGaussBeam(AxisymmetricHermiteGaussBeam):
+    name = 'AxisymmetricGaussBeam'
 
     modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0')
 
-    def __init__(self, name='SymmetricGaussBeam', **kwargs):
+    def __init__(self, name='AxisymmetricGaussBeam', **kwargs):
         kwargs.update(m=0)
 
         super().__init__(**kwargs)
