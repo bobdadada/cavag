@@ -72,7 +72,7 @@ In addition, as $m$ or $n$ increases, the number of nodes increases and the rang
 
 The most commonly used laser is the fundamental mode of Hermite-Gaussian beam, that is, $m=n=0$. The equation of the waist of fundamental mode is given by
 $$
-u_{mn}(x_0,y_0)=\left(\frac{2}{w_0^2 \pi}\right)^{1/2}\exp\left(-\frac{x_0^2+y_0^2}{w_0^2}\right) \tag{9}
+u_{mn}(x_0,y_0)=\left(\frac{2}{\omega_0^2 \pi}\right)^{1/2}\exp\left(-\frac{x_0^2+y_0^2}{\omega_0^2}\right) \tag{9}
 $$
 
 
@@ -94,19 +94,19 @@ The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipyn
 
 With the characteristics of Gaussian beams and the notation in the figure, we get
 $$
-w = w_0\left[1+\left(\frac{\lambda s}{\pi{w_0}^2}\right)^2\right]^{1/2}, \ R= s\left[1+\left(\frac{\pi w_0^2}{\lambda s}\right)^2\right] \tag{10}
+\omega = \omega_0\left[1+\left(\frac{\lambda s}{\pi{\omega_0}^2}\right)^2\right]^{1/2}, \ R= s\left[1+\left(\frac{\pi \omega_0^2}{\lambda s}\right)^2\right] \tag{10}
 $$
 and
 $$
-w'_0 = \frac{w'}{\left[1+\left(\frac{\pi{w'}^2}{\lambda R'}\right)^2\right]^{1/2}}, \ s' =  \frac{R'}{1+\left(\frac{\lambda R'}{\pi{w'}^2}\right)^2}  \tag{11}
+\omega'_0 = \frac{\omega'}{\left[1+\left(\frac{\pi{\omega'}^2}{\lambda R'}\right)^2\right]^{1/2}}, \ s' =  \frac{R'}{1+\left(\frac{\lambda R'}{\pi{\omega'}^2}\right)^2}  \tag{11}
 $$
 With our notations, the features of thin lens imply that
 $$
-w' = w \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{1}{f'}  \tag{12}
+\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{1}{f'}  \tag{12}
 $$
 Then with the order following
 $$
-(w_0,s)\overset{(10)}\rightarrow (w,R) \overset{(12)}\rightarrow(w',R')\overset{(11)}\rightarrow(w'_0,s')
+(\omega_0,s)\overset{(10)}\rightarrow (\omega,R) \overset{(12)}\rightarrow(\omega',R')\overset{(11)}\rightarrow(\omega'_0,s')
 $$
 one can get radius and position of the waist of the Gaussian beam after passing through the thin lens.
 
@@ -124,11 +124,11 @@ If we move the origin of the coordinates to the position of the mirror surface, 
 
 !> The definitions of symbols $R',R,R_0$ have changed.
 $$
-w' = w \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{13}
+\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{13}
 $$
 With equation $(10)$ and $(11)$, then the beam waist position and radius of the beam after reflection can be calculated by the following steps
 $$
-(w_0,s)\overset{(10)}\rightarrow (w,R) \overset{(13)}\rightarrow(w',R')\overset{(11)}\rightarrow(w'_0,s')\overset{z\rightarrow -z}\rightarrow(w'_0,-s')
+(\omega_0,s)\overset{(10)}\rightarrow (\omega,R) \overset{(13)}\rightarrow(\omega',R')\overset{(11)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
 $$
 In the last expression, the optical axis has undergone an axis-symmetric transformation with respect to the vertical axis. At this time, all parameters in the Gaussian beam should be calculated in the new optical axis. 
 
