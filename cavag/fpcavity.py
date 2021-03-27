@@ -140,8 +140,7 @@ class AxisymmetricCavity(AxisymmetricCavityStructure):
         if lkw:
             self.__rtls[0].change_params(**lkw)
         if rkw:
-            self.__rtls[1].change_params(**rkw)        
-        return kwargs
+            self.__rtls[1].change_params(**rkw)
 
     @property
     def rl(self):
