@@ -105,10 +105,41 @@ class Test_Object(unittest.TestCase):
             @property
             def c(self):
                 return self.get_property('c', lambda: self.a+self.b)
-        
+
+        class ExampleE(Example):
+
+            modifiable_properties = ('ae', 'a')
+            
+            def __init__(self, name='ExampleE', **kwargs):
+                super().__init__(**kwargs)
+                self.name = name
+                
+                self.property_set.add_required(ExampleE.modifiable_properties)
+
+                for prop in ExampleE.modifiable_properties:
+                    self.property_set[prop] = kwargs.get(prop, None)
+            
+            @property
+            def ae(self):
+                return self.property_set.get_strictly('ae')
+
+            def change_params(self, **kwargs):
+                a = kwargs.get('a', None)
+                if a is not None:
+                    self.update_propset(a=a, b=a**2)
+                super().change_params(**kwargs)
+
         exm = Example(a=1, b=2)
         self.assertEqual(exm.c, 3)
 
+        exme = ExampleE(ae=2, a=2)
+        self.assertEqual(exme.ae, 2)
+        self.assertEqual(exme.a, 2)
+
+        exme.change_params(ae=4, a=4)
+        self.assertEqual(exme.ae, 4)
+        self.assertEqual(exme.a, 4)
+        self.assertEqual(exme.b, 16)
 
 if __name__ == '__main__':
     unittest.main()
