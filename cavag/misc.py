@@ -52,18 +52,12 @@ class RTL(PrintableObject):
         self.property_set['t'] = t
         self.property_set['l'] = l
     
-    def change_params(self, _norm=True, _filter=True, **kwargs):
-        super().change_params(_filter=_filter, **kwargs)
-
-        if _filter:
-            kwargs = self.filter_properties(kwargs)
-
-        if _norm and any(p in kwargs for p in RTL.modifiable_properties):
-            r, t, l = kwargs.get('r', None), kwargs.get('t', None), kwargs.get('l', None)
+    def preprocess_properties(self, _norm=True, **propdict):
+        if _norm and any(p in propdict for p in RTL.modifiable_properties):
+            r, t, l = propdict.get('r', None), propdict.get('t', None), propdict.get('l', None)
             r, t, l = RTLConverter.normalize(r=r, t=t, l=l)
-            kwargs.update({'r':r, 't':t, 'l':l})
-            
-        self.update_propset(**kwargs)
+            propdict.update({'r':r, 't':t, 'l':l})
+        return propdict
 
 
 class RTLConverter:

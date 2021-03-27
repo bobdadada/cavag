@@ -72,14 +72,6 @@ class Object(object):
         
         for prop in Object.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
-    
-    @classmethod
-    def filter_properties(cls, propdict):
-        dt = {}
-        for prop in cls.modifiable_properties:
-            if prop in propdict:
-                dt[prop] = propdict[prop]
-        return dt
 
     def get_property(self, k, v_f=None):
         if (k not in self.property_set) or (self.property_set[k] is None):
@@ -89,10 +81,19 @@ class Object(object):
                 self.property_set[k] = v_f()
         return self.property_set.get_strictly(k)
 
-    def change_params(self, _filter=True, **kwargs):
-        if _filter:
-            kwargs = self.filter_properties(kwargs)
-        self.update_propset(**kwargs)
+    def preprocess_properties(self, **propdict):
+        return propdict
+    
+    @classmethod
+    def filter_properties(cls, **propdict):
+        dt = {}
+        for prop in cls.modifiable_properties:
+            if prop in propdict:
+                dt[prop] = propdict[prop]
+        return dt
+    
+    def postprocess_properties(self, **propdict):
+        return propdict
     
     def __filter_params(self, dp):
         dt = {}
@@ -103,6 +104,17 @@ class Object(object):
 
     def update_propset(self, **kwargs):
         self.property_set.change_params(**self.__filter_params(kwargs))
+    
+    def change_params(self, _filter=True, **kwargs):
+        kwargs = self.preprocess_properties(**kwargs)
+        if _filter:
+            kwargs = self.filter_properties(**kwargs)
+        kwargs = self.postprocess_properties(**kwargs)
+        self.update_propset(**kwargs)
+        try:
+            super().change_params(_filter=_filter, **kwargs)
+        except:
+            pass
     
     def __parse_property(self, p):
         try:
