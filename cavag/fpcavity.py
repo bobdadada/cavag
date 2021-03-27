@@ -29,7 +29,7 @@ class AxisymmetricCavityStructure(PrintableObject):
         
         for prop in AxisymmetricCavityStructure.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
-    
+
     @property
     def length(self):
         """腔长"""
@@ -87,8 +87,7 @@ class SymmetricAxisymmetricCavityStructure(AxisymmetricCavityStructure):
     def change_params(self, **kwargs):
         roc = kwargs.get('roc', None)
         if roc is not None:
-            kwargs.update(rocl=roc, rocr=roc)
-            self.update_propset(roc=roc)
+            self.update_propset(roc=roc, rocl=roc, rocr=roc)
 
         super().change_params(**kwargs)
 
@@ -196,7 +195,7 @@ class AxisymmetricCavity(AxisymmetricCavityStructure):
         return self.get_property('finesse', lambda: self.fsr/(2*self.kappa))
 
 
-class SymmetricAxisymmetricCavity(AxisymmetricCavity, SymmetricAxisymmetricCavityStructure):
+class SymmetricAxisymmetricCavity(SymmetricAxisymmetricCavityStructure, AxisymmetricCavity):
     name = "SymmetricAxisymmetricCavity"
 
     modifiable_properties = ('length', 'roc', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
