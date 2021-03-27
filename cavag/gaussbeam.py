@@ -193,16 +193,9 @@ class NormalizedHermiteGaussBeam(Wavelength):
             NormalizedHermiteGaussBeam1D(namm='y-direction', **(__kwarg_beams[1])),
         )
     
-    def change_params(self, _filter=True, **kwargs):
-        super().change_params(_filter=_filter, **kwargs)
-
-        if _filter:
-            kwargs = self.filter_properties(kwargs)
-
-        self.update_propset(**kwargs)
-
+    def postprocess_properties(self, **propdict):
         xkw, ykw = {}, {}
-        for k, v in kwargs.items():
+        for k, v in propdict.items():
             if k.endswith('x'):
                 xkw[k[:-1]] = v
             elif k.endswith('y'):
@@ -214,6 +207,8 @@ class NormalizedHermiteGaussBeam(Wavelength):
             self.__beams[0].change_params(**xkw)
         if ykw:
             self.__beams[1].change_params(**ykw)
+        
+        return propdict        
 
     @property
     def cx(self):

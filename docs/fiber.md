@@ -28,26 +28,26 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
 <p style="color:blue;">The attributes are defined as follows:</p>
 
-- <span class="prop" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'omegaf', 'roc')` where
+- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'omegaf', 'roc')` where
   
-  - <span class="prop" style="color:red;">nf</span> - $n_f$, core refractive index
-  - <span class="prop" style="color:red;">wavelength</span> - $\lambda$, wavelength of transmitted light
-  - <span class="prop" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
-  - <span class="prop" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
+  - <span class="attr" style="color:red;">nf</span> - $n_f$, core refractive index
+  - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of transmitted light
+  - <span class="attr" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
+  - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
   
   These attributes are also input parameters of the constructor. 
 
-- <span class="prop" style="color:red;">name</span> - The name of instances or classes. The default is *FiberEnd*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *FiberEnd*, which can be modified as required. 
 
-- <span class="prop" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
 
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
 
   - properties provided by this class
 
-    - <span class="prop" style="color:red;">nf</span> - $n_f$, core refractive index
-    - <span class="prop" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
-    - <span class="prop" style="color:red;">roc</span> - $roc$, radius of curvature
+    - <span class="attr" style="color:red;">nf</span> - $n_f$, core refractive index
+    - <span class="attr" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
+    - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature
 
   - properties provided by parent class
 
@@ -55,7 +55,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="prop" style="color:red;">\_\_init\_\_(name='FiberEnd', **kwargs)</span>  - Create a `FiberEnd` object by named parameters consistent with <span class="prop" style="color:red;">modifiable_properties</span>. 
+- <span class="attr" style="color:red;">\_\_init\_\_(name='FiberEnd', **kwargs)</span>  - Create a `FiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
 
 - See <a class="module-object-refer">misc.Wavelength</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
@@ -67,27 +67,27 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
 <p style="color:blue;">The attributes are defined as follows:</p>
 
-- <span class="prop" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'a', 'naf', 'roc')` where
+- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'a', 'naf', 'roc')` where
   
-  - <span class="prop" style="color:red;">nf</span> - $n_f$, core refractive index
-  - <span class="prop" style="color:red;">wavelength</span> - $\lambda$, wavelength of transmitted light
-  - <span class="prop" style="color:red;">a</span> - $a$, radius of fiber core
-  - <span class="prop" style="color:red;">naf</span> - $NA_f$, numerical aperture
-  - <span class="prop" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
+  - <span class="attr" style="color:red;">nf</span> - $n_f$, core refractive index
+  - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of transmitted light
+  - <span class="attr" style="color:red;">a</span> - $a$, radius of fiber core
+  - <span class="attr" style="color:red;">naf</span> - $NA_f$, numerical aperture
+  - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
   
   These attributes are also input parameters of the constructor. 
 
-- <span class="prop" style="color:red;">name</span> - The name of instances or classes. The default is *StepIndexFiberEnd*, which can be modified as required.
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *StepIndexFiberEnd*, which can be modified as required.
 
-- <span class="prop" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
 
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
 
   - properties provided by this class
   
-    - <span class="prop" style="color:red;">a</span> - $a$, radius of fiber core
-    - <span class="prop" style="color:red;">naf</span> - $NA_f$, numerical aperture. the numerical aperture by definition is given by $NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
-    - <span class="prop" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber. For the step-index fiber, we can compute $w_f$ by approximation of Gaussian light. 
+    - <span class="attr" style="color:red;">a</span> - $a$, radius of fiber core
+    - <span class="attr" style="color:red;">naf</span> - $NA_f$, numerical aperture. the numerical aperture by definition is given by $NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
+    - <span class="attr" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber. For the step-index fiber, we can compute $w_f$ by approximation of Gaussian light. 
       $$
       \omega_f=a(0.65 +1.619V^{-1.5}+2.879V^{-6})
       $$
@@ -103,7 +103,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="prop" style="color:red;">\_\_init\_\_(name='StepIndexFiberEnd', **kwargs)</span>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <span class="prop" style="color:red;">modifiable_properties</span>. 
+- <span class="attr" style="color:red;">\_\_init\_\_(name='StepIndexFiberEnd', **kwargs)</span>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
 
 - See <a class="module-object-refer-to" module="fiber">FiberEnd</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 

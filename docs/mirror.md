@@ -19,27 +19,27 @@ Following classes are defined in the module:
 
 <strong class="object" id="Mirror">Mirror</strong>: `class Mirror(misc.RTL, misc.Position)`
 
-This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Position` which provide attributes <span class="prop" style="color:red;">r</span>, <span class="prop" style="color:red;">t</span>, <span class="prop" style="color:red;">l</span> and <span class="prop" style="color:red;">position</span>.
+This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Position` which provide attributes <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span>, <span class="attr" style="color:red;">l</span> and <span class="attr" style="color:red;">position</span>.
 
 <p style="color:blue;">The attributes are defined as follows:</p>
 
-- <span class="prop" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('roc', 'r', 't', 'l', 'position')` where
+- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('roc', 'r', 't', 'l', 'position')` where
   
-  - <span class="prop" style="color:red;">roc</span> - $roc$, radius of curvature
-  - <span class="prop" style="color:red;">r</span> - $R$, optical reflectivity
-  - <span class="prop" style="color:red;">t</span> - $T$, optical transmittance
-  - <span class="prop" style="color:red;">l</span> - $L$, optical loss
-  - <span class="prop" style="color:red;">position</span> - the position of the mirror
+  - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature
+  - <span class="attr" style="color:red;">r</span> - $R$, optical reflectivity
+  - <span class="attr" style="color:red;">t</span> - $T$, optical transmittance
+  - <span class="attr" style="color:red;">l</span> - $L$, optical loss
+  - <span class="attr" style="color:red;">position</span> - the position of the mirror
 
-- <span class="prop" style="color:red;">name</span> - The name of instances or classes. The default is *Mirror*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Mirror*, which can be modified as required. 
   
-- <span class="prop" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
   
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
   
   - properties provided by this class
     
-    - <span class="prop" style="color:red;">roc</span> - $roc$, radius of curvature
+    - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature
   
   - properties provided by parent class
     
@@ -47,7 +47,7 @@ This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Po
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="prop" style="color:red;">\_\_init\_\_(name='Mirror', **kwargs)</span>  - Create a `Mirror` object by named parameters consistent with <span class="prop" style="color:red;">modifiable_properties</span>.
+- <span class="attr" style="color:red;">\_\_init\_\_(name='Mirror', **kwargs)</span>  - Create a `Mirror` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
   
 -  See <a class="module-object-refer">misc.RTL</a>, <a class="module-object-refer">misc.PosItion</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
@@ -68,22 +68,22 @@ A class for a thin lens. In cavity-related applications, thin lens or `zero` abe
 <p style="color:blue;">The attributes are defined as follows:</p>
 
 
-- <span class="prop" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('f', 'r', 't', 'l', 'position')` where
-  - <span class="prop" style="color:red;">f</span> - $f$, focal distance
-  - <span class="prop" style="color:red;">r</span> - $R$, optical reflectivity
-  - <span class="prop" style="color:red;">t</span> - $T$, optical transmittance
-  - <span class="prop" style="color:red;">l</span> - $L$, optical loss
-  - <span class="prop" style="color:red;">position</span> - the position of the lens
+- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('f', 'r', 't', 'l', 'position')` where
+  - <span class="attr" style="color:red;">f</span> - $f$, focal distance
+  - <span class="attr" style="color:red;">r</span> - $R$, optical reflectivity
+  - <span class="attr" style="color:red;">t</span> - $T$, optical transmittance
+  - <span class="attr" style="color:red;">l</span> - $L$, optical loss
+  - <span class="attr" style="color:red;">position</span> - the position of the lens
   
-- <span class="prop" style="color:red;">name</span> - The name of instances or classes. The default is *Lens*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Lens*, which can be modified as required. 
 
-- <span class="prop" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
 
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
 
   - properties provided by this class
 
-    - <span class="prop" style="color:red;">f</span> - $f$, focal distance
+    - <span class="attr" style="color:red;">f</span> - $f$, focal distance
 
   - properties provided by parent class
 
@@ -92,7 +92,7 @@ A class for a thin lens. In cavity-related applications, thin lens or `zero` abe
 <p style="color:blue;">The methods are defined as follows:</p>
 
 
-- <span class="prop" style="color:red;">\_\_init\_\_(name='Lens', **kwargs)</span>  - Create a `Lens` object by named parameters consistent with <span class="prop" style="color:red;">modifiable_properties</span>.
+- <span class="attr" style="color:red;">\_\_init\_\_(name='Lens', **kwargs)</span>  - Create a `Lens` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
 
 - See <a class="module-object-refer">misc.RTL</a>, <a class="module-object-refer">misc.Position</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
