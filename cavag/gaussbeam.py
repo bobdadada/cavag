@@ -206,9 +206,7 @@ class NormalizedHermiteGaussBeam(Wavelength):
         if xkw:
             self.__beams[0].change_params(**xkw)
         if ykw:
-            self.__beams[1].change_params(**ykw)
-        
-        return propdict        
+            self.__beams[1].change_params(**ykw)     
 
     @property
     def cx(self):

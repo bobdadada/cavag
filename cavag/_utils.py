@@ -109,8 +109,8 @@ class Object(object):
         if _filter:
             kwargs = self.filter_properties(**kwargs)
         kwargs = self.preprocess_properties(**kwargs)
-        kwargs = self.postprocess_properties(**kwargs)
         self.update_propset(**kwargs)
+        self.postprocess_properties(**kwargs)
     
     def __parse_property(self, p):
         try:
