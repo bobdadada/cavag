@@ -86,7 +86,7 @@ class Object(object):
     
     @classmethod
     def filter_properties(cls, **propdict):
-        dt = {}
+        dt = {k:v for k, v in propdict.items() if k.startswith('_')}
         for prop in cls.modifiable_properties:
             if prop in propdict:
                 dt[prop] = propdict[prop]
@@ -102,19 +102,15 @@ class Object(object):
                 dt[k] = v
         return dt
 
-    def update_propset(self, **kwargs):
-        self.property_set.change_params(**self.__filter_params(kwargs))
+    def update_propset(self, **propdict):
+        self.property_set.change_params(**self.__filter_params(propdict))
     
     def change_params(self, _filter=True, **kwargs):
-        kwargs = self.preprocess_properties(**kwargs)
         if _filter:
             kwargs = self.filter_properties(**kwargs)
+        kwargs = self.preprocess_properties(**kwargs)
         kwargs = self.postprocess_properties(**kwargs)
         self.update_propset(**kwargs)
-        try:
-            super().change_params(_filter=_filter, **kwargs)
-        except:
-            pass
     
     def __parse_property(self, p):
         try:
