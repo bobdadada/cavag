@@ -84,12 +84,11 @@ class SymmetricAxisymmetricCavityStructure(AxisymmetricCavityStructure):
         self.property_set.add_required(SymmetricAxisymmetricCavityStructure.modifiable_properties)
         self.property_set['roc'] = roc
     
-    def change_params(self, **kwargs):
-        roc = kwargs.get('roc', None)
+    def preprocess_properties(self, **propdict):
+        roc = propdict.get('roc', None)
         if roc is not None:
-            self.update_propset(roc=roc, rocl=roc, rocr=roc)
-
-        super().change_params(**kwargs)
+            propdict.update(rocl=roc, rocr=roc)
+        return propdict
 
     @property
     def roc(self):
@@ -127,13 +126,7 @@ class AxisymmetricCavity(AxisymmetricCavityStructure):
         self.__rtls = (RTL(name='left_rtl', **(__kwarg_rtls[0])),
                         RTL(name='right_rtl', **(__kwarg_rtls[1])))
 
-    def change_params(self, _filter=True, **kwargs):
-        super().change_params(_filter=_filter, **kwargs)
-
-        if _filter:
-            kwargs = self.filter_properties(kwargs)
-        
-        self.update_propset(**kwargs)
+    def postprocess_properties(self, **kwargs):
 
         lkw, rkw = {}, {}
         for k, v in kwargs.items():
@@ -148,6 +141,7 @@ class AxisymmetricCavity(AxisymmetricCavityStructure):
             self.__rtls[0].change_params(**lkw)
         if rkw:
             self.__rtls[1].change_params(**rkw)        
+        return kwargs
 
     @property
     def rl(self):
