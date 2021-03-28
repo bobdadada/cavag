@@ -251,7 +251,7 @@ class AxisymmetricCavityHerimiteGaussMode(AxisymmetricCavityStructure, Axisymmet
             gr = self.gr
             glgr = self.gl*self.gr
             try:
-                zprr = gl*(1-gr)/(gl+gr-2*glgr)*self.length
+                pr = gl*(1-gr)/(gl+gr-2*glgr)*self.length
             except ZeroDivisionError:
                 pr = self.length/2
             return pr
@@ -286,7 +286,7 @@ class AxisymmetricCavityHerimiteGaussMode(AxisymmetricCavityStructure, Axisymmet
     @property
     def e(self):
         """单光子电场强度"""
-        return self.get_property('e', np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.v)))
+        return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.v)))
 
 
 class SymmetricAxisymmetricCavityHerimiteGaussMode(SymmetricAxisymmetricCavityStructure, AxisymmetricCavityHerimiteGaussMode):
@@ -345,19 +345,19 @@ def judge_cavity_type(length, rocl, rocr):
     :param length: 腔长
     :param rocl: 左边腔镜ROC
     :param rocr: 右边腔镜ROC
-    :return: (r1, r2)   r1: True-腔满足稳定条件，False-腔不满足稳定条件;
-                        r2: True-临界腔，False-非临界腔
+    :return: (stable, critical) stable: True-腔满足稳定条件，False-腔不满足稳定条件;
+                                critical: True-临界腔，False-非临界腔
     """
-    r1 = False
-    r2 = False
+    stable = False
+    critical = False
 
     glgr = (1-length/rocl)*(1-length/rocr)
     if glgr >= 0 and glgr <= 1:
-        r1 = True
+        stable = True
         if glgr == 0 or glgr == 1:
-            r2 = True
+            critical = True
 
-    return r1, r2
+    return stable, critical
 
 
 def calculate_loss_clipping(d, omegam):
@@ -385,21 +385,21 @@ def calculate_g(v, nu, gamma):
     计算腔模-离子耦合系数g因子
     :param v: 高斯驻波场模式体积
     :param nu: 光频率 = 光速/波长
-    :param gamma: 驻波场对应频率跃迁的真空自发辐射速率
+    :param gamma: 驻波场对应频率能级跃迁的真空自发辐射速率
     :return: 耦合系数g
     """
     return np.sqrt((3*gamma*constants.pi*constants.c**3)/(2*v*(2*np.pi*nu)**2))
 
 
-def calculate_C1(g, kappa, gamma):
+def calculate_C1(g, kappa, gammat):
     """
     计算单原子耦合系数
     :param g: 耦合系数
     :param kappa: 腔泄漏损耗
-    :param gamma: 总自发辐射速率
+    :param gammat: 总自发辐射速率
     :return: 耦合因子
     """
-    return g**2/(kappa*gamma)
+    return g**2/(kappa*gammat)
 
 
 def calculate_neta_e(C1):
@@ -411,12 +411,12 @@ def calculate_neta_e(C1):
     return 2*C1/(2*C1+1)
 
 
-def calculate_neta_ext(kappa, gamma):
+def calculate_neta_ext(kappa, gammat):
     """
     计算腔耦合光子提取几率
     :param kappa: 腔泄露损耗
-    :param gamma: 总自发辐射速率
+    :param gammat: 总自发辐射速率
     return: 腔耦合提取几率
     """
-    return 2*kappa/(2*kappa+gamma)
+    return 2*kappa/(2*kappa+gammat)
 
