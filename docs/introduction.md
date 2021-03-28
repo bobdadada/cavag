@@ -21,6 +21,25 @@ Source Page: [fiber](fiber.md)
 
 Source Page: [fpcavity](fpcavity)
 
+**Class[es]**
+
+- <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavityStructure</a>
+- <a class="module-object-refer-to" module="fpcavity">SymmetricAxisymmetricCavityStructure</a>
+- <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavity</a>
+- <a class="module-object-refer-to" module="fpcavity">SymmetricAxisymmetricCavity</a>
+- <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavityGaussMode</a>
+- <a class="module-object-refer-to" module="fpcavity">SymmetricAxisymmetricCavityGaussMode</a>
+
+**Function[s]**
+
+- <a class="module-object-refer-to" module="fpcavity">judge_cavity_type</a>
+- <a class="module-object-refer-to" module="fpcavity">calculate_loss_clipping</a>
+- <a class="module-object-refer-to" module="fpcavity">calculate_loss_scattering</a>
+- <a class="module-object-refer-to" module="fpcavity">calculate_g</a>
+- <a class="module-object-refer-to" module="fpcavity">calculate_C1</a>
+- <a class="module-object-refer-to" module="fpcavity">calculate_neta_e</a>
+- <a class="module-object-refer-to" module="fpcavity">calculate_neta_ext</a>
+
 <!-- tab:gaussbeam -->
 
 Source Page: [gaussbeam](gaussbeam.md)
@@ -93,11 +112,11 @@ This class defines an abstraction of real object.
   
 - <span class="attr" style="color:red;">filter\_properties(\*\*propdict)</span> - This method filters the <span class="attr" style="color:red;">propdict</span> and returns the corresponding sub-dictionary in the <span class="attr" style="color:red;">propdict</span> with only properties in the <span class="attr" style="color:red;">modifiable\_properties</span>. Note that any key-value pair in <span class="attr" style="color:red;">propdict</span> with key starting "\_" will be retained as a configuration property.
   
-- <span class="attr" style="color:red;">preprocess\_properties(\*\*propdict)</span> - Pre-process the <span class="attr" style="color:red;">propdict</span>. It is often used to calculate and update properties which are not in the <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="attr" style="color:red;">preprocess\_properties(\*\*propdict)</span> - Pre-process the <span class="attr" style="color:red;">propdict</span>. It is often used to calculate and update properties which are not in the <span class="attr" style="color:red;">modifiable\_properties</span>. This method is often overridden by subclasses.
   
 - <span class="attr" style="color:red;">update\_propset(\*\*propdict)</span> - This method directly uses <span class="attr" style="color:red;">propdict</span> to update properties in <span class="attr" style="color:red;">property\_set</span> with method <span class="attr" style="color:red;">change\_params</span> of <span class="attr" style="color:red;">property\_set</span>. Note that any key-value pair in <span class="attr" style="color:red;">propdict</span> with key starting "\_" will be ignored. Not recommended to use this method directly, use <span class="attr" style="color:red;">change\_params</span> of this class instead.
   
-- <span class="attr" style="color:red;">postprocess\_properties(\*\*propdict)</span> - Post-process the <span class="attr" style="color:red;">propdict</span>. Commonly used to perform other update operations of the instance.
+- <span class="attr" style="color:red;">postprocess\_properties(\*\*propdict)</span> - Post-process the <span class="attr" style="color:red;">propdict</span>. Commonly used to perform other update operations of the instance. This method is often overridden by subclasses.
 
 ----
 

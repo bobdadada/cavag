@@ -1,14 +1,16 @@
+import logging
+
 import numpy as np
 from scipy import constants
 
 from ._utils import PrintableObject
-from .gaussbeam import AxisymmetricHermiteGaussBeam
-from .misc import RTL
+from .gaussbeam import AxisymmetricGaussBeam
+from .misc import RTL, Position
 
 __all__ = [
     'AxisymmetricCavityStructure', 'SymmetricAxisymmetricCavityStructure',
     'AxisymmetricCavity', 'SymmetricAxisymmetricCavity',
-    'AxisymmetricCavityHerimiteGaussMode', 'SymmetricAxisymmetricCavityHerimiteGaussMode',
+    'AxisymmetricCavityGaussMode', 'SymmetricAxisymmetricCavityGaussMode',
     'judge_cavity_type',
     'calculate_loss_clipping', 'calculate_loss_scattering',
     'calculate_g', 'calculate_C1', 'calculate_neta_e',
@@ -32,27 +34,27 @@ class AxisymmetricCavityStructure(PrintableObject):
 
     @property
     def length(self):
-        """腔长"""
+        """腔长[L]"""
         return self.get_property('length')
     
     @property
     def rocl(self):
-        """左腔镜曲率半径"""
+        """左腔镜曲率半径[L]"""
         return self.get_property('rocl')
     
     @property
     def rocr(self):
-        """右腔镜曲率半径"""
+        """右腔镜曲率半径[L]"""
         return self.get_property('rocr')
     
     @property
     def gl(self):
-        """左腔镜g因子"""
+        """左腔镜g因子[1]"""
         return self.get_property('gl', lambda: 1-self.length/self.rocl)
 
     @property
     def gr(self):
-        """右腔镜g因子"""
+        """右腔镜g因子[1]"""
         return self.get_property('gr', lambda: 1-self.length/self.rocr)
     
     def isStable(self):
@@ -92,21 +94,24 @@ class SymmetricAxisymmetricCavityStructure(AxisymmetricCavityStructure):
 
     @property
     def roc(self):
-        """对称腔曲率半径"""
+        """对称腔曲率半径[L]"""
         return self.get_property('roc')
     
     @property
     def g(self):
-        """腔镜g因子"""
+        """腔镜g因子[1]"""
         return self.get_property('g', lambda: 1-self.length/self.roc)
 
 
 class AxisymmetricCavity(AxisymmetricCavityStructure):
     name = "AxisymmetricCavity"
 
-    modifiable_properties = ('length', 'rocl', 'rocr', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
+    modifiable_properties = ('length', 'nc', 'lc', 'rocl', 'rocr', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
 
     def __init__(self, name="AxisymmetricCavity", **kwargs):
+        kwargs.update(nc=kwargs.get('nc', 1))  # default air medium 
+        kwargs.update(lc=kwargs.get('lc', 0))
+
         super().__init__(**kwargs)
         self.name = name
 
@@ -141,57 +146,77 @@ class AxisymmetricCavity(AxisymmetricCavityStructure):
             self.__rtls[0].change_params(**lkw)
         if rkw:
             self.__rtls[1].change_params(**rkw)
+    
+    @property
+    def nc(self):
+        """腔介质的折射率[1]"""
+        return self.get_property('nc')
+
+    @property
+    def lc(self):
+        """腔有效单程损耗"""
+        return self.get_property('lc')
 
     @property
     def rl(self):
-        """左腔镜反射率"""
+        """左腔镜反射率[1]"""
         return self.get_property('rl', lambda: self.__rtls[0].r)
 
     @property
     def tl(self):
-        """左腔镜透射率"""
+        """左腔镜透射率[1]"""
         return self.get_property('tl', lambda: self.__rtls[0].t)
     
     @property
     def ll(self):
-        """左腔镜损耗"""
+        """左腔镜损耗[1]"""
         return self.get_property('ll', lambda: self.__rtls[0].l)
 
     @property
     def rr(self):
-        """右腔镜反射率"""
+        """右腔镜反射率[1]"""
         return self.get_property('rr', lambda: self.__rtls[1].r)
 
     @property
     def tr(self):
-        """右腔镜透射率"""
+        """右腔镜透射率[1]"""
         return self.get_property('tr', lambda: self.__rtls[1].t)
     
     @property
     def lr(self):
-        """右腔镜损耗"""
+        """右腔镜损耗[1]"""
         return self.get_property('lr', lambda: self.__rtls[1].l)
 
     @property
     def kappa(self):
-        """半波半宽(圆频率)"""
-        return self.get_property('kappa', lambda: constants.c*(2-self.rr-self.rl)/(4*self.length))
+        """半波半宽(圆频率)[1/T]"""
+        def v_f():
+            if np.sqrt(self.rl*self.rr) < 0.9 or (self.lc > 0.01):
+                logging.warning("The reflectivity of the cavity mirror is too low, or the loss of cavity is too high, "
+                                "so the deviation of the `kappa` calculated by this approximate formula is large.")
+            return constants.c*(2-(1-self.lc)*(self.rl+self.rr))/(4*self.length)
+        return self.get_property('kappa', v_f)
     
     @property
     def fsr(self):
-        """FSR(圆频率)"""
+        """FSR(圆频率)[1/T]"""
         return self.get_property('fsr', lambda: 2*constants.pi*constants.c/(2*self.length))
 
     @property
     def finesse(self):
-        """精细度"""
+        """精细度[1]"""
         return self.get_property('finesse', lambda: self.fsr/(2*self.kappa))
+    
+    @property
+    def Q(self):
+        """品质因子[1]"""
+        return self.get_property('Q', lambda: constants.pi*self.nu/(self.kappa))
 
 
 class SymmetricAxisymmetricCavity(SymmetricAxisymmetricCavityStructure, AxisymmetricCavity):
     name = "SymmetricAxisymmetricCavity"
 
-    modifiable_properties = ('length', 'roc', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
+    modifiable_properties = ('length', 'nc', 'lc', 'roc', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
 
     def __init__(self, name="SymmetricAxisymmetricCavity", **kwargs):
         roc = kwargs.get('roc', None)
@@ -203,13 +228,12 @@ class SymmetricAxisymmetricCavity(SymmetricAxisymmetricCavityStructure, Axisymme
         self.property_set['roc'] = roc
 
 
-class AxisymmetricCavityHerimiteGaussMode(AxisymmetricCavityStructure, AxisymmetricHermiteGaussBeam):
-    name = 'AxisymmetricCavityHerimiteGaussMode'
+class AxisymmetricCavityGaussMode(AxisymmetricCavityStructure, AxisymmetricGaussBeam, Position):
+    name = 'AxisymmetricCavityGaussMode'
 
-    modifiable_properties = ('length', 'wavelength', 'rocl', 'rocr', 'A0', 'm')
-    
+    modifiable_properties = ('length', 'wavelength', 'rocl', 'rocr', 'A0', 'position')
 
-    def __init__(self, name="AxisymmetricCavityHerimiteGaussMode", **kwargs):
+    def __init__(self, name="AxisymmetricCavityGaussMode", **kwargs):
         kwargs.update(A0=kwargs.get('A0', 1))
 
         super().__init__(**kwargs)
@@ -217,7 +241,7 @@ class AxisymmetricCavityHerimiteGaussMode(AxisymmetricCavityStructure, Axisymmet
 
     @property
     def z0(self):
-        """瑞利长度"""
+        """瑞利长度[L]"""
         def v_f():
             gl = self.gl
             gr = self.gr
@@ -231,7 +255,7 @@ class AxisymmetricCavityHerimiteGaussMode(AxisymmetricCavityStructure, Axisymmet
 
     @property
     def pl(self):
-        """左腔镜相对束腰位置"""
+        """左腔镜相对束腰位置[L]"""
         def v_f():
             gl = self.gl
             gr = self.gr
@@ -245,7 +269,7 @@ class AxisymmetricCavityHerimiteGaussMode(AxisymmetricCavityStructure, Axisymmet
 
     @property
     def pr(self):
-        """右腔镜相对束腰位置"""
+        """右腔镜相对束腰位置[L]"""
         def v_f():
             gl = self.gl
             gr = self.gr
@@ -259,42 +283,42 @@ class AxisymmetricCavityHerimiteGaussMode(AxisymmetricCavityStructure, Axisymmet
     
     @property
     def p0(self):
-        """束腰位置"""
-        return self.get_property('p0', lambda: (self.pl-self.pr)/2)
+        """束腰位置[L]"""
+        return self.get_property('p0', lambda: (self.pl-self.pr)/2+self.position)
 
     @property
     def omega0(self):
-        """束腰半径"""
+        """束腰半径[L]"""
         return self.get_property('omega0', lambda: np.sqrt(self.wavelength*self.z0/constants.pi))
 
     @property
     def omegaml(self):
-        """左腔面模场半径"""
+        """左腔面模场半径[L]"""
         return self.get_property('omegaml', lambda: self.omega0*np.sqrt(1+(self.pl/self.z0)**2))
 
     @property
     def omegamr(self):
-        """右腔面模场半径"""
+        """右腔面模场半径[L]"""
         return self.get_property('omegamr', lambda: self.omega0*np.sqrt(1+(self.pr/self.z0)**2))
 
     # 模式体积(小NA近似)
     @property
-    def v(self):
-        """模式体积"""
-        return self.get_property('v', lambda: self.length*(self.omega0)**2*constants.pi/4)
+    def V_mode(self):
+        """模式体积[L^3]"""
+        return self.get_property('V_mode', lambda: self.length*(self.omega0)**2*constants.pi/4)
 
     @property
     def e(self):
-        """单光子电场强度"""
-        return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.v)))
+        """单光子电场强度[ML/T^3I]"""
+        return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.V_mode)))
 
 
-class SymmetricAxisymmetricCavityHerimiteGaussMode(SymmetricAxisymmetricCavityStructure, AxisymmetricCavityHerimiteGaussMode):
-    name = "SymmetricAxisymmetricCavityHerimiteGaussMode"
+class SymmetricAxisymmetricCavityGaussMode(SymmetricAxisymmetricCavityStructure, AxisymmetricCavityGaussMode):
+    name = "SymmetricAxisymmetricCavityGaussMode"
 
-    modifiable_properties = ('length', 'wavelength', 'roc', 'A0', 'm')
+    modifiable_properties = ('length', 'wavelength', 'roc', 'A0')
 
-    def __init__(self, name="SymmetricAxisymmetricCavityHerimiteGaussMode" ,**kwargs):
+    def __init__(self, name="SymmetricAxisymmetricCavityGaussMode" ,**kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
@@ -305,7 +329,7 @@ class SymmetricAxisymmetricCavityHerimiteGaussMode(SymmetricAxisymmetricCavitySt
 
     @property
     def z0(self):
-        """瑞利长度"""
+        """瑞利长度[L]"""
         def v_f():
             length = self.length
             roc = self.roc
@@ -314,27 +338,27 @@ class SymmetricAxisymmetricCavityHerimiteGaussMode(SymmetricAxisymmetricCavitySt
 
     @property
     def p(self):
-        """腔镜相对束腰位置"""
+        """腔镜相对束腰位置[L]"""
         return self.get_property('p', lambda: self.length/2)
 
     @property
     def p0(self):
-        """束腰位置"""
-        return self.get_property('p0', lambda: 0)
+        """束腰位置[L]"""
+        return self.get_property('p0', lambda: self.position)
     
     @property
     def pl(self):
-        """左腔镜相对束腰位置"""
+        """左腔镜相对束腰位置[L]"""
         return self.get_property('pl', lambda: self.p)
 
     @property
     def pr(self):
-        """右腔镜相对束腰位置"""
+        """右腔镜相对束腰位置[L]"""
         return self.get_property('pr', lambda: self.p)
 
     @property
     def omegam(self):
-        """腔面模场半径"""
+        """腔面模场半径[L]"""
         return self.get_property('omegam', self.omega0*np.sqrt(1+(self.length/2/ self.z0)**2))
 
 
@@ -380,15 +404,15 @@ def calculate_loss_scattering(sigmasc, wavelength):
     return (4*constants.pi*sigmasc/wavelength)**2
 
 
-def calculate_g(v, nu, gamma):
+def calculate_g(V_mode, nu, gamma):
     """
     计算腔模-离子耦合系数g因子
-    :param v: 高斯驻波场模式体积
+    :param V_mode: 高斯驻波场模式体积
     :param nu: 光频率 = 光速/波长
     :param gamma: 驻波场对应频率能级跃迁的真空自发辐射速率
     :return: 耦合系数g
     """
-    return np.sqrt((3*gamma*constants.pi*constants.c**3)/(2*v*(2*np.pi*nu)**2))
+    return np.sqrt((3*gamma*constants.pi*constants.c**3)/(2*V_mode*(2*np.pi*nu)**2))
 
 
 def calculate_C1(g, kappa, gammat):

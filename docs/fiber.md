@@ -87,7 +87,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
   
     - <span class="attr" style="color:red;">a</span> - $a$, radius of fiber core
     - <span class="attr" style="color:red;">naf</span> - $NA_f$, numerical aperture. the numerical aperture by definition is given by $NA_{f}=\sqrt{n^2_{\text{core}}-n^2_{\text{clad}}}$.
-    - <span class="attr" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber. For the step-index fiber, we can compute $w_f$ by approximation of Gaussian light. 
+    - <span class="attr" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber. For the step-index fiber, we can compute $\omega_f$ by approximation of Gaussian light. 
       $$
       \omega_f=a(0.65 +1.619V^{-1.5}+2.879V^{-6})
       $$
