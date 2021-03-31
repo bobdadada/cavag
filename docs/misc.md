@@ -30,7 +30,7 @@ This class define an abstract class describing $R,T,L$.
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *RTL*, which can be modified as required. 
 
-- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
 
@@ -92,7 +92,7 @@ This class define a one-dimensional position.
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Position*, which can be modified as required. 
   
-- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
   
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
   
@@ -128,7 +128,7 @@ Light Wavelength Abstract Class.
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Wavelength*, which can be modified as required. 
 
-- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
 

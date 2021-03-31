@@ -33,7 +33,7 @@ This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Po
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Mirror*, which can be modified as required. 
   
-- <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
   
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
   
@@ -77,7 +77,7 @@ A class for a thin lens. In cavity-related applications, thin lens or `zero` abe
   
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Lens*, which can be modified as required. 
 
-- <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
 

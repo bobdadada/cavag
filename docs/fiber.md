@@ -39,7 +39,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *FiberEnd*, which can be modified as required. 
 
-- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
 
@@ -79,7 +79,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *StepIndexFiberEnd*, which can be modified as required.
 
-- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited by `_utils.Object`. See [introduction](introduction.md) for details.
+- <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
 - The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
 
