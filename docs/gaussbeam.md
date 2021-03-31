@@ -4,7 +4,7 @@
 
 The normalized Gaussian Beam or more general Hermite-Gaussian Beam has form
 $$
-f_{mn}(x,y,z)=u_{mn}(x,y,z)e^{-jkz}  \tag{1}
+f_{mn}(x,y,z,t)=u_{mn}(x,y,z)e^{-jkz}e^{j2\pi \nu t}  \tag{1}
 $$
 where
 $$
