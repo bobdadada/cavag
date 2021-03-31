@@ -111,7 +111,7 @@
     function docsifyModuleObjectRefer(hook, vm) {
         function scrollIntoModuleObject(name, f) {
             let path = name.split('.');
-            window.location.href = DOM.location.origin + '/#/' + path[0];
+            window.location.href = DOM.location.href.replace(/\/(?![^#]*\/)#.*/, '') + '#/' + path[0];
             scrollIntoViewById(path[1], f)
             return false;
         }
