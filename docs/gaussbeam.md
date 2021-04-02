@@ -4,13 +4,18 @@
 
 The normalized Gaussian Beam or more general Hermite-Gaussian Beam has form
 $$
-f_{mn}(x,y,z,t)=u_{mn}(x,y,z)e^{-jkz}e^{j2\pi \nu t}  \tag{1}
+\begin{aligned}
+&f_{mn}(x,y,z,t)\\&=u_{mn}(x,y,z)e^{-jkz}e^{j2\pi \nu t}
+\end{aligned} \tag{1}
 $$
 where
 $$
 \begin{aligned}
-u_{mn}(x,y,z)=&\frac{C_{mn}}{\sqrt{1+z^2/z_R^2}}\psi_{m}\left(\frac{\sqrt{2}x}{\omega}\right)\psi_{n}\left(\frac{\sqrt{2}y}{\omega}\right)\\
-&\cdot \exp\left[-\frac{jk}{2R}(x^2+y^2)\right]e^{j(m+n+1)\phi}
+&u_{mn}(x,y,z)\\
+&=\frac{C_{mn}}{\sqrt{1+z^2/z_R^2}}\\
+&\;\cdot\psi_{m}\left(\frac{\sqrt{2}x}{\omega}\right)\psi_{n}\left(\frac{\sqrt{2}y}{\omega}\right)\\
+&\;\cdot \exp\left[-\frac{jk}{2R}(x^2+y^2)\right]\\
+&\;\cdot e^{j(m+n+1)\phi}
 \end{aligned} \tag{2}
 $$
 for $m,n=0,1,2,\dots$, where 
@@ -52,13 +57,17 @@ C_m=\frac{1}{\pi^{1/4}\sqrt{2^m m!}}
 $$
 with identity $\int^{\infty}_{-\infty}H^2_m(\xi)e^{-\xi^2}d\xi=\sqrt{\pi} 2^m m!$. At $z=0$, we can get the shape of the waist
 $$
-u_{mn}(x_0,y_0)=C_{mn}\psi_{m}\left(\frac{\sqrt{2}x_0}{\omega_0}\right)\psi_{n}\left(\frac{\sqrt{2}y_0}{\omega_0}\right) \tag{8}
+\begin{aligned}
+&u_{mn}(x_0,y_0)\\
+&=C_{mn}\psi_{m}\left(\frac{\sqrt{2}x_0}{\omega_0}\right)\psi_{n}\left(\frac{\sqrt{2}y_0}{\omega_0}\right)
+\end{aligned} \tag{8}
 $$
 $C_{mn}$ can be chosen so that $\int^{\infty}_{-\infty}dx_0 \int^{\infty}_{-\infty}dy_0 |u_{mn}(x_0,y_0)|^2=1$. The Hermite-Gaussian forward traveling wave can also be computed by
 $$
 \begin{aligned}
-u_{mn}(x,y,z)=&\frac{j}{\lambda z}\int^{\infty}_{-\infty}dx_0\int^{\infty}_{-\infty}dy_0 u_{mn}(x_0,y_0)\\
-&\cdot\exp\left\{-\frac{jk}{2z}[(x-x_0)^2+(y-y_0)^2]\right\}
+&u_{mn}(x,y,z)\\
+&=\frac{j}{\lambda z}\int^{\infty}_{-\infty}dx_0\int^{\infty}_{-\infty}dy_0 u_{mn}(x_0,y_0)\\
+&\;\cdot\exp\left\{-\frac{jk}{2z}[(x-x_0)^2+(y-y_0)^2]\right\}
 \end{aligned}
 $$
 
@@ -72,7 +81,10 @@ In addition, as $m$ or $n$ increases, the number of nodes increases and the rang
 
 The most commonly used laser is the fundamental mode of Hermite-Gaussian beam, that is, $m=n=0$. The equation of the waist of fundamental mode is given by
 $$
-u_{mn}(x_0,y_0)=\left(\frac{2}{\omega_0^2 \pi}\right)^{1/2}\exp\left(-\frac{x_0^2+y_0^2}{\omega_0^2}\right) \tag{9}
+\begin{aligned}
+&u_{mn}(x_0,y_0)\\
+&=\left(\frac{2}{\omega_0^2 \pi}\right)^{1/2}\exp\left(-\frac{x_0^2+y_0^2}{\omega_0^2}\right) 
+\end{aligned} \tag{9}
 $$
 
 
@@ -94,11 +106,17 @@ The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipyn
 
 With the characteristics of Gaussian beams and the notation in the figure, we get
 $$
-\omega = \omega_0\left[1+\left(\frac{\lambda s}{\pi{\omega_0}^2}\right)^2\right]^{1/2}, \ R= s\left[1+\left(\frac{\pi \omega_0^2}{\lambda s}\right)^2\right] \tag{10}
+\begin{aligned}
+&\omega = \omega_0\left[1+\left(\frac{\lambda s}{\pi{\omega_0}^2}\right)^2\right]^{1/2} \\
+& R= s\left[1+\left(\frac{\pi \omega_0^2}{\lambda s}\right)^2\right] 
+\end{aligned} \tag{10}
 $$
 and
 $$
-\omega'_0 = \frac{\omega'}{\left[1+\left(\frac{\pi{\omega'}^2}{\lambda R'}\right)^2\right]^{1/2}}, \ s' =  \frac{R'}{1+\left(\frac{\lambda R'}{\pi{\omega'}^2}\right)^2}  \tag{11}
+\begin{aligned}
+&\omega'_0 = \frac{\omega'}{\left[1+\left(\frac{\pi{\omega'}^2}{\lambda R'}\right)^2\right]^{1/2}}\\
+&s' =  \frac{R'}{1+\left(\frac{\lambda R'}{\pi{\omega'}^2}\right)^2} 
+\end{aligned} \tag{11}
 $$
 With our notations, the features of thin lens imply that
 $$
@@ -106,7 +124,10 @@ $$
 $$
 Then with the order following
 $$
-(\omega_0,s)\overset{(10)}\rightarrow (\omega,R) \overset{(12)}\rightarrow(\omega',R')\overset{(11)}\rightarrow(\omega'_0,s')
+\begin{aligned}
+& (\omega_0,s)\overset{(10)}\rightarrow (\omega,R) \\
+& \overset{(12)}\rightarrow(\omega',R')\overset{(11)}\rightarrow(\omega'_0,s')
+\end{aligned}
 $$
 one can get radius and position of the waist of the Gaussian beam after passing through the thin lens.
 
@@ -128,7 +149,10 @@ $$
 $$
 With equation $(10)$ and $(11)$, then the beam waist position and radius of the beam after reflection can be calculated by the following steps
 $$
-(\omega_0,s)\overset{(10)}\rightarrow (\omega,R) \overset{(13)}\rightarrow(\omega',R')\overset{(11)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
+\begin{aligned}
+&(\omega_0,s)\overset{(10)}\rightarrow (\omega,R) \overset{(13)}\rightarrow(\omega',R')\\
+&\overset{(11)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
+\end{aligned}
 $$
 In the last expression, the optical axis has undergone an axis-symmetric transformation with respect to the vertical axis. At this time, all parameters in the Gaussian beam should be calculated in the new optical axis. 
 

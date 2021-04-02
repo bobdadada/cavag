@@ -42,11 +42,11 @@ This class define an abstract class describing $R,T,L$.
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="attr" style="color:red;">\_\_init\_\_(name='RTL', **kwargs)</span>  - Create a `RTL` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. For parameter <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span>, one can provide only two of them, and the remaining one can be calculated when the class is constructed. Note $R,T,L$ are normalized in the constructor, i.e, $R+T+L=1$.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='RTL', \*\*<span class="param">kwargs</span>)</span>  - Create a `RTL` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. For parameter <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span>, one can provide only two of them, and the remaining one can be calculated when the class is constructed. Note $R,T,L$ are normalized in the constructor, i.e, $R+T+L=1$.
   
-- <span class="attr" style="color:red;">preprocess\_properties(\_norm=True, **propdict)</span> - We rewrite the `preprocess_properties` method provided by <code>_utils.<a class="module-object-refer-to" module="introduction">Object</a></code> and provided an additional parameter <span class="attr" style="color:red;">\_norm</span>. If <span class="attr" style="color:red;">\_norm</span> is set to `True`, then the input parameters <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span> in <span class="attr" style="color:red;">propdict</span> will be normalized, to make $R+T+L=1$.
+- <span class="method" style="color:red;">preprocess\_properties(<span class="param">\_norm</span>=True, \*\*<span class="param">propdict</span>)</span> - We rewrite the `preprocess_properties` method provided by <code>_utils.<a class="module-object-refer-to" module="introduction">Object</a></code> and provided an additional parameter <span class="param" style="color:red;">\_norm</span>. If <span class="param" style="color:red;">\_norm</span> is set to `True`, then the input parameters <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span> in <span class="param" style="color:red;">propdict</span> will be normalized, to make $R+T+L=1$.
   
-- <span class="attr" style="color:red;">add_loss(loss)</span> - This method provides a way to add <span class="attr" style="color:red;">loss</span> to the surface. In common cases, the loss can be divided into multiple parts. At this time, the loss will be added by this method, and the method will calculate the normalized $R,T,L$.
+- <span class="method" style="color:red;">add_loss(<span class="param">loss</span>)</span> - This method provides a way to add <span class="param" style="color:red;">loss</span> to the surface. In common cases, the loss can be divided into multiple parts. At this time, the loss will be added by this method, and the method will calculate the normalized $R,T,L$.
 
 ----
 
@@ -56,17 +56,17 @@ A helper class for the $R,T,L$ conversion. This class is mainly used to define a
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="attr" style="color:red;">@(staticmethod): normalize(r=None, t=None, l=None)</span> - The method is used to normalize the $R,T,L$, i.e. $R+T+L=1$. One can only provide only two of the parameters reflectivity - $R$ - <span class="attr" style="color:red;">r</span>, transmittance - $T$ - <span class="attr" style="color:red;">t</span>, loss - $L$ - <span class="attr" style="color:red;">l</span>. Then this method will return the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): normalize(<span class="param">r</span>=None, <span class="param">t</span>=None, <span class="param">l</span>=None)</span> - The method is used to normalize the $R,T,L$, i.e. $R+T+L=1$. One can only provide only two of the parameters reflectivity - $R$ - <span class="param" style="color:red;">r</span>, transmittance - $T$ - <span class="param" style="color:red;">t</span>, loss - $L$ - <span class="param" style="color:red;">l</span>. Then this method will return the normalized $R,T,L$ in a tuple.
   
-- <span class="attr" style="color:red;">@(staticmethod): rtl_by_r_t2l(r, t2l)</span> - By parameters reflectivity - $R$ - <span class="attr" style="color:red;">r</span> and the ratio of transmittance to loss - $T/L$ - <span class="attr" style="color:red;">t2l</span>, this method returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): rtl_by_r_t2l(<span class="param">r</span>, <span class="param">t2l</span>)</span> - By parameters reflectivity - $R$ - <span class="param" style="color:red;">r</span> and the ratio of transmittance to loss - $T/L$ - <span class="param" style="color:red;">t2l</span>, this method returns the normalized $R,T,L$ in a tuple.
   
-- <span class="attr" style="color:red;">@(staticmethod): rtl_by_t_r2l(t, r2l)</span> - By parameters transmittance - $T$ - <span class="attr" style="color:red;">t</span> and the ratio of reflectivity to loss - $R/L$ - <span class="attr" style="color:red;">r2l</span>, this method returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): rtl_by_t_r2l(<span class="param">t</span>, <span class="param">r2l</span>)</span> - By parameters transmittance - $T$ - <span class="param" style="color:red;">t</span> and the ratio of reflectivity to loss - $R/L$ - <span class="param" style="color:red;">r2l</span>, this method returns the normalized $R,T,L$ in a tuple.
   
-- <span class="attr" style="color:red;">@(staticmethod): add_reflectivity(m0, re)</span> - This method adds extra reflectivity - <span class="attr" style="color:red;">re</span> to the original (reflectivity, transmittance, loss) tuple - <span class="attr" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): add_reflectivity(<span class="param">m0</span>, <span class="param">re</span>)</span> - This method adds extra reflectivity - <span class="param" style="color:red;">re</span> to the original (reflectivity, transmittance, loss) tuple - <span class="param" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
   
-- <span class="attr" style="color:red;">@(staticmethod): add_transmittance(m0, te)</span> - This method adds extra transmittance - <span class="attr" style="color:red;">te</span> to the original (reflectivity, transmittance, loss) tuple - <span class="attr" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): add_transmittance(<span class="param">m0</span>, <span class="param">te</span>)</span> - This method adds extra transmittance - <span class="param" style="color:red;">te</span> to the original (reflectivity, transmittance, loss) tuple - <span class="param" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
   
-- <span class="attr" style="color:red;">@(staticmethod): add_loss(m0, le)</span> - This method adds extra loss - <span class="attr" style="color:red;">le</span> to the original (reflectivity, transmittance, loss) tuple - <span class="attr" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): add_loss(<span class="param">m0</span>, <span class="param">le</span>)</span> - This method adds extra loss - <span class="param" style="color:red;">le</span> to the original (reflectivity, transmittance, loss) tuple - <span class="param" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
 
 ----
 
@@ -102,7 +102,7 @@ This class define a one-dimensional position.
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="attr" style="color:red;">\_\_init\_\_(name='Position', **kwargs)</span>  - Create a `Position` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Position', \*\*<span class="param">kwargs</span>)</span>  - Create a `Position` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
 
 ----
 
@@ -141,7 +141,7 @@ Light Wavelength Abstract Class.
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="attr" style="color:red;">\_\_init\_\_(name='Wavelength', **kwargs)</span>  - Create a `Wavelength` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Wavelength', \*\*<span class="param">kwargs</span>)</span>  - Create a `Wavelength` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
 
 ----
 

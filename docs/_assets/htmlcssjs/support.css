@@ -11,18 +11,29 @@ h1, h2, h3 {
     margin-right: 5px;
 }
 
-/* object对象强调 */
+/* Begin - object对象强调 */
 .object {
     font-size: 1.5em;
 }
 
-/* 属性文字强调 */
 .attr {
     font-family: "Times New Roman",Georgia,Serif;
-    font-size: 1.1em;
+    font-size: 1.2em;
     font-style: italic;
-    color: red;
+    color: #D94600;
 }
+
+.method {
+    font-family: "Times New Roman",Georgia,Serif;
+    font-size: 1.1em;
+    color: #C6A300;
+}
+
+.param {
+    font-style: italic;
+    color: #00A600;
+}
+/* End - object对象强调 */
 
 /* docsify-tabs__content字体 */
 .docsify-tabs__content {

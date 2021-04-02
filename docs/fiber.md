@@ -55,7 +55,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="attr" style="color:red;">\_\_init\_\_(name='FiberEnd', **kwargs)</span>  - Create a `FiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='FiberEnd', \*\*<span class="param">kwargs</span>)</span>  - Create a `FiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
 
 - See <a class="module-object-refer">misc.Wavelength</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
@@ -103,7 +103,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="attr" style="color:red;">\_\_init\_\_(name='StepIndexFiberEnd', **kwargs)</span>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='StepIndexFiberEnd', \*\*<span class="param">kwargs</span>)</span>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
 
 - See <a class="module-object-refer-to" module="fiber">FiberEnd</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
