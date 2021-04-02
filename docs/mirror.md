@@ -47,7 +47,7 @@ This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Po
 
 <p style="color:blue;">The methods are defined as follows:</p>
 
-- <span class="attr" style="color:red;">\_\_init\_\_(name='Mirror', **kwargs)</span>  - Create a `Mirror` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Mirror', \*\*<span class="param">kwargs</span>)</span>  - Create a `Mirror` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
   
 -  See <a class="module-object-refer">misc.RTL</a>, <a class="module-object-refer">misc.PosItion</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
@@ -92,7 +92,7 @@ A class for a thin lens. In cavity-related applications, thin lens or `zero` abe
 <p style="color:blue;">The methods are defined as follows:</p>
 
 
-- <span class="attr" style="color:red;">\_\_init\_\_(name='Lens', **kwargs)</span>  - Create a `Lens` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Lens', \*\*<span class="param">kwargs</span>)</span>  - Create a `Lens` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
 
 - See <a class="module-object-refer">misc.RTL</a>, <a class="module-object-refer">misc.Position</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
