@@ -39,15 +39,7 @@ the normalization factor is given by
 $$
 C_{mn}=\left(\frac{2}{\omega_0^2 \pi 2^{m+n}m! n!}\right)^{1/2}
 $$
-The equation $(5)$ also shows that
-$$
-\frac{\omega^2(z)}{\omega_0^2}-\frac{z^2}{z_R^2}=1
-$$
-So the asymptotic straight line of above equation gives half divergence angle $\theta$
-$$
-\tan\theta=\frac{\omega_0}{z_R}=\frac{\lambda}{\pi \omega_0} \tag{7}
-$$
-Since the fiber is axis-symmetric, the actual divergence angle should be $2\theta$. And note $\psi_m(\xi)=H_m(\xi)e^{-\xi^2/2}$ is the $m$th order Hermite-Gaussian mode to equation
+And note $\psi_m(\xi)=H_m(\xi)e^{-\xi^2/2}$ is the $m$th order Hermite-Gaussian mode to equation
 $$
 -\frac{d^2 \psi_m}{d \xi^2}+\xi^2 \psi_m = \lambda_m \psi_m
 $$
@@ -60,7 +52,7 @@ $$
 \begin{aligned}
 &u_{mn}(x_0,y_0)\\
 &=C_{mn}\psi_{m}\left(\frac{\sqrt{2}x_0}{\omega_0}\right)\psi_{n}\left(\frac{\sqrt{2}y_0}{\omega_0}\right)
-\end{aligned} \tag{8}
+\end{aligned} \tag{7}
 $$
 $C_{mn}$ can be chosen so that $\int^{\infty}_{-\infty}dx_0 \int^{\infty}_{-\infty}dy_0 |u_{mn}(x_0,y_0)|^2=1$. The Hermite-Gaussian forward traveling wave can also be computed by
 $$
@@ -71,6 +63,45 @@ $$
 \end{aligned}
 $$
 
+#### Characteristics of Gaussian mode
+
+The most commonly used laser is the fundamental mode of Hermite-Gaussian beam, that is, $m=n=0$. The equation of the fundamental Gaussian mode is given by
+$$
+\begin{aligned}
+&u_{00}(x_0,y_0)\\
+&=\left(\frac{2}{\omega_0^2 \pi}\right)^{1/2}\exp\left(-\frac{x_0^2+y_0^2}{\omega_0^2}\right) 
+\end{aligned} \tag{8}
+$$
+And the equation $(5)$ also shows that
+$$
+\frac{\omega^2(z)}{\omega_0^2}-\frac{z^2}{z_R^2}=1
+$$
+So the asymptotic straight line of above equation gives divergence half angle $\theta_{0}$ of Gaussian mode
+$$
+\tan\theta_{0}=\frac{\omega_0}{z_R}=\frac{\lambda}{\pi \omega_0} \tag{9}
+$$
+Since the fiber is axis-symmetric, the divergence full angle should be $2\theta_{0}$. The mode volume of the Gaussian mode is given by
+
+$$
+\begin{aligned}
+V_{00eff}=&\int^{z_2}_{z_1}\pi\omega_0^2\left[1+\left(\frac{z}{z_R}\right)^2\right]dz\\
+=&\pi\omega_0^2\left[z_2-z_1+\frac{1}{3z_R^2}\left(z_2^3-z_1^3\right)\right]
+\end{aligned} \tag{10}
+$$
+
+
+#### Characteristics of Hermite-Gaussian mode
+
+The divergence of half angle of a Hermite-Gaussian mode is
+$$
+\theta_{m}=\sqrt{2m+1}\theta_{0} \tag{11}
+$$
+and the mode volume of a Hermite-Gaussian mode is
+$$
+V_{mneff}=\sqrt{(2m+1)(2n+1)}V_{00eff} \tag{12}
+$$
+where $V_{00eff}$ is the fundamental mode at same location.
+
 ### Demonstration of the characteristics of Hermite-Gaussian Modes
 
 <div><img src="_assets/picture/res/gaussbeam/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
@@ -79,20 +110,30 @@ The figure on the left shows the waist shape of some modes. It is easy to find t
 
 In addition, as $m$ or $n$ increases, the number of nodes increases and the range of the waist becomes larger and larger. 
 
-The most commonly used laser is the fundamental mode of Hermite-Gaussian beam, that is, $m=n=0$. The equation of the waist of fundamental mode is given by
-$$
-\begin{aligned}
-&u_{mn}(x_0,y_0)\\
-&=\left(\frac{2}{\omega_0^2 \pi}\right)^{1/2}\exp\left(-\frac{x_0^2+y_0^2}{\omega_0^2}\right) 
-\end{aligned} \tag{9}
-$$
-
 
 <div style="clear: both"></div>
 
-<div style="text-align:center"><img src="_assets/picture/res/gaussbeam/random_comb_hermite_gaussian.png" alt="random_comb_hermite_gaussian" style="height:400px;"><img src="_assets/picture/res/gaussbeam/intensity_center_waist_normalized_hg.png" alt="intensity_center_waist_normalized_hg" style="height:400px;"></div>
+<div><img src="_assets/picture/res/gaussbeam/random_comb_hermite_gaussian.png" alt="random_comb_hermite_gaussian" style="float:left; height:300px;"></div>
 
-A waist of a random combinations of some mode are shown in the first figure above. It can be seen that the graph of a random combination of the Hermite-Gaussian modes becomes very weird. Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. And the second figure shows the intensity at the center of the waist of each normalized Hermite-Gaussian mode. We also find an oscillation characteristic in this figure.
+A waist of a random combinations of some mode are shown in this figure. It can be seen that the graph of a random combination of the Hermite-Gaussian modes becomes very weird. 
+
+The state shown in the figure is a superposition state of multiple Hermite-Gaussian modes, that is
+$$
+u(x,y,z) = \sum_{m,n}u_{mn}(x,y,z)
+$$
+Note the intensity of this mode satisfies
+$$
+I(x,y,z)\propto \|u(x,y,z)\|^2=\left\|\sum_{m,n}u_{mn}(x,y,z)\right\|^2\ne\sum_{m,n}\left\|u_{mn}(x,y,z)\right\|^2
+$$
+The final inequality represents a typical difference between classical and quantum 
+
+<div style="clear: both"></div>
+
+<div><img src="_assets/picture/res/gaussbeam/intensity_center_waist_normalized_hg.png" alt="intensity_center_waist_normalized_hg" style="float:left; height:300px;"></div>
+
+Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. And the second figure shows the intensity at the center of the waist of each normalized Hermite-Gaussian mode. We also find an oscillation characteristic in this figure.
+
+<div style="clear: both"></div>
 
 The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipynb](_assets/example/hermite_gaussian_beam.ipynb ':ignore :class=download').
 
@@ -109,24 +150,24 @@ $$
 \begin{aligned}
 &\omega = \omega_0\left[1+\left(\frac{\lambda s}{\pi{\omega_0}^2}\right)^2\right]^{1/2} \\
 & R= s\left[1+\left(\frac{\pi \omega_0^2}{\lambda s}\right)^2\right] 
-\end{aligned} \tag{10}
+\end{aligned} \tag{13}
 $$
 and
 $$
 \begin{aligned}
 &\omega'_0 = \frac{\omega'}{\left[1+\left(\frac{\pi{\omega'}^2}{\lambda R'}\right)^2\right]^{1/2}}\\
 &s' =  \frac{R'}{1+\left(\frac{\lambda R'}{\pi{\omega'}^2}\right)^2} 
-\end{aligned} \tag{11}
+\end{aligned} \tag{14}
 $$
 With our notations, the features of thin lens imply that
 $$
-\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{1}{f'}  \tag{12}
+\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{1}{f'}  \tag{15}
 $$
 Then with the order following
 $$
 \begin{aligned}
-& (\omega_0,s)\overset{(10)}\rightarrow (\omega,R) \\
-& \overset{(12)}\rightarrow(\omega',R')\overset{(11)}\rightarrow(\omega'_0,s')
+& (\omega_0,s)\overset{(13)}\rightarrow (\omega,R) \\
+& \overset{(15)}\rightarrow(\omega',R')\overset{(14)}\rightarrow(\omega'_0,s')
 \end{aligned}
 $$
 one can get radius and position of the waist of the Gaussian beam after passing through the thin lens.
@@ -145,13 +186,13 @@ If we move the origin of the coordinates to the position of the mirror surface, 
 
 !> The definitions of symbols $R',R,R_0$ have changed.
 $$
-\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{13}
+\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{16}
 $$
 With equation $(10)$ and $(11)$, then the beam waist position and radius of the beam after reflection can be calculated by the following steps
 $$
 \begin{aligned}
-&(\omega_0,s)\overset{(10)}\rightarrow (\omega,R) \overset{(13)}\rightarrow(\omega',R')\\
-&\overset{(11)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
+&(\omega_0,s)\overset{(13)}\rightarrow (\omega,R) \overset{(16)}\rightarrow(\omega',R')\\
+&\overset{(14)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
 \end{aligned}
 $$
 In the last expression, the optical axis has undergone an axis-symmetric transformation with respect to the vertical axis. At this time, all parameters in the Gaussian beam should be calculated in the new optical axis. 

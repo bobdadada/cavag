@@ -50,7 +50,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
     @property
     def theta(self):
         """半发散角"""
-        return self.get_property('theta', lambda:np.arctan(self.wavelength/(constants.pi*self.omega0)))
+        return self.get_property('theta', lambda: np.sqrt(2*self.m+1)*np.arctan(self.wavelength/(constants.pi*self.omega0)))
     
     @property
     def m(self) -> int:
