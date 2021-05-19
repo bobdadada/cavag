@@ -35,10 +35,6 @@ Source Page: [fpcavity](fpcavity)
 - <a class="module-object-refer-to" module="fpcavity">judge_cavity_type</a>
 - <a class="module-object-refer-to" module="fpcavity">calculate_loss_clipping</a>
 - <a class="module-object-refer-to" module="fpcavity">calculate_loss_scattering</a>
-- <a class="module-object-refer-to" module="fpcavity">calculate_g</a>
-- <a class="module-object-refer-to" module="fpcavity">calculate_C1</a>
-- <a class="module-object-refer-to" module="fpcavity">calculate_neta_e</a>
-- <a class="module-object-refer-to" module="fpcavity">calculate_neta_ext</a>
 
 <!-- tab:gaussbeam -->
 
@@ -64,9 +60,15 @@ Source Page: [misc](misc.md)
 - <a class="module-object-refer-to" module="misc">Position</a>
 - <a class="module-object-refer-to" module="misc">Wavelength</a>
 
-<!-- tab:utils -->
+<!-- tab:extension[s] -->
 
-Source Page: [utils](utils.md)
+Source Page: [extension[s]](extension)
+
+- [fcqs](extension/fcqs.md)
+  - <a class="module-object-refer-to" module="extension/fcqs">calculate_g</a>
+  - <a class="module-object-refer-to" module="extension/fcqs">calculate_C1</a>
+  - <a class="module-object-refer-to" module="extension/fcqs">calculate_neta_e</a>
+  - <a class="module-object-refer-to" module="extension/fcqs">calculate_neta_ext</a>
 
 <!-- tabs:end -->
 

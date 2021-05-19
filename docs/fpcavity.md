@@ -62,6 +62,25 @@ Q=\frac{\nu}{\delta\nu} \tag{10}
 $$
 !> Please note that some of the above symbols may be different from other reference books.
 
+There are many ways to define the modal volume of a cavity, one of the most convenient is defined as
+$$
+V=\frac{\int_V \mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2d^3 \mathbf{r}}{\max_{V}[\mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2]}=\frac{\int_{V}|u(\mathbf{r})|^2 d^3 \mathbf{r}}{\max_{V}|u(\mathbf{r})|^2}=\frac{1}{4}\pi\omega_0^2L \tag{11}
+$$
+
+There are a lot of losses in the cavity, and a lot of losses are on the mirror surface, mainly including:
+
+Clipping loss on the finite-diameter mirrors. Conservatively assume a cavity mode and consider its 'spillover' loss upon reflection on a finite-diameter mirror. For a single reflection,
+$$
+\mathcal{L}_{cl}=e^{-2(D/2)^2/\omega_m^2} \tag{12}
+$$
+where $\omega_{m}$ is the mode radius of the mode impinging on the mirror of diameter $D$. Note the mode radius of higher-order modes is larger, so the clipping loss is larger under the same parameters.
+
+Scattering loss. A widely used estimate linking the roughness of the mirror surface to the scattering loss is
+$$
+\mathcal{L}_{sc}=\left(\frac{4\pi \sigma_{sc}}{\lambda}\right)^2 \tag{13}
+$$
+where $\sigma_{sc}$ is the roughness of the surface, which is consistent with the definition of surface roughness in the field of mechanical manufacturing, a typical value is $0.2\text{nm}$. Better mirror manufacturing technology and coating technology can effectively reduce $\sigma_{sc}$, thereby reducing $\mathcal{L}_{sc}$.
+
 ## Codes
 
 
