@@ -42,7 +42,7 @@ $$
 $$
 where $n_c$ is the refractive index of the medium in the cavity. Generally, this medium is air, that is, $n_c=1$. Different from the definition in other reference books, this definition of $\text{FSR}$ above is an angular frequency.
 
-The width of the $\text{TEM}_{00}$ cavity resonances, usually expressed as full-width at half-maximum (FWHM) frequency $\delta\nu$ in laser physics and as half-width at half-maximum (HWHM) angular frequency<a class="refer">[1]</a>
+The width of the cavity resonances, usually expressed as full-width at half-maximum (FWHM) frequency $\delta\nu$ in laser physics and as half-width at half-maximum (HWHM) angular frequency<a class="refer">[1]</a>
 $$
 \kappa = \frac{2\pi \delta\nu}{2}\approx\frac{c[2-(1-\mathcal{L}_c)(\mathcal{R}_l+\mathcal{R}_r)]}{4n_c L} \tag{8}
 $$
@@ -62,10 +62,17 @@ Q=\frac{\nu}{\delta\nu} \tag{10}
 $$
 !> Please note that some of the above symbols may be different from other reference books.
 
+By the 
+
 There are many ways to define the modal volume of a cavity, one of the most convenient is defined as
 $$
-V=\frac{\int_V \mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2d^3 \mathbf{r}}{\max_{V}[\mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2]}=\frac{\int_{V}|u(\mathbf{r})|^2 d^3 \mathbf{r}}{\max_{V}|u(\mathbf{r})|^2}=\frac{1}{4}\pi\omega_0^2L \tag{11}
+\begin{aligned}
+V&=\frac{\int_V \mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2d^3 \mathbf{r}}{\max_{V}[\mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2]}\approx \frac{\int_{V}|u(\mathbf{r})|^2 d^3 \mathbf{r}}{\max_{V}|u(\mathbf{r})|^2}\\
+&=?\frac{L}{\max_{V}|u(\mathbf{r})|^2}
+\end{aligned} \tag{11}
 $$
+
+?where $u(\mathbf{r})$ is the Hermite-Gauss mode $=\frac{1}{4}\pi\omega_0^2L $.?
 
 There are a lot of losses in the cavity, and a lot of losses are on the mirror surface, mainly including:
 

@@ -63,6 +63,29 @@ $$
 \end{aligned}
 $$
 
+Through Maxwell’s equations, 
+$$
+\begin{aligned}
+\mu \mathbf{H} &= \nabla \times \mathbf{A}\\
+\mathbf{E} &= -j2\pi\nu \nabla \times \mathbf{A}-\nabla\Phi\\
+\end{aligned}
+$$
+where $\Phi$ in an environment without charged particles, is
+$$
+\Phi=\frac{j}{2\pi\nu \mu\epsilon}\nabla \cdot \mathbf{A}
+$$
+Suppose that $\mathbf{A}$ is polarized along $\hat{\mathbf{x}}$:
+$$
+\mathbf{A}=\hat{\mathbf{x}}u_{mn}(x,y,z)e^{-jkz}
+$$
+Then
+$$
+\begin{aligned}
+\mathbf{E} &= -j2\pi\nu \left(\hat{\mathbf{x}}u_{mn}-j\hat{\mathbf{z}}\frac{\partial u_{mn}}{k\partial x} \right)e^{-jkz}\\
+\mu \mathbf{H} &= -jk\left(\hat{\mathbf{y}}u_{mn}-j\hat{\mathbf{z}}\frac{\partial u_{mn}}{k\partial y} \right)e^{-jkz}
+\end{aligned} \tag{8}
+$$
+
 #### Characteristics of Gaussian mode
 
 The most commonly used laser is the fundamental mode of Hermite-Gaussian beam, that is, $m=n=0$. The equation of the fundamental Gaussian mode is given by
@@ -70,7 +93,7 @@ $$
 \begin{aligned}
 &u_{00}(x_0,y_0)\\
 &=\left(\frac{2}{\omega_0^2 \pi}\right)^{1/2}\exp\left(-\frac{x_0^2+y_0^2}{\omega_0^2}\right) 
-\end{aligned} \tag{8}
+\end{aligned} \tag{9}
 $$
 And the equation $(5)$ also shows that
 $$
@@ -78,7 +101,7 @@ $$
 $$
 So the asymptotic straight line of above equation gives divergence half angle $\theta_{0}$ of Gaussian mode
 $$
-\tan\theta_{0}=\frac{\omega_0}{z_R}=\frac{\lambda}{\pi \omega_0} \tag{9}
+\tan\theta_{0}=\frac{\omega_0}{z_R}=\frac{\lambda}{\pi \omega_0} \tag{10}
 $$
 Since the fiber is axis-symmetric, the divergence full angle should be $2\theta_{0}$. The mode volume of the Gaussian mode is given by
 
@@ -86,7 +109,7 @@ $$
 \begin{aligned}
 V_{00eff}=&\int^{z_2}_{z_1}\pi\omega_0^2\left[1+\left(\frac{z}{z_R}\right)^2\right]dz\\
 =&\pi\omega_0^2\left[z_2-z_1+\frac{1}{3z_R^2}\left(z_2^3-z_1^3\right)\right]
-\end{aligned} \tag{10}
+\end{aligned} \tag{11}
 $$
 
 
@@ -94,19 +117,19 @@ $$
 
 The divergence of half angle of a Hermite-Gaussian mode is
 $$
-\theta_{m}=\sqrt{2m+1}\theta_{0} \tag{11}
+\theta_{m}=\sqrt{2m+1}\theta_{0} \tag{12}
 $$
 and the mode volume of a Hermite-Gaussian mode is
 $$
-V_{mneff}=\sqrt{(2m+1)(2n+1)}V_{00eff} \tag{12}
+V_{mneff}=\sqrt{(2m+1)(2n+1)}V_{00eff} \tag{13}
 $$
-where $V_{00eff}$ is the fundamental mode at same location.
+where $V_{00eff}$ is the mode volume of the fundamental mode at same location.
 
 ### Demonstration of the characteristics of Hermite-Gaussian Modes
 
 <div><img src="_assets/picture/res/gaussbeam/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
 
-The figure on the left shows the waist shape of some modes. It is easy to find that although the equation (3) is equivalently satisfied for each mode, the beam waist of different modes cannot be represented by $\omega_0$ only, and only the waist radius of fundamental Gaussian mode can be represented by $\omega_0$.
+The figure on the left shows the waist shape of some modes. It is easy to find that although the equation $(3)$ is equivalently satisfied for each mode, the beam waist of different modes cannot be represented by $\omega_0$ only, and only the waist radius of fundamental Gaussian mode can be represented by $\omega_0$.
 
 In addition, as $m$ or $n$ increases, the number of nodes increases and the range of the waist becomes larger and larger. 
 
@@ -150,24 +173,24 @@ $$
 \begin{aligned}
 &\omega = \omega_0\left[1+\left(\frac{\lambda s}{\pi{\omega_0}^2}\right)^2\right]^{1/2} \\
 & R= s\left[1+\left(\frac{\pi \omega_0^2}{\lambda s}\right)^2\right] 
-\end{aligned} \tag{13}
+\end{aligned} \tag{14}
 $$
 and
 $$
 \begin{aligned}
 &\omega'_0 = \frac{\omega'}{\left[1+\left(\frac{\pi{\omega'}^2}{\lambda R'}\right)^2\right]^{1/2}}\\
 &s' =  \frac{R'}{1+\left(\frac{\lambda R'}{\pi{\omega'}^2}\right)^2} 
-\end{aligned} \tag{14}
+\end{aligned} \tag{15}
 $$
 With our notations, the features of thin lens imply that
 $$
-\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{1}{f'}  \tag{15}
+\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{1}{f'}  \tag{16}
 $$
 Then with the order following
 $$
 \begin{aligned}
-& (\omega_0,s)\overset{(13)}\rightarrow (\omega,R) \\
-& \overset{(15)}\rightarrow(\omega',R')\overset{(14)}\rightarrow(\omega'_0,s')
+& (\omega_0,s)\overset{(14)}\rightarrow (\omega,R) \\
+& \overset{(16)}\rightarrow(\omega',R')\overset{(15)}\rightarrow(\omega'_0,s')
 \end{aligned}
 $$
 one can get radius and position of the waist of the Gaussian beam after passing through the thin lens.
@@ -186,13 +209,13 @@ If we move the origin of the coordinates to the position of the mirror surface, 
 
 !> The definitions of symbols $R',R,R_0$ have changed.
 $$
-\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{16}
+\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{17}
 $$
-With equation $(10)$ and $(11)$, then the beam waist position and radius of the beam after reflection can be calculated by the following steps
+With equation $(11)$ and $(12)$, then the beam waist position and radius of the beam after reflection can be calculated by the following steps
 $$
 \begin{aligned}
-&(\omega_0,s)\overset{(13)}\rightarrow (\omega,R) \overset{(16)}\rightarrow(\omega',R')\\
-&\overset{(14)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
+&(\omega_0,s)\overset{(14)}\rightarrow (\omega,R) \overset{(17)}\rightarrow(\omega',R')\\
+&\overset{(15)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
 \end{aligned}
 $$
 In the last expression, the optical axis has undergone an axis-symmetric transformation with respect to the vertical axis. At this time, all parameters in the Gaussian beam should be calculated in the new optical axis. 
