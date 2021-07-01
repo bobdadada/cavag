@@ -103,7 +103,7 @@ So the asymptotic straight line of above equation gives divergence half angle $\
 $$
 \tan\theta_{0}=\frac{\omega_0}{z_R}=\frac{\lambda}{\pi \omega_0} \tag{10}
 $$
-Since the fiber is axis-symmetric, the divergence full angle should be $2\theta_{0}$. The mode volume of the Gaussian mode is given by
+Since the fiber is axis-symmetric, the divergence full angle should be $2\theta_{0}$. In some textbooks, the mode volume of the Gaussian mode is given by
 
 $$
 \begin{aligned}
@@ -112,18 +112,21 @@ V_{00eff}=&\int^{z_2}_{z_1}\pi\omega_0^2\left[1+\left(\frac{z}{z_R}\right)^2\rig
 \end{aligned} \tag{11}
 $$
 
-
 #### Characteristics of Hermite-Gaussian mode
 
-The divergence of half angle of a Hermite-Gaussian mode is
+The waist radius of $x$-direction of a Hermite-Gaussian mode is
 $$
-\theta_{m}=\sqrt{2m+1}\theta_{0} \tag{12}
+\omega_{m}=\sqrt{2m+1}\omega_0 \tag{12}
 $$
-and the mode volume of a Hermite-Gaussian mode is
+and the half divergence angle of this direction is
 $$
-V_{mneff}=\sqrt{(2m+1)(2n+1)}V_{00eff} \tag{13}
+\theta_{m}=\sqrt{2m+1}\theta_{0} \tag{13}
 $$
-where $V_{00eff}$ is the mode volume of the fundamental mode at same location.
+The mode volume of the Hermite-Gaussian mode is
+$$
+V_{mneff}=\sqrt{(2m+1)(2n+1)}V_{00eff} \tag{14}
+$$
+where $V_{00eff}$ is the mode volume of the fundamental mode at the same location.
 
 ### Demonstration of the characteristics of Hermite-Gaussian Modes
 
@@ -162,7 +165,7 @@ The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipyn
 
 ### transformation of Hermite-Gaussian Modes
 
-**transformation by a thin lens**
+#### transformation by a thin lens
 
 !> Please note that the definition of the symbol here is slightly different from elsewhere.
 
@@ -173,29 +176,29 @@ $$
 \begin{aligned}
 &\omega = \omega_0\left[1+\left(\frac{\lambda s}{\pi{\omega_0}^2}\right)^2\right]^{1/2} \\
 & R= s\left[1+\left(\frac{\pi \omega_0^2}{\lambda s}\right)^2\right] 
-\end{aligned} \tag{14}
+\end{aligned} \tag{15}
 $$
 and
 $$
 \begin{aligned}
 &\omega'_0 = \frac{\omega'}{\left[1+\left(\frac{\pi{\omega'}^2}{\lambda R'}\right)^2\right]^{1/2}}\\
 &s' =  \frac{R'}{1+\left(\frac{\lambda R'}{\pi{\omega'}^2}\right)^2} 
-\end{aligned} \tag{15}
+\end{aligned} \tag{16}
 $$
-With our notations, the features of thin lens imply that
+With our notations, features of the thin lens imply that
 $$
-\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{1}{f'}  \tag{16}
+\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{1}{f'}  \tag{17}
 $$
 Then with the order following
 $$
 \begin{aligned}
-& (\omega_0,s)\overset{(14)}\rightarrow (\omega,R) \\
-& \overset{(16)}\rightarrow(\omega',R')\overset{(15)}\rightarrow(\omega'_0,s')
+& (\omega_0,s)\overset{(15)}\rightarrow (\omega,R) \\
+& \overset{(17)}\rightarrow(\omega',R')\overset{(16)}\rightarrow(\omega'_0,s')
 \end{aligned}
 $$
 one can get radius and position of the waist of the Gaussian beam after passing through the thin lens.
 
-**transformation by a mirror**
+#### transformation by a mirror
 
 <div style="text-align:center"><img src="_assets/picture/model/model_gb_mirror.svg" alt="transformation of H-G by thin mirror"></div>
 
@@ -208,14 +211,16 @@ A unfolded mirror acts like a lens with a focal distance $f'=R_0/2$.
 If we move the origin of the coordinates to the position of the mirror surface, change the definition of symbols, then the features of unfold mirror gives
 
 !> The definitions of symbols $R',R,R_0$ have changed.
+
+With our notations, features of the mirror imply that
 $$
-\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{17}
+\omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{18}
 $$
-With equation $(11)$ and $(12)$, then the beam waist position and radius of the beam after reflection can be calculated by the following steps
+Then the waist position and waist radius of the beam after reflection can be calculated by the following steps
 $$
 \begin{aligned}
-&(\omega_0,s)\overset{(14)}\rightarrow (\omega,R) \overset{(17)}\rightarrow(\omega',R')\\
-&\overset{(15)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
+&(\omega_0,s)\overset{(15)}\rightarrow (\omega,R) \overset{(18)}\rightarrow(\omega',R')\\
+&\overset{(16)}\rightarrow(\omega'_0,s')\overset{z\rightarrow -z}\rightarrow(\omega'_0,-s')
 \end{aligned}
 $$
 In the last expression, the optical axis has undergone an axis-symmetric transformation with respect to the vertical axis. At this time, all parameters in the Gaussian beam should be calculated in the new optical axis. 

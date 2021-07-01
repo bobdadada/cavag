@@ -12,7 +12,7 @@ class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
         wavelength, p0, omega0, m = 1550e-9, 0, 4e-6, 3
         c = (2/constants.pi)**(1/4)/np.sqrt(omega0*(2**m)*special.factorial(m))
         z0 = constants.pi*omega0**2/wavelength
-        theta = np.arctan(omega0/z0)
+        theta = np.sqrt(2*m+1)*np.arctan(omega0/z0)
 
         nhgb1d = NormalizedHermiteGaussBeam1D(wavelength=wavelength, p0=p0, omega0=omega0, m=m)
         
@@ -306,6 +306,24 @@ class Test_AxisymmetricGaussBeam(unittest.TestCase):
 
         self.assertAlmostEqual(asgb.A_f(10), A0/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
 
+
+class Test_transformation(unittest.TestCase):
+
+    def test_local2remote(self):
+        wavelength = 493e-9
+
+        omega0 = 10e-6
+        z = 100e-6
+        omega, R = local2remote(wavelength, omega0, z)
+
+        zr = constants.pi * omega0 ** 2 / wavelength
+
+        self.assertTrue(R > 0)
+        self.assertEqual(omega, omega0 * np.sqrt(1 + ( z / zr) ** 2))
+        self.assertEqual(R, z * (1 + (zr / z) ** 2))
+    
+    def test_remote2local(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()
