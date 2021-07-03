@@ -227,7 +227,15 @@ In the last expression, the optical axis has undergone an axis-symmetric transfo
 
 #### Transformation by a general linear system
 
-A Gaussian beam is completely
+A Gaussian beam is completely by the complex parameter $q$, where
+$$
+\frac{1}{q}=\frac{1}{R}-j\frac{\lambda}{\pi \omega^2} \tag{19}
+$$
+and the definition of $R$ and $\omega$ can be seen in formula $(4),(5)$. Because all higher-order Hermite-Gaussian modes are described by the same $R$ and $\omega$, the same $q$ parameter, their transformation is governed by the same law, except in so far as the phase change $(m+n+1)\phi$ is concerned. And a paraxial system can be described by $A,B,C,D$ matrix. The transformations of $q$ can be expressed as a bilinear transformation
+$$
+q'=\frac{Aq+B}{Cq+D} \tag{20}
+$$
+This can be verified in any linear system.
 
 ## Codes
 
