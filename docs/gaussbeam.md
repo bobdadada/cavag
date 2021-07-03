@@ -163,15 +163,15 @@ Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. 
 
 The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipynb](_assets/example/hermite_gaussian_beam.ipynb ':ignore :class=download').
 
-### transformation of Hermite-Gaussian Modes
+### Transformation of Hermite-Gaussian Modes
 
-#### transformation by a thin lens
+#### Transformation by a thin lens
 
 !> Please note that the definition of the symbol here is slightly different from elsewhere.
 
 <div style="text-align:center"><img src="_assets/picture/model/model_gb_thin_lens.svg" alt="transformation of H-G by thin lens"></div>
 
-With the characteristics of Gaussian beams and the notation in the figure, we get
+With the characteristics of Hermite-Gaussian beams and the notation in the figure, we get
 $$
 \begin{aligned}
 &\omega = \omega_0\left[1+\left(\frac{\lambda s}{\pi{\omega_0}^2}\right)^2\right]^{1/2} \\
@@ -196,9 +196,9 @@ $$
 & \overset{(17)}\rightarrow(\omega',R')\overset{(16)}\rightarrow(\omega'_0,s')
 \end{aligned}
 $$
-one can get radius and position of the waist of the Gaussian beam after passing through the thin lens.
+one can get radius and position of the waist of the Gaussian beam after passing through the thin lens. This is the same for any mode of Hermite-Gaussian.
 
-#### transformation by a mirror
+#### Transformation by a mirror
 
 <div style="text-align:center"><img src="_assets/picture/model/model_gb_mirror.svg" alt="transformation of H-G by thin mirror"></div>
 
@@ -224,6 +224,10 @@ $$
 \end{aligned}
 $$
 In the last expression, the optical axis has undergone an axis-symmetric transformation with respect to the vertical axis. At this time, all parameters in the Gaussian beam should be calculated in the new optical axis. 
+
+#### Transformation by a general linear system
+
+A Gaussian beam is completely
 
 ## Codes
 
