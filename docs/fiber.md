@@ -16,9 +16,7 @@ With the advancement of technology, manufacturers can produce optical fibers for
 
 #### 1. The input and output ends of a fiber
 
-In optical coupling applications, we only need to consider the conditions of the input and output ends of the fiber. Three properties, $n_f$ (core refractive index), $\lambda$ (wavelength of transmitted light), and $w_f$ (radius of mode field), of the fiber must be considered. Any qualified manufacturer is fully capable of providing these data.  For the fiber cavity, the end face of the fiber is not necessarily flat. For this case, the radius of curvature $roc$ (radius of curvature) of the end face needs to be considered.
-
-Following classes are defined in the module:
+In optical coupling applications, we only need to consider the conditions of the input and output ends of the fiber. Three properties, $n_f$ (core refractive index), $\lambda$ (wavelength of transmitted light), and $\omega_f$ (radius of mode field), of the fiber must be considered. Any qualified manufacturer is fully capable of providing these data.  For the fiber cavity, the end face of the fiber is not necessarily flat. For this case, the radius of curvature $roc$ (radius of curvature) of the end face needs to be considered.
 
 ----
 
@@ -35,8 +33,6 @@ This class define a fiber end face object. Almost all attributes cannot be assig
   - <span class="attr" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
   - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
   
-  These attributes are also input parameters of the constructor. 
-
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *FiberEnd*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
@@ -75,8 +71,6 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
   - <span class="attr" style="color:red;">naf</span> - $NA_f$, numerical aperture
   - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
   
-  These attributes are also input parameters of the constructor. 
-
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *StepIndexFiberEnd*, which can be modified as required.
 
 - <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.

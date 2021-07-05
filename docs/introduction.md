@@ -86,8 +86,6 @@ In other modules, all abstract classes related to physical objects are subclasse
 
 An empty **property\_set** is created if the subclass is constructed. It is a data type similar to the python `dict`. One can get and set the <span class="param" style="color:red;">value</span> corresponding to <span class="param" style="color:red;">key</span> by `value = property_set[key]` and `property_set[key] = value`. The private attribute **\_\_required_props** of **property_set** is a set, when an instance of `PropertySet` is created, this attribute will be set to `set(props)` where <span class="param" style="color:red;">props</span> is the input parameter of the constructor <span class="method" style="color:red;">\_\_init\_\_(<span class="param">props</span>=(), \*<span class="param">args</span>, \*\*<span class="param">kwargs</span>)</span>. **\_\_required\_props** contains all basic properties that a physical object must have, and all other properties can be derived from these basic properties. These basic properties are initialized to `None`. The value of a property `prop` in **\_\_required_props** can be normally obtained through `property_set[prop]`, but if the value of this property is `None`, obtaining the corresponding value through `property_set.get_strictly(prop)` will raise a `PropertyLost` exception.
 
-The detailed definitions are as follows:
-
 ----
 
 <strong class="object" id="Object">Object</strong>: `class Object`

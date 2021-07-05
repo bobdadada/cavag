@@ -10,8 +10,6 @@ In this module, we define many commonly used auxiliary classes, all of which are
 
 Since reflectivity $R$, transmittance $T$, and loss $L$ are important in the mirror-related applications and often given in an equivalent form in practical applications, we need $RTL$ abstract class and a helper class for $R,T,L$ conversion. 
 
-Following classes are defined in the module:
-
 ----
 
 <strong class="object" id="RTL">RTL</strong>: `class RTL(_utils.PrintableObject)`
@@ -25,8 +23,6 @@ This class define an abstract class describing $R,T,L$.
   - <span class="attr" style="color:red;">r</span> - $R$, optical reflectivity, the value must be between $0$ and $1$
   - <span class="attr" style="color:red;">t</span> - $T$, optical transmittance, the value must be between $0$ and $1$
   - <span class="attr" style="color:red;">l</span> - $L$, optical loss, the value must be between $0$ and $1$
-
-  These attributes are also input parameters of the constructor. 
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *RTL*, which can be modified as required. 
 
@@ -74,8 +70,6 @@ A helper class for the $R,T,L$ conversion. This class is mainly used to define a
 
 The position is also an useful property of a real object. In this `cavag`, the commonly used position property is the position on the optical axis. So we need to define a one-dimensional position auxiliary class. 
 
-Following classes are defined in the module:
-
 ----
 
 <strong class="object" id="Position">Position</strong>: `class Position(_utils.PrintableObject)`
@@ -87,8 +81,6 @@ This class define a one-dimensional position.
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('position', )` where
 
   - <span class="attr" style="color:red;">position</span> - position of a real object, must be a number, default to $0$
-
-  These attributes are also input parameters of the constructor. 
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Position*, which can be modified as required. 
   
@@ -110,8 +102,6 @@ This class define a one-dimensional position.
 
 For light, wavelength $\lambda$ is an important property. 
 
-Following classes are defined in the module:
-
 ----
 
 <strong class="object" id="Wavelength">Wavelength</strong>: `class Wavelength(_utils.PrintableObject)`
@@ -123,8 +113,6 @@ Light Wavelength Abstract Class.
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('wavelength', )` where
 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the light
-
-  These attributes are also input parameters of the constructor. 
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Wavelength*, which can be modified as required. 
 

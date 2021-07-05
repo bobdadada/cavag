@@ -31,38 +31,38 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
             self.property_set[prop] = kwargs.get(prop, None)
 
     @property
-    def c(self):
-        """归一化因子"""
+    def cm(self):
+        """归一化因子[1]"""
         def v_f():
             omega0 = self.omega0
             m = self.m
             return (2/constants.pi)**(1/4)/np.sqrt(omega0*(2**m)*special.factorial(m))
-        return self.get_property('c', v_f)
+        return self.get_property('cm', v_f)
 
     @property
     def p0(self):
-        """束腰位置"""
+        """束腰位置[L]"""
         return self.get_property('p0')
 
     @property
     def omega0(self):
-        """束腰半径"""
+        """束腰半径[L]"""
         return self.get_property('omega0')
 
     @property
-    def theta(self):
-        """半发散角"""
-        return self.get_property('theta', lambda: np.sqrt(2*self.m+1)*np.arctan(self.wavelength/(constants.pi*self.omega0)))
-
-    @property
     def m(self) -> int:
-        """光的模式数"""
+        """光的模式数[1]"""
         return self.get_property('m')
-
+    
     @property
     def z0(self):
-        """瑞利长度"""
+        """瑞利长度[L]"""
         return self.get_property('z0', lambda:  constants.pi * (self.omega0) ** 2 / self.wavelength)
+
+    @property
+    def theta(self):
+        """半发散角[1]"""
+        return self.get_property('theta', lambda: np.sqrt(2*self.m+1)*np.arctan(self.wavelength/(constants.pi*self.omega0)))
 
     @property
     def hm(self):
@@ -99,7 +99,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
 
     def u_f(self, z, x):
         """强度函数"""
-        c = self.c
+        cm = self.cm
         A = self.A_f(z)
         psi = self.psi_f(z, x)
         phi = self.phi_f(z)
@@ -107,7 +107,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         R = self.R_f(z)
         m = self.m
 
-        ampl = c*A*psi
+        ampl = cm*A*psi
         phase = -k/(2*R)*x**2+(m+1/2)*phi
 
         return ampl, phase
@@ -135,7 +135,6 @@ class HermiteGaussBeam1D(NormalizedHermiteGaussBeam1D):
         """振幅函数"""
         A0 = self.A0
         A = super().A_f(z)
-        print(A)
         return A0*A
 
 
@@ -215,19 +214,19 @@ class NormalizedHermiteGaussBeam(Wavelength):
             self.__beams[1].change_params(**ykw)
 
     @property
-    def cx(self):
+    def cmx(self):
         """x方向归一化因子"""
-        return self.get_property('cx', lambda: self.__beams[0].c)
+        return self.get_property('cmx', lambda: self.__beams[0].cm)
 
     @property
-    def cy(self):
+    def cmy(self):
         """y方向归一化因子"""
-        return self.get_property('cy', lambda: self.__beams[1].c)
+        return self.get_property('cmy', lambda: self.__beams[1].cm)
 
     @property
-    def c(self):
+    def cm(self):
         """总归一化因子"""
-        return self.get_property('c', lambda: self.cx*self.cy)
+        return self.get_property('cm', lambda: self.cmx*self.cmy)
 
     @property
     def p0(self):
@@ -394,9 +393,9 @@ class NormalizedAxisymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
             self.property_set[prop] = kwargs.get(prop, None)
 
     @property
-    def c(self):
+    def cm(self):
         """总归一化因子"""
-        return self.get_property('c', lambda: (super(NormalizedAxisymmetricHermiteGaussBeam, self).c)**2)
+        return self.get_property('cm', lambda: (super(NormalizedAxisymmetricHermiteGaussBeam, self).cm)**2)
 
     def A_f(self, z):
         """振幅函数"""
@@ -404,7 +403,7 @@ class NormalizedAxisymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
 
     def u_f(self, z, x, y):
         """强度函数"""
-        c = self.c
+        cm = self.cm
         A = self.A_f(z)
         psi = self.psi_f(z, x)*self.psi_f(z, y)
         phi = self.phi_f(z)
@@ -412,7 +411,7 @@ class NormalizedAxisymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
         R = self.R_f(z)
         m = self.m
 
-        ampl = c*A*psi
+        ampl = cm*A*psi
         phase = -k/(2*R)*(x**2+y**2)+(2*m+1/2)*phi
 
         return ampl, phase
@@ -509,6 +508,7 @@ def convert_through_mirror(wavelength, omega0, s, roc):
     omega0p, spm = convert_through_lens(wavelength, omega0, s, roc/2)
     sp = -spm
     return omega0p, sp
+
 
 def convert_through_lens(wavelength, omega0, s, f):
     """

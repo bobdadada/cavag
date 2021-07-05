@@ -12,7 +12,7 @@ where
 $$
 \begin{aligned}
 &u_{mn}(x,y,z)\\
-&=\frac{C_{mn}}{\sqrt{1+z^2/z_R^2}}\\
+&=\frac{C_{mn}}{\sqrt{1+z^2/z_0^2}}\\
 &\;\cdot\psi_{m}\left(\frac{\sqrt{2}x}{\omega}\right)\psi_{n}\left(\frac{\sqrt{2}y}{\omega}\right)\\
 &\;\cdot \exp\left[-\frac{jk}{2R}(x^2+y^2)\right]\\
 &\;\cdot e^{j(m+n+1)\phi}
@@ -20,19 +20,19 @@ $$
 $$
 for $m,n=0,1,2,\dots$, where 
 $$
-z_R=\pi \omega_0^2/\lambda  \tag{3}
+z_0=\pi \omega_0^2/\lambda  \tag{3}
 $$
  which also called by Rayleigh length or Rayleigh range, and
 $$
-R=R(z)=z\left[1+\left(\frac{z_R}{z}\right)^2\right] \tag{4}
+R=R(z)=z\left[1+\left(\frac{z_0}{z}\right)^2\right] \tag{4}
 $$
 
 $$
-\omega=\omega(z)=\omega_0\left[1+\left(\frac{z}{z_R}\right)^2\right]^{1/2} \tag{5}
+\omega=\omega(z)=\omega_0\left[1+\left(\frac{z}{z_0}\right)^2\right]^{1/2} \tag{5}
 $$
 
 $$
-\tan\phi=\frac{z}{z_R} \tag{6}
+\tan\phi=\frac{z}{z_0} \tag{6}
 $$
 
 the normalization factor is given by
@@ -43,9 +43,9 @@ And note $\psi_m(\xi)=H_m(\xi)e^{-\xi^2/2}$ is the $m$th order Hermite-Gaussian 
 $$
 -\frac{d^2 \psi_m}{d \xi^2}+\xi^2 \psi_m = \lambda_m \psi_m
 $$
-with eigenvalue $\lambda_m=2(m+1/2)$. The normalization factor $C_m$ of $\psi_m(\xi)$ is given by
+with eigenvalue $\lambda_m=2(m+1/2)$. The normalization factor $C'_m$ of $\psi_m(\xi)$ is given by
 $$
-C_m=\frac{1}{\pi^{1/4}\sqrt{2^m m!}}
+C'_m=\frac{1}{\pi^{1/4}\sqrt{2^m m!}}
 $$
 with identity $\int^{\infty}_{-\infty}H^2_m(\xi)e^{-\xi^2}d\xi=\sqrt{\pi} 2^m m!$. At $z=0$, we can get the shape of the waist
 $$
@@ -97,18 +97,18 @@ $$
 $$
 And the equation $(5)$ also shows that
 $$
-\frac{\omega^2(z)}{\omega_0^2}-\frac{z^2}{z_R^2}=1
+\frac{\omega^2(z)}{\omega_0^2}-\frac{z^2}{z_0^2}=1
 $$
 So the asymptotic straight line of above equation gives divergence half angle $\theta_{0}$ of Gaussian mode
 $$
-\tan\theta_{0}=\frac{\omega_0}{z_R}=\frac{\lambda}{\pi \omega_0} \tag{10}
+\tan\theta_{0}=\frac{\omega_0}{z_0}=\frac{\lambda}{\pi \omega_0} \tag{10}
 $$
 Since the fiber is axis-symmetric, the divergence full angle should be $2\theta_{0}$. In some textbooks, the mode volume of the Gaussian mode is given by
 
 $$
 \begin{aligned}
-V_{00eff}=&\int^{z_2}_{z_1}\pi\omega_0^2\left[1+\left(\frac{z}{z_R}\right)^2\right]dz\\
-=&\pi\omega_0^2\left[z_2-z_1+\frac{1}{3z_R^2}\left(z_2^3-z_1^3\right)\right]
+V_{00eff}=&\int^{z_2}_{z_1}\pi\omega_0^2\left[1+\left(\frac{z}{z_0}\right)^2\right]dz\\
+=&\pi\omega_0^2\left[z_2-z_1+\frac{1}{3z_0^2}\left(z_2^3-z_1^3\right)\right]
 \end{aligned} \tag{11}
 $$
 
@@ -242,6 +242,58 @@ This can be verified in any linear system.
 **This page corresponds to the module `gaussbeam`**
 
 ### Classes
+
+#### 1. One-dimensional situation
+
+Generally speaking, Hermite-Gaussian beam needs to be described by all three coordinates $x,y,z$. However, it can be seen from formulas $(1)$ and $(2)$ that we can learn the characteristics of a Hermite-Gaussian Beam by studying the propagation characteristics in a certain direction.
+
+----
+
+<strong class="object" id="NormalizedHermiteGaussBeam1D">NormalizedHermiteGaussBeam1D</strong>: `class NormalizedHermiteGaussBeam1D(misc.Wavelength)`
+
+This class defines a general normalized Hermite-Gaussian beam in one dimension. And it is a subclass of `misc.Wavelength`.
+
+<p style="color:blue;">The attributes are defined as follows:</p>
+
+- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('wavelength', 'p0', 'omega0', 'm')` where
+
+  - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
+  - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">m</span> - $m$, mode number
+
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedHermiteGaussBeam1D*, which can be modified as required. 
+
+- <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
+
+- The following attributes are all decorated by `@property`, which cannot be assigned directly. Some properties are provided by the parent class.
+
+  - properties provided by this class
+
+    - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
+    - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+    - <span class="attr" style="color:red;">m</span> - $m$, mode number
+    - <span class="attr" style="color:red;">cm</span> - $c_m$, normalization factor of beam, defined by $c_{m}=\left(2/\pi\right)^{1/4}/\sqrt{\omega_0  2^{m} m!}$
+    - <span class="attr" style="color:red;">z0</span> - $z_0$, Rayleigh length, defined by $\pi\omega_0^2/\lambda$
+    - <span class="attr" style="color:red;">theta</span> - $\theta$, half divergence angle in radian, defined by $\theta=\sqrt{2m+1}\arctan(\lambda/(\pi \omega_0))$
+    - <span class="attr" style="color:red;">hm</span> - $h_m$, Hermite polynomial $H_m$
+
+  - properties provided by parent class
+
+    - see <a class="module-object-refer">misc.Wavelength</a> for details
+
+<p style="color:blue;">The methods are defined as follows:</p>
+
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedHermiteGaussBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedHermiteGaussBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">A_f(<span class="param">z</span>)</span> - compute the amplitude at position <span class="param">z</span>, the amplitude is defined by $1/(1+(z-p_0)^2/z_0^2)^{1/4}$.
+- <span class="method" style="color:red;">omega_f(<span class="param">z</span>)</span> - compute the mode field radius at position <span class="param">z</span>, which is defined by $\omega_0\sqrt{1+(z-p_0)^2/z_0^2}$.
+- <span class="method" style="color:red;">R_f(<span class="param">z</span>)</span> - compute the radius of curvature at position <span class="param">z</span>, which is defined by $(z-p_0)(1+z_0^2/(z-p_0)^2)$.
+- <span class="method" style="color:red;">phi_f(<span class="param">z</span>)</span> - compute $\phi$ phase at position <span class="param">z</span>, which is defined by $\arctan((z-p_0)/z_0)$.
+- <span class="method" style="color:red;">psi_f(<span class="param">z</span>, <span class="param">x</span>)</span> - compute $\psi$ phase at position <span class="param">z</span> and <span class="param">x</span>, which is defined by $H_m(\xi)e^{-\xi^2/2}$, where $\xi=\sqrt{2}x/\omega$.
+- <span class="method" style="color:red;">u_f(<span class="param">z</span>, <span class="param">x</span>)</span> - compute $u_m$ at position <span class="param">z</span> and <span class="param">x</span>, see the formula $(1)$. This function will return the total amplitude and phase, like $u_m=A_te^{j\phi_t}$.
+- See <a class="module-object-refer">misc.Wavelength</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+
+----
 
 
 
