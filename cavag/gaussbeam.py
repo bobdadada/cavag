@@ -8,8 +8,8 @@ __all__ = [
     'NormalizedGaussBeam1D', 'GaussBeam1D',
     'NormalizedHermiteGaussBeam', 'HermiteGaussBeam',
     'NormalizedGaussBeam', 'GaussBeam',
-    'NormalizedAxisymmetricHermiteGaussBeam', 'AxisymmetricHermiteGaussBeam',
-    'NormalizedAxisymmetricGaussBeam', 'AxisymmetricGaussBeam',
+    'NormalizedEqualSymmetricHermiteGaussBeam', 'EqualSymmetricHermiteGaussBeam',
+    'NormalizedEqualSymmetricGaussBeam', 'EqualSymmetricGaussBeam',
     'local2remote', 'remote2local', 'convert_through_mirror', 'convert_through_lens'
 ]
 
@@ -89,7 +89,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         z0, p0 = self.z0, self.p0
         return np.arctan((z-p0)/z0)
 
-    def psi_f(self, z, x):
+    def psim_f(self, z, x):
         """HG函数"""
         hm = self.hm
         omega = self.omega_f(z)
@@ -101,7 +101,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         """强度函数"""
         cm = self.cm
         A = self.A_f(z)
-        psi = self.psi_f(z, x)
+        psi = self.psim_f(z, x)
         phi = self.phi_f(z)
         k = self.k
         R = self.R_f(z)
@@ -311,13 +311,13 @@ class NormalizedHermiteGaussBeam(Wavelength):
         """y方向phi相位函数"""
         return self.__beams[1].phi_f(z)
 
-    def psix_f(self, z, x):
+    def psimx_f(self, z, x):
         """x方向HG函数"""
-        return self.__beams[0].psi_f(z, x)
+        return self.__beams[0].psim_f(z, x)
 
-    def psiy_f(self, z, y):
+    def psimy_f(self, z, y):
         """y方向HG函数"""
-        return self.__beams[1].psi_f(z, y)
+        return self.__beams[1].psim_f(z, y)
 
     def u_f(self, z, x, y):
         """强度函数"""
@@ -376,26 +376,26 @@ class GaussBeam(HermiteGaussBeam):
         self.name = name
 
 
-class NormalizedAxisymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
-    name = 'NormalizedAxisymmetricHermiteGaussBeam'
+class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
+    name = 'NormalizedEqualSymmetricHermiteGaussBeam'
 
     # 波长, 束腰半径, 束腰位置, 模式数
     modifiable_properties = ('wavelength', 'p0', 'omega0', 'm')
 
-    def __init__(self, name='NormalizedAxisymmetricHermiteGaussBeam', **kwargs):
+    def __init__(self, name='NormalizedEqualSymmetricHermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
         self.property_set.add_required(
-            NormalizedAxisymmetricHermiteGaussBeam.modifiable_properties)
+            NormalizedEqualSymmetricHermiteGaussBeam.modifiable_properties)
 
-        for prop in NormalizedAxisymmetricHermiteGaussBeam.modifiable_properties:
+        for prop in NormalizedEqualSymmetricHermiteGaussBeam.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
 
     @property
     def cm(self):
         """总归一化因子"""
-        return self.get_property('cm', lambda: (super(NormalizedAxisymmetricHermiteGaussBeam, self).cm)**2)
+        return self.get_property('cm', lambda: (super(NormalizedEqualSymmetricHermiteGaussBeam, self).cm)**2)
 
     def A_f(self, z):
         """振幅函数"""
@@ -405,7 +405,7 @@ class NormalizedAxisymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
         """强度函数"""
         cm = self.cm
         A = self.A_f(z)
-        psi = self.psi_f(z, x)*self.psi_f(z, y)
+        psi = self.psim_f(z, x)*self.psim_f(z, y)
         phi = self.phi_f(z)
         k = self.k
         R = self.R_f(z)
@@ -417,12 +417,12 @@ class NormalizedAxisymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
         return ampl, phase
 
 
-class AxisymmetricHermiteGaussBeam(NormalizedAxisymmetricHermiteGaussBeam):
-    name = 'AxisymmetricHermiteGaussBeam'
+class EqualSymmetricHermiteGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
+    name = 'EqualSymmetricHermiteGaussBeam'
 
     modifiable_properties = ('A0', 'p0', 'wavelength', 'omega0', 'm')
 
-    def __init__(self, name='AxisymmetricHermiteGaussBeam', **kwargs):
+    def __init__(self, name='EqualSymmetricHermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
@@ -441,24 +441,24 @@ class AxisymmetricHermiteGaussBeam(NormalizedAxisymmetricHermiteGaussBeam):
         return A0*A
 
 
-class NormalizedAxisymmetricGaussBeam(NormalizedAxisymmetricHermiteGaussBeam):
-    name = 'NormalizedAxisymmetricGaussBeam'
+class NormalizedEqualSymmetricGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
+    name = 'NormalizedEqualSymmetricGaussBeam'
 
     modifiable_properties = ('wavelength', 'p0', 'omega0')
 
-    def __init__(self, name='NormalizedAxisymmetricGaussBeam', **kwargs):
+    def __init__(self, name='NormalizedEqualSymmetricGaussBeam', **kwargs):
         kwargs.update(m=0)
 
         super().__init__(**kwargs)
         self.name = name
 
 
-class AxisymmetricGaussBeam(AxisymmetricHermiteGaussBeam):
-    name = 'AxisymmetricGaussBeam'
+class EqualSymmetricGaussBeam(EqualSymmetricHermiteGaussBeam):
+    name = 'EqualSymmetricGaussBeam'
 
     modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0')
 
-    def __init__(self, name='AxisymmetricGaussBeam', **kwargs):
+    def __init__(self, name='EqualSymmetricGaussBeam', **kwargs):
         kwargs.update(m=0)
 
         super().__init__(**kwargs)
