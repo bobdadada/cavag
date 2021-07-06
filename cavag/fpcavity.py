@@ -4,7 +4,7 @@ import numpy as np
 from scipy import constants
 
 from ._utils import PrintableObject
-from .gaussbeam import AxisymmetricGaussBeam
+from .gaussbeam import EqualSymmetricGaussBeam
 from .misc import RTL, Position
 
 __all__ = [
@@ -226,7 +226,7 @@ class SymmetricAxisymmetricCavity(SymmetricAxisymmetricCavityStructure, Axisymme
         self.property_set['roc'] = roc
 
 
-class AxisymmetricCavityGaussMode(AxisymmetricCavityStructure, AxisymmetricGaussBeam, Position):
+class AxisymmetricCavityGaussMode(AxisymmetricCavityStructure, EqualSymmetricGaussBeam, Position):
     name = 'AxisymmetricCavityGaussMode'
 
     modifiable_properties = ('length', 'wavelength', 'rocl', 'rocr', 'A0', 'position')

@@ -24,7 +24,7 @@ In optical coupling applications, we only need to consider the conditions of the
 
 This class define a fiber end face object. Almost all attributes cannot be assigned by `self.attr = value`.
 
-<p style="color:blue;">The attributes are defined as follows:</p>
+<p style="color:blue;">attributes:</p>
 
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'omegaf', 'roc')` where
   
@@ -49,7 +49,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
     - see <a class="module-object-refer">misc.Wavelength</a> for details
 
-<p style="color:blue;">The methods are defined as follows:</p>
+<p style="color:blue;">methods:</p>
 
 - <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='FiberEnd', \*\*<span class="param">kwargs</span>)</span>  - Create a `FiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
 
@@ -61,7 +61,7 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
 This class is a subclass of `FiberEnd` and particularly used to describe a step-index fiber.
 
-<p style="color:blue;">The attributes are defined as follows:</p>
+<p style="color:blue;">attributes:</p>
 
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'a', 'naf', 'roc')` where
   
@@ -95,7 +95,7 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
     - see <a class="module-object-refer-to" module="fiber">FiberEnd</a> for details
 
-<p style="color:blue;">The methods are defined as follows:</p>
+<p style="color:blue;">methods:</p>
 
 - <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='StepIndexFiberEnd', \*\*<span class="param">kwargs</span>)</span>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
 

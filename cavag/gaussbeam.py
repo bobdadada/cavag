@@ -53,7 +53,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
     def m(self) -> int:
         """光的模式数[1]"""
         return self.get_property('m')
-    
+
     @property
     def z0(self):
         """瑞利长度[L]"""
@@ -420,7 +420,7 @@ class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
 class EqualSymmetricHermiteGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
     name = 'EqualSymmetricHermiteGaussBeam'
 
-    modifiable_properties = ('A0', 'p0', 'wavelength', 'omega0', 'm')
+    modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0', 'm')
 
     def __init__(self, name='EqualSymmetricHermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
@@ -523,4 +523,3 @@ def convert_through_lens(wavelength, omega0, s, f):
     Rp = 1 / (1 / R + 1 / f)
     omega0p, sp = remote2local(wavelength, omegap, Rp)
     return omega0p, sp
-

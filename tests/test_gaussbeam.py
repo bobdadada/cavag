@@ -244,7 +244,7 @@ class Test_GaussBeam(unittest.TestCase):
         self.assertAlmostEqual(gb.A_f(10), A0/(1+(10-p0)**2/z0x**2)**(1/4)/(1+(10-p0)**2/z0y**2)**(1/4))  # 振幅
 
 
-class Test_NormalizedAxisymmetricHermiteGaussBeam(unittest.TestCase):
+class Test_NormalizedEqualSymmetricHermiteGaussBeam(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0, m = 980e-9, 0, 1e-6, 3
@@ -252,15 +252,34 @@ class Test_NormalizedAxisymmetricHermiteGaussBeam(unittest.TestCase):
         cm = (2/constants.pi)**(1/2)/(omega0*(2**m)*special.factorial(m))
         z0 = constants.pi*omega0**2/wavelength
 
-        nashgb = NormalizedAxisymmetricHermiteGaussBeam(wavelength=wavelength, p0=p0, omega0=omega0,
+        neshgb = NormalizedEqualSymmetricHermiteGaussBeam(wavelength=wavelength, p0=p0, omega0=omega0,
                     m=m)
         
-        self.assertAlmostEqual(nashgb.cm, cm) 
+        self.assertAlmostEqual(neshgb.cm, cm) 
 
-        self.assertAlmostEqual(nashgb.A_f(10), 1/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
+        self.assertAlmostEqual(neshgb.A_f(10), 1/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
+    
+    def test_subclass(self):
+
+        class A(NormalizedEqualSymmetricHermiteGaussBeam):
+
+            @property
+            def cm(self):
+                self.a_v = 1
+                return super().cm
+        
+        wavelength, p0, omega0, m = 980e-9, 0, 1e-6, 3
+
+        cm = (2/constants.pi)**(1/2)/(omega0*(2**m)*special.factorial(m))
+        z0 = constants.pi*omega0**2/wavelength
+
+        a = A(wavelength=wavelength, p0=p0, omega0=omega0, m=m)
+
+        self.assertAlmostEqual(a.cm, cm)
+        self.assertAlmostEqual(a.a_v, 1)
 
 
-class Test_AxisymmetricHermiteGaussBeam(unittest.TestCase):
+class Test_EqualSymmetricHermiteGaussBeam(unittest.TestCase):
 
     def test_constructor(self):
         A0, wavelength, p0, omega0, m = 2, 980e-9, 0, 1e-6, 3
@@ -268,15 +287,15 @@ class Test_AxisymmetricHermiteGaussBeam(unittest.TestCase):
         cm = (2/constants.pi)**(1/2)/(omega0*(2**m)*special.factorial(m))
         z0 = constants.pi*omega0**2/wavelength
 
-        ashgb = AxisymmetricHermiteGaussBeam(A0=A0, wavelength=wavelength, p0=p0, omega0=omega0,
+        eshgb = EqualSymmetricHermiteGaussBeam(A0=A0, wavelength=wavelength, p0=p0, omega0=omega0,
                     m=m)
         
-        self.assertAlmostEqual(ashgb.cm, cm) 
+        self.assertAlmostEqual(eshgb.cm, cm) 
 
-        self.assertAlmostEqual(ashgb.A_f(10), A0/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
+        self.assertAlmostEqual(eshgb.A_f(10), A0/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
 
 
-class Test_NormalizedAxisymmetricGaussBeam(unittest.TestCase):
+class Test_NormalizedEqualSymmetricGaussBeam(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0 = 980e-9, 0, 1e-6
@@ -284,14 +303,14 @@ class Test_NormalizedAxisymmetricGaussBeam(unittest.TestCase):
         cm = (2/constants.pi)**(1/2)/(omega0)
         z0 = constants.pi*omega0**2/wavelength
 
-        nasgb = NormalizedAxisymmetricGaussBeam(wavelength=wavelength, p0=p0, omega0=omega0)
+        nesgb = NormalizedEqualSymmetricGaussBeam(wavelength=wavelength, p0=p0, omega0=omega0)
         
-        self.assertAlmostEqual(nasgb.cm, cm) 
+        self.assertAlmostEqual(nesgb.cm, cm) 
 
-        self.assertAlmostEqual(nasgb.A_f(10), 1/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
+        self.assertAlmostEqual(nesgb.A_f(10), 1/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
 
 
-class Test_AxisymmetricGaussBeam(unittest.TestCase):
+class Test_EqualSymmetricGaussBeam(unittest.TestCase):
 
     def test_constructor(self):
         A0, wavelength, p0, omega0 = 3, 980e-9, 0, 1e-6
@@ -299,12 +318,12 @@ class Test_AxisymmetricGaussBeam(unittest.TestCase):
         cm = (2/constants.pi)**(1/2)/(omega0)
         z0 = constants.pi*omega0**2/wavelength
 
-        asgb = AxisymmetricGaussBeam(A0=A0, wavelength=wavelength, p0=p0, omega0=omega0)
+        esgb = EqualSymmetricGaussBeam(A0=A0, wavelength=wavelength, p0=p0, omega0=omega0)
         
-        self.assertAlmostEqual(asgb.cm, cm)
-        self.assertAlmostEqual(asgb.m, 0)
+        self.assertAlmostEqual(esgb.cm, cm)
+        self.assertAlmostEqual(esgb.m, 0)
 
-        self.assertAlmostEqual(asgb.A_f(10), A0/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
+        self.assertAlmostEqual(esgb.A_f(10), A0/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
 
 
 class Test_transformation(unittest.TestCase):

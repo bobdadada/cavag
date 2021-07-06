@@ -368,7 +368,7 @@ class Test_SymmetricAxisymmetricCavityGaussMode(unittest.TestCase):
         self.assertEqual(sacgm.V_mode, V_mode)
         self.assertEqual(sacgm.e, e)
 
-class Test_fucntions(unittest.TestCase):
+class Test_functions(unittest.TestCase):
 
     def test_judge_cavity_type(self):
         r1, r2 = judge_cavity_type(300, 200, 300)
@@ -393,21 +393,3 @@ class Test_fucntions(unittest.TestCase):
         sl = (4*constants.pi*sigmasc/wavelength)**2
         self.assertEqual(calculate_loss_scattering(sigmasc, wavelength), sl)
 
-    def test_calculate_g(self):
-        wavelength = 980e-9
-        nu = constants.c/wavelength
-        V_mode = 100*3**2*1e-18
-        gamma = 1e6
-        g = np.sqrt((3*gamma*constants.pi*constants.c**3)/(2*V_mode*(2*np.pi*nu)**2))
-        self.assertEqual(calculate_g(V_mode, nu, gamma), g)
-    
-    def test_calculate_C1(self):
-        wavelength = 980e-9
-        nu = constants.c/wavelength
-        V_mode = 100*3**2*1e-18
-        kappa = 3e8
-        gamma = 1e6
-        g = np.sqrt((3*gamma*constants.pi*constants.c**3)/(2*V_mode*(2*np.pi*nu)**2))
-        gammat = 3e6
-        C1 = g**2/(kappa*gammat)
-        self.assertEqual(calculate_C1(g, kappa, gammat), C1)

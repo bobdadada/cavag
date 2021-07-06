@@ -19,7 +19,7 @@ In many cases, we need the optical properties of the surface of  an object. The 
 
 This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Position` which provide attributes <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span>, <span class="attr" style="color:red;">l</span> and <span class="attr" style="color:red;">position</span>.
 
-<p style="color:blue;">The attributes are defined as follows:</p>
+<p style="color:blue;">attributes:</p>
 
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('roc', 'r', 't', 'l', 'position')` where
 
@@ -43,7 +43,7 @@ This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Po
     
     - see <a class="module-object-refer">misc.RTL</a> and <a class="module-object-refer">misc.Position</a> for details
 
-<p style="color:blue;">The methods are defined as follows:</p>
+<p style="color:blue;">methods:</p>
 
 - <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Mirror', \*\*<span class="param">kwargs</span>)</span>  - Create a `Mirror` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
   
@@ -61,7 +61,7 @@ This module is not mainly for designing optical systems, so we only define simpl
 
 A class for a thin lens. In cavity-related applications, thin lens or `zero` aberration approximation can give good experimental results. Therefore, we only consider the effect of focal length $f$ of a mirror.
 
-<p style="color:blue;">The attributes are defined as follows:</p>
+<p style="color:blue;">attributes:</p>
 
 
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('f', 'r', 't', 'l', 'position')` where
@@ -86,7 +86,7 @@ A class for a thin lens. In cavity-related applications, thin lens or `zero` abe
 
     - see <a class="module-object-refer">misc.RTL</a> and <a class="module-object-refer">misc.Position</a> for details
 
-<p style="color:blue;">The methods are defined as follows:</p>
+<p style="color:blue;">methods:</p>
 
 
 - <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Lens', \*\*<span class="param">kwargs</span>)</span>  - Create a `Lens` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.

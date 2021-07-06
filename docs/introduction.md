@@ -40,6 +40,28 @@ Source Page: [fpcavity](fpcavity)
 
 Source Page: [gaussbeam](gaussbeam.md)
 
+**Class[es]**
+
+- <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam1D</a>
+- <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam1D</a>
+- <a class="module-object-refer-to" module="gaussbeam">NormalizedGaussBeam1D</a>
+- <a class="module-object-refer-to" module="gaussbeam">GaussBeam1D</a>
+- <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">NormalizedGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">GaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricHermiteGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">EqualSymmetricHermiteGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">EqualSymmetricGaussBeam</a>
+
+**Function[s]**
+
+- <a class="module-object-refer-to" module="gaussbeam">local2remote</a>
+- <a class="module-object-refer-to" module="gaussbeam">remote2local</a>
+- <a class="module-object-refer-to" module="gaussbeam">convert_through_mirror</a>
+- <a class="module-object-refer-to" module="gaussbeam">convert_through_lens</a>
+
 <!-- tab:mirror -->
 
 Source Page: [mirror](mirror.md)

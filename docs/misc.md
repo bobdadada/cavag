@@ -6,7 +6,7 @@
 
 In this module, we define many commonly used auxiliary classes, all of which are subclasses of `_utils.PrintableObject`. Generally, we will not use these classes directly, but will combine them into more specific subclasses. 
 
-#### 1. $R,T,L$
+#### 1. Reflectivity, Transmittance and Loss 
 
 Since reflectivity $R$, transmittance $T$, and loss $L$ are important in the mirror-related applications and often given in an equivalent form in practical applications, we need $RTL$ abstract class and a helper class for $R,T,L$ conversion. 
 
@@ -16,7 +16,7 @@ Since reflectivity $R$, transmittance $T$, and loss $L$ are important in the mir
 
 This class define an abstract class describing $R,T,L$.
 
-<p style="color:blue;">The attributes are defined as follows:</p>
+<p style="color:blue;">attributes:</p>
 
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('r', 't', 'l')` where
 
@@ -36,7 +36,7 @@ This class define an abstract class describing $R,T,L$.
     - <span class="attr" style="color:red;">t</span> - $T$, optical transmittance
     - <span class="attr" style="color:red;">l</span> - $L$, optical loss
 
-<p style="color:blue;">The methods are defined as follows:</p>
+<p style="color:blue;">methods:</p>
 
 - <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='RTL', \*\*<span class="param">kwargs</span>)</span>  - Create a `RTL` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. For parameter <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span>, one can provide only two of them, and the remaining one can be calculated when the class is constructed. Note $R,T,L$ are normalized in the constructor, i.e, $R+T+L=1$.
   
@@ -50,7 +50,7 @@ This class define an abstract class describing $R,T,L$.
 
 A helper class for the $R,T,L$ conversion. This class is mainly used to define a namespace, and all methods of the class are decorated as `@staticmethod`.
 
-<p style="color:blue;">The methods are defined as follows:</p>
+<p style="color:blue;">methods:</p>
 
 - <span class="method" style="color:red;">@(staticmethod): normalize(<span class="param">r</span>=None, <span class="param">t</span>=None, <span class="param">l</span>=None)</span> - The method is used to normalize the $R,T,L$, i.e. $R+T+L=1$. One can only provide only two of the parameters reflectivity - $R$ - <span class="param" style="color:red;">r</span>, transmittance - $T$ - <span class="param" style="color:red;">t</span>, loss - $L$ - <span class="param" style="color:red;">l</span>. Then this method will return the normalized $R,T,L$ in a tuple.
   
@@ -76,7 +76,7 @@ The position is also an useful property of a real object. In this `cavag`, the c
 
 This class define a one-dimensional position.
 
-<p style="color:blue;">The attributes are defined as follows:</p>
+<p style="color:blue;">attributes:</p>
 
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('position', )` where
 
@@ -92,7 +92,7 @@ This class define a one-dimensional position.
     
     - <span class="attr" style="color:red;">position</span> - position of a real object
 
-<p style="color:blue;">The methods are defined as follows:</p>
+<p style="color:blue;">methods:</p>
 
 - <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Position', \*\*<span class="param">kwargs</span>)</span>  - Create a `Position` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
 
@@ -108,7 +108,7 @@ For light, wavelength $\lambda$ is an important property.
 
 Light Wavelength Abstract Class.
 
-<p style="color:blue;">The attributes are defined as follows:</p>
+<p style="color:blue;">attributes:</p>
 
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('wavelength', )` where
 
@@ -127,7 +127,7 @@ Light Wavelength Abstract Class.
     - <span class="attr" style="color:red;">nu</span> - $\nu$, frequency of transmitted light, wheres $\nu=c/\lambda$, where $c$ is speed of light in vacuum.
     - <span class="attr" style="color:red;">nu_angular</span> - $\nu_{angular}$, angular frequency of transmitted light, wheres $\nu_{angular}=2\pi \nu=2\pi c/\lambda=ck$.
 
-<p style="color:blue;">The methods are defined as follows:</p>
+<p style="color:blue;">methods:</p>
 
 - <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Wavelength', \*\*<span class="param">kwargs</span>)</span>  - Create a `Wavelength` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>.
 
