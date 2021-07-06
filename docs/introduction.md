@@ -24,11 +24,11 @@ Source Page: [fpcavity](fpcavity)
 **Class[es]**
 
 - <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavityStructure</a>
-- <a class="module-object-refer-to" module="fpcavity">SymmetricAxisymmetricCavityStructure</a>
+- <a class="module-object-refer-to" module="fpcavity">EqualAxisymmetricCavityStructure</a>
 - <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavity</a>
-- <a class="module-object-refer-to" module="fpcavity">SymmetricAxisymmetricCavity</a>
-- <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavityGaussMode</a>
-- <a class="module-object-refer-to" module="fpcavity">SymmetricAxisymmetricCavityGaussMode</a>
+- <a class="module-object-refer-to" module="fpcavity">EqualAxisymmetricCavity</a>
+- <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavityMode</a>
+- <a class="module-object-refer-to" module="fpcavity">EqualAxisymmetricCavityMode</a>
 
 **Function[s]**
 

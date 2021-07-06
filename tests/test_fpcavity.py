@@ -44,47 +44,47 @@ class Test_AxisymmetricCavityStructure(unittest.TestCase):
         self.assertEqual(ascs.isStable(), True)
         self.assertEqual(ascs.isCritical(), False)
 
-class Test_SymmetricAxisymmetricCavityStructure(unittest.TestCase):
+class Test_EqualAxisymmetricCavityStructure(unittest.TestCase):
 
     def test_constructor(self):
         roc, length = 300, 500
         g = 1 - length/roc
         
-        sascs = SymmetricAxisymmetricCavityStructure(roc=roc, length=length)
+        eascs = EqualAxisymmetricCavityStructure(roc=roc, length=length)
 
-        self.assertEqual(sascs.roc, roc)
-        self.assertEqual(sascs.rocl, roc)
-        self.assertEqual(sascs.rocr, roc)
-        self.assertEqual(sascs.length, length)
+        self.assertEqual(eascs.roc, roc)
+        self.assertEqual(eascs.rocl, roc)
+        self.assertEqual(eascs.rocr, roc)
+        self.assertEqual(eascs.length, length)
 
-        self.assertEqual(sascs.g, g)
-        self.assertEqual(sascs.gl, g)
-        self.assertEqual(sascs.gr, g)
+        self.assertEqual(eascs.g, g)
+        self.assertEqual(eascs.gl, g)
+        self.assertEqual(eascs.gr, g)
 
-        self.assertEqual(sascs.isStable(), True)
-        self.assertEqual(sascs.isCritical(), False)
+        self.assertEqual(eascs.isStable(), True)
+        self.assertEqual(eascs.isCritical(), False)
 
     def test_change_properties(self):
         roc, length = 300, 500
         
-        sascs = SymmetricAxisymmetricCavityStructure(roc=roc, length=length)
+        eascs = EqualAxisymmetricCavityStructure(roc=roc, length=length)
 
         length, roc = 400, 300
         g = 1 - length/roc
 
-        sascs.change_params(length=length, roc=roc)
+        eascs.change_params(length=length, roc=roc)
 
-        self.assertEqual(sascs.roc, roc)
-        self.assertEqual(sascs.rocl, roc)
-        self.assertEqual(sascs.rocr, roc)
-        self.assertEqual(sascs.length, length)
+        self.assertEqual(eascs.roc, roc)
+        self.assertEqual(eascs.rocl, roc)
+        self.assertEqual(eascs.rocr, roc)
+        self.assertEqual(eascs.length, length)
 
-        self.assertEqual(sascs.g, g)
-        self.assertEqual(sascs.gl, g)
-        self.assertEqual(sascs.gr, g)
+        self.assertEqual(eascs.g, g)
+        self.assertEqual(eascs.gl, g)
+        self.assertEqual(eascs.gr, g)
 
-        self.assertEqual(sascs.isStable(), True)
-        self.assertEqual(sascs.isCritical(), False)
+        self.assertEqual(eascs.isStable(), True)
+        self.assertEqual(eascs.isCritical(), False)
 
 class Test_AxisymmetricCavity(unittest.TestCase):
 
@@ -142,7 +142,7 @@ class Test_AxisymmetricCavity(unittest.TestCase):
         self.assertAlmostEqual(asc.fsr, fsr)
         self.assertAlmostEqual(asc.finesse, finesse)
 
-class Test_SymmetricAxisymmetricCavity(unittest.TestCase):
+class Test_EqualAxisymmetricCavity(unittest.TestCase):
 
     def test_constructor(self):
         length, roc, rl, rr = 400, 300, 0.9, 0.8
@@ -152,55 +152,55 @@ class Test_SymmetricAxisymmetricCavity(unittest.TestCase):
         fsr = 2*constants.pi*constants.c/(2*length)
         finesse = fsr/(2*kappa)
                 
-        sasc = SymmetricAxisymmetricCavity(length=length, roc=roc, rl=rl, rr=rr)
+        easc = EqualAxisymmetricCavity(length=length, roc=roc, rl=rl, rr=rr)
 
-        self.assertEqual(sasc.rl, rl)
-        self.assertEqual(sasc.rr, rr)
-        self.assertEqual(sasc.length, length)
+        self.assertEqual(easc.rl, rl)
+        self.assertEqual(easc.rr, rr)
+        self.assertEqual(easc.length, length)
 
-        self.assertEqual(sasc.roc, roc)
-        self.assertEqual(sasc.rocl, roc)
-        self.assertEqual(sasc.rocr, roc)
-        self.assertEqual(sasc.length, length)
+        self.assertEqual(easc.roc, roc)
+        self.assertEqual(easc.rocl, roc)
+        self.assertEqual(easc.rocr, roc)
+        self.assertEqual(easc.length, length)
 
-        self.assertEqual(sasc.g, g)
-        self.assertEqual(sasc.gl, g)
-        self.assertEqual(sasc.gr, g)
-        self.assertAlmostEqual(sasc.kappa, kappa)
-        self.assertAlmostEqual(sasc.fsr, fsr)
-        self.assertAlmostEqual(sasc.finesse, finesse)
+        self.assertEqual(easc.g, g)
+        self.assertEqual(easc.gl, g)
+        self.assertEqual(easc.gr, g)
+        self.assertAlmostEqual(easc.kappa, kappa)
+        self.assertAlmostEqual(easc.fsr, fsr)
+        self.assertAlmostEqual(easc.finesse, finesse)
     
     def test_change_properties(self):
         length, roc, rl, rr = 400, 300, 0.9, 0.8
                 
-        sasc = SymmetricAxisymmetricCavity(length=length, roc=roc, rl=rl, rr=rr)
+        easc = EqualAxisymmetricCavity(length=length, roc=roc, rl=rl, rr=rr)
 
         length, roc = 300, 400
         
-        sasc.change_params(length=length, roc=roc)
+        easc.change_params(length=length, roc=roc)
 
         g = 1 - length/roc
         kappa = constants.c*(2-rr-rl)/(4*length)
         fsr = 2*constants.pi*constants.c/(2*length)
         finesse = fsr/(2*kappa)
 
-        self.assertEqual(sasc.rl, rl)
-        self.assertEqual(sasc.rr, rr)
-        self.assertEqual(sasc.length, length)
+        self.assertEqual(easc.rl, rl)
+        self.assertEqual(easc.rr, rr)
+        self.assertEqual(easc.length, length)
 
-        self.assertEqual(sasc.roc, roc)
-        self.assertEqual(sasc.rocl, roc)
-        self.assertEqual(sasc.rocr, roc)
-        self.assertEqual(sasc.length, length)
+        self.assertEqual(easc.roc, roc)
+        self.assertEqual(easc.rocl, roc)
+        self.assertEqual(easc.rocr, roc)
+        self.assertEqual(easc.length, length)
 
-        self.assertEqual(sasc.g, g)
-        self.assertEqual(sasc.gl, g)
-        self.assertEqual(sasc.gr, g)
-        self.assertAlmostEqual(sasc.kappa, kappa)
-        self.assertAlmostEqual(sasc.fsr, fsr)
-        self.assertAlmostEqual(sasc.finesse, finesse)
+        self.assertEqual(easc.g, g)
+        self.assertEqual(easc.gl, g)
+        self.assertEqual(easc.gr, g)
+        self.assertAlmostEqual(easc.kappa, kappa)
+        self.assertAlmostEqual(easc.fsr, fsr)
+        self.assertAlmostEqual(easc.finesse, finesse)
 
-class Test_AxisymmetricCavityGaussMode(unittest.TestCase):
+class Test_AxisymmetricCavityMode(unittest.TestCase):
 
     def test_constructor(self):
         length, wavelength, rocl, rocr, A0 = 300, 9.8, 600, 400, 1
@@ -218,34 +218,34 @@ class Test_AxisymmetricCavityGaussMode(unittest.TestCase):
         V_mode = length*omega0**2*constants.pi/4
         e = np.sqrt(constants.h*nu/(2*constants.epsilon_0*V_mode))
 
-        acgm = AxisymmetricCavityGaussMode(length=length, wavelength=wavelength,
+        acm = AxisymmetricCavityMode(length=length, wavelength=wavelength,
                 rocl=rocl, rocr=rocr, A0=A0)
 
-        self.assertEqual(acgm.length, length)
-        self.assertEqual(acgm.wavelength, wavelength)
-        self.assertEqual(acgm.rocl, rocl)
-        self.assertEqual(acgm.A0, A0)
-        self.assertEqual(acgm.nu, nu)
+        self.assertEqual(acm.length, length)
+        self.assertEqual(acm.wavelength, wavelength)
+        self.assertEqual(acm.rocl, rocl)
+        self.assertEqual(acm.A0, A0)
+        self.assertEqual(acm.nu, nu)
 
-        self.assertEqual(acgm.gl, gl)
-        self.assertEqual(acgm.gr, gr)
-        self.assertEqual(acgm.pl, pl)
-        self.assertEqual(acgm.pr, pr)
-        self.assertEqual(acgm.z0, z0)
-        self.assertEqual(acgm.p0, p0)
-        self.assertEqual(acgm.omega0, omega0)
-        self.assertEqual(acgm.omegaml, omegaml)
-        self.assertEqual(acgm.omegamr, omegamr)
-        self.assertEqual(acgm.V_mode, V_mode)
-        self.assertEqual(acgm.e, e)
+        self.assertEqual(acm.gl, gl)
+        self.assertEqual(acm.gr, gr)
+        self.assertEqual(acm.pl, pl)
+        self.assertEqual(acm.pr, pr)
+        self.assertEqual(acm.z0, z0)
+        self.assertEqual(acm.p0, p0)
+        self.assertEqual(acm.omega0, omega0)
+        self.assertEqual(acm.omegaml, omegaml)
+        self.assertEqual(acm.omegamr, omegamr)
+        self.assertEqual(acm.V_mode, V_mode)
+        self.assertEqual(acm.e, e)
     
     def test_change_properties(self):
         length, wavelength, rocl, rocr, A0 = 300, 9.8, 600, 400, 1
         
-        acgm = AxisymmetricCavityGaussMode(length=length, wavelength=wavelength,
+        acm = AxisymmetricCavityMode(length=length, wavelength=wavelength,
                 rocl=rocl, rocr=rocr, A0=A0)
         length, wavelength, rocl, rocr, A0 = 450, 9.2, 500, 600, 2
-        acgm.change_params(length=length, wavelength=wavelength,
+        acm.change_params(length=length, wavelength=wavelength,
                 rocl=rocl, rocr=rocr, A0=A0)
         
         nu = constants.c/wavelength
@@ -261,25 +261,25 @@ class Test_AxisymmetricCavityGaussMode(unittest.TestCase):
         V_mode = length*omega0**2*constants.pi/4
         e = np.sqrt(constants.h*nu/(2*constants.epsilon_0*V_mode))
 
-        self.assertEqual(acgm.length, length)
-        self.assertEqual(acgm.wavelength, wavelength)
-        self.assertEqual(acgm.rocl, rocl)
-        self.assertEqual(acgm.A0, A0)
-        self.assertEqual(acgm.nu, nu)
+        self.assertEqual(acm.length, length)
+        self.assertEqual(acm.wavelength, wavelength)
+        self.assertEqual(acm.rocl, rocl)
+        self.assertEqual(acm.A0, A0)
+        self.assertEqual(acm.nu, nu)
 
-        self.assertEqual(acgm.gl, gl)
-        self.assertEqual(acgm.gr, gr)
-        self.assertEqual(acgm.pl, pl)
-        self.assertEqual(acgm.pr, pr)
-        self.assertEqual(acgm.z0, z0)
-        self.assertEqual(acgm.p0, p0)
-        self.assertEqual(acgm.omega0, omega0)
-        self.assertEqual(acgm.omegaml, omegaml)
-        self.assertEqual(acgm.omegamr, omegamr)
-        self.assertEqual(acgm.V_mode, V_mode)
-        self.assertEqual(acgm.e, e)
+        self.assertEqual(acm.gl, gl)
+        self.assertEqual(acm.gr, gr)
+        self.assertEqual(acm.pl, pl)
+        self.assertEqual(acm.pr, pr)
+        self.assertEqual(acm.z0, z0)
+        self.assertEqual(acm.p0, p0)
+        self.assertEqual(acm.omega0, omega0)
+        self.assertEqual(acm.omegaml, omegaml)
+        self.assertEqual(acm.omegamr, omegamr)
+        self.assertEqual(acm.V_mode, V_mode)
+        self.assertEqual(acm.e, e)
 
-class Test_SymmetricAxisymmetricCavityGaussMode(unittest.TestCase):
+class Test_EqualAxisymmetricCavityMode(unittest.TestCase):
    
     def test_constructor(self):
         length, wavelength, roc, A0 = 300, 9.8, 400, 1
@@ -300,36 +300,36 @@ class Test_SymmetricAxisymmetricCavityGaussMode(unittest.TestCase):
         V_mode = length*omega0**2*constants.pi/4
         e = np.sqrt(constants.h*nu/(2*constants.epsilon_0*V_mode))
 
-        sacgm = SymmetricAxisymmetricCavityGaussMode(length=length, wavelength=wavelength,
+        eacm = EqualAxisymmetricCavityMode(length=length, wavelength=wavelength,
                 roc=roc, A0=A0)
 
-        self.assertEqual(sacgm.length, length)
-        self.assertEqual(sacgm.wavelength, wavelength)
-        self.assertEqual(sacgm.roc, roc)
-        self.assertEqual(sacgm.rocl, rocl)
-        self.assertEqual(sacgm.A0, A0)
-        self.assertEqual(sacgm.nu, nu)
+        self.assertEqual(eacm.length, length)
+        self.assertEqual(eacm.wavelength, wavelength)
+        self.assertEqual(eacm.roc, roc)
+        self.assertEqual(eacm.rocl, rocl)
+        self.assertEqual(eacm.A0, A0)
+        self.assertEqual(eacm.nu, nu)
 
-        self.assertEqual(sacgm.g, g)
-        self.assertEqual(sacgm.gl, gl)
-        self.assertEqual(sacgm.gr, gr)
-        self.assertEqual(sacgm.pl, pl)
-        self.assertEqual(sacgm.pr, pr)
-        self.assertEqual(sacgm.z0, z0)
-        self.assertEqual(sacgm.p0, p0)
-        self.assertEqual(sacgm.omega0, omega0)
-        self.assertEqual(sacgm.omegaml, omegaml)
-        self.assertEqual(sacgm.omegamr, omegamr)
-        self.assertEqual(sacgm.V_mode, V_mode)
-        self.assertEqual(sacgm.e, e)
+        self.assertEqual(eacm.g, g)
+        self.assertEqual(eacm.gl, gl)
+        self.assertEqual(eacm.gr, gr)
+        self.assertEqual(eacm.pl, pl)
+        self.assertEqual(eacm.pr, pr)
+        self.assertEqual(eacm.z0, z0)
+        self.assertEqual(eacm.p0, p0)
+        self.assertEqual(eacm.omega0, omega0)
+        self.assertEqual(eacm.omegaml, omegaml)
+        self.assertEqual(eacm.omegamr, omegamr)
+        self.assertEqual(eacm.V_mode, V_mode)
+        self.assertEqual(eacm.e, e)
     
     def test_change_properties(self):
         length, wavelength, roc, A0 = 300, 9.8, 400, 1
         
-        sacgm = SymmetricAxisymmetricCavityGaussMode(length=length, wavelength=wavelength,
+        eacm = EqualAxisymmetricCavityMode(length=length, wavelength=wavelength,
                 roc=roc, A0=A0)
         length, wavelength, roc, A0 = 400, 9.1, 300, 2
-        sacgm.change_params(length=length, wavelength=wavelength,
+        eacm.change_params(length=length, wavelength=wavelength,
                 roc=roc, A0=A0)
 
         nu = constants.c/wavelength
@@ -348,25 +348,25 @@ class Test_SymmetricAxisymmetricCavityGaussMode(unittest.TestCase):
         V_mode = length*omega0**2*constants.pi/4
         e = np.sqrt(constants.h*nu/(2*constants.epsilon_0*V_mode))        
 
-        self.assertEqual(sacgm.length, length)
-        self.assertEqual(sacgm.wavelength, wavelength)
-        self.assertEqual(sacgm.roc, roc)
-        self.assertEqual(sacgm.rocl, rocl)
-        self.assertEqual(sacgm.A0, A0)
-        self.assertEqual(sacgm.nu, nu)
+        self.assertEqual(eacm.length, length)
+        self.assertEqual(eacm.wavelength, wavelength)
+        self.assertEqual(eacm.roc, roc)
+        self.assertEqual(eacm.rocl, rocl)
+        self.assertEqual(eacm.A0, A0)
+        self.assertEqual(eacm.nu, nu)
 
-        self.assertEqual(sacgm.g, g)
-        self.assertEqual(sacgm.gl, gl)
-        self.assertEqual(sacgm.gr, gr)
-        self.assertEqual(sacgm.pl, pl)
-        self.assertEqual(sacgm.pr, pr)
-        self.assertEqual(sacgm.z0, z0)
-        self.assertEqual(sacgm.p0, p0)
-        self.assertEqual(sacgm.omega0, omega0)
-        self.assertEqual(sacgm.omegaml, omegaml)
-        self.assertEqual(sacgm.omegamr, omegamr)
-        self.assertEqual(sacgm.V_mode, V_mode)
-        self.assertEqual(sacgm.e, e)
+        self.assertEqual(eacm.g, g)
+        self.assertEqual(eacm.gl, gl)
+        self.assertEqual(eacm.gr, gr)
+        self.assertEqual(eacm.pl, pl)
+        self.assertEqual(eacm.pr, pr)
+        self.assertEqual(eacm.z0, z0)
+        self.assertEqual(eacm.p0, p0)
+        self.assertEqual(eacm.omega0, omega0)
+        self.assertEqual(eacm.omegaml, omegaml)
+        self.assertEqual(eacm.omegamr, omegamr)
+        self.assertEqual(eacm.V_mode, V_mode)
+        self.assertEqual(eacm.e, e)
 
 class Test_functions(unittest.TestCase):
 

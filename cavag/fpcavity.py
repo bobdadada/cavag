@@ -8,9 +8,9 @@ from .gaussbeam import EqualSymmetricGaussBeam
 from .misc import RTL, Position
 
 __all__ = [
-    'AxisymmetricCavityStructure', 'SymmetricAxisymmetricCavityStructure',
-    'AxisymmetricCavity', 'SymmetricAxisymmetricCavity',
-    'AxisymmetricCavityGaussMode', 'SymmetricAxisymmetricCavityGaussMode',
+    'AxisymmetricCavityStructure', 'EqualAxisymmetricCavityStructure',
+    'AxisymmetricCavity', 'EqualAxisymmetricCavity',
+    'AxisymmetricCavityMode', 'EqualAxisymmetricCavityMode',
     'judge_cavity_type',
     'calculate_loss_clipping', 'calculate_loss_scattering'
 ]
@@ -69,19 +69,19 @@ class AxisymmetricCavityStructure(PrintableObject):
         return judge_cavity_type(self.length, self.rocl, self.rocr)[1]
 
 
-class SymmetricAxisymmetricCavityStructure(AxisymmetricCavityStructure):
-    name = "SymmetricAxisymmetricCavityStructure"
+class EqualAxisymmetricCavityStructure(AxisymmetricCavityStructure):
+    name = "EqualAxisymmetricCavityStructure"
 
     modifiable_properties = ('length', 'roc')
 
-    def __init__(self, name="SymmetricAxisymmetricCavityStructure", **kwargs):
+    def __init__(self, name="EqualAxisymmetricCavityStructure", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
         super().__init__(**kwargs)
         self.name = name
         
-        self.property_set.add_required(SymmetricAxisymmetricCavityStructure.modifiable_properties)
+        self.property_set.add_required(EqualAxisymmetricCavityStructure.modifiable_properties)
         self.property_set['roc'] = roc
     
     def preprocess_properties(self, **propdict):
@@ -211,12 +211,12 @@ class AxisymmetricCavity(AxisymmetricCavityStructure):
         return self.get_property('Q', lambda: constants.pi*self.nu/(self.kappa))
 
 
-class SymmetricAxisymmetricCavity(SymmetricAxisymmetricCavityStructure, AxisymmetricCavity):
-    name = "SymmetricAxisymmetricCavity"
+class EqualAxisymmetricCavity(EqualAxisymmetricCavityStructure, AxisymmetricCavity):
+    name = "EqualAxisymmetricCavity"
 
     modifiable_properties = ('length', 'nc', 'lc', 'roc', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
 
-    def __init__(self, name="SymmetricAxisymmetricCavity", **kwargs):
+    def __init__(self, name="EqualAxisymmetricCavity", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
@@ -226,12 +226,12 @@ class SymmetricAxisymmetricCavity(SymmetricAxisymmetricCavityStructure, Axisymme
         self.property_set['roc'] = roc
 
 
-class AxisymmetricCavityGaussMode(AxisymmetricCavityStructure, EqualSymmetricGaussBeam, Position):
-    name = 'AxisymmetricCavityGaussMode'
+class AxisymmetricCavityMode(AxisymmetricCavityStructure, EqualSymmetricGaussBeam, Position):
+    name = 'AxisymmetricCavityMode'
 
     modifiable_properties = ('length', 'wavelength', 'rocl', 'rocr', 'A0', 'position')
 
-    def __init__(self, name="AxisymmetricCavityGaussMode", **kwargs):
+    def __init__(self, name="AxisymmetricCavityMode", **kwargs):
         kwargs.update(A0=kwargs.get('A0', 1))
 
         super().__init__(**kwargs)
@@ -311,12 +311,12 @@ class AxisymmetricCavityGaussMode(AxisymmetricCavityStructure, EqualSymmetricGau
         return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.V_mode)))
 
 
-class SymmetricAxisymmetricCavityGaussMode(SymmetricAxisymmetricCavityStructure, AxisymmetricCavityGaussMode):
-    name = "SymmetricAxisymmetricCavityGaussMode"
+class EqualAxisymmetricCavityMode(EqualAxisymmetricCavityStructure, AxisymmetricCavityMode):
+    name = "EqualAxisymmetricCavityMode"
 
     modifiable_properties = ('length', 'wavelength', 'roc', 'A0')
 
-    def __init__(self, name="SymmetricAxisymmetricCavityGaussMode" ,**kwargs):
+    def __init__(self, name="EqualAxisymmetricCavityMode" ,**kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
