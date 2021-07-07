@@ -165,7 +165,7 @@ The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipyn
 
 ### Transformation
 
-#### Transformation by a thin lens
+#### Transformation by a lens
 
 !> Please note that the definition of the symbol here is slightly different from elsewhere.
 
@@ -732,7 +732,7 @@ Here we define some helper functions. In order to facilitate the understanding o
 
 Given the wavelength and the waist radius of the fundamental mode beam, calculate the fundamental mode field radius at a certain position. The waist is at the origin, and the radius of curvature is positive in the positive direction of the coordinate axis. This function can be used directly in higher-order modes. 
 
-See <a class="module-object-refer-to" module="gaussbeam">remote2local</a>.
+See also <a class="module-object-refer-to" module="gaussbeam">remote2local</a>.
 
 <p style="color:blue;">parameters:</p>
 
@@ -751,7 +751,7 @@ See <a class="module-object-refer-to" module="gaussbeam">remote2local</a>.
 
 Given the wavelength, the fundamental mode radius and the radius of curvature at current position, calculate the radius of the waist of the fundamental mode beam and the distance between the waist and the current position. The waist is at the origin, and the radius of curvature in the positive direction of the coordinate axis is positive. This function can be used directly in higher order modes.
 
-See <a class="module-object-refer-to" module="gaussbeam">local2remote</a>.
+See also <a class="module-object-refer-to" module="gaussbeam">local2remote</a>.
 
 <p style="color:blue;">parameters:</p>
 
@@ -766,15 +766,43 @@ See <a class="module-object-refer-to" module="gaussbeam">local2remote</a>.
 
 ----
 
-<strong class="object" id="convert_through_mirror">convert_through_mirror</strong>: `def convert_through_mirror(wavelength, omega0, s, roc)`
+<strong class="object" id="convert_through_lens">convert_through_lens</strong>: `def convert_through_lens(wavelength, omega0, s, f)`
 
+Compute the transformation of Hermite-Gaussian Beam through a perfect thin lens. The [model](#transformation-by-a-lens) is shown above.
 
+See also <a class="module-object-refer-to" module="gaussbeam">convert_through_mirror</a>.
 
-The [model](#transformation-by-a-thin-lens) is shown above.
+<p style="color:blue;">parameters:</p>
+
+- <span class="param">wavelength</span> - $\lambda$, wavelength of the beam
+- <span class="param">omega0</span> - $\omega_0$, radius of the waist
+- <span class="param">s</span> - $s$, position of the waist from the lens
+- <span class="param">f</span> - $f$, focal distance, positive for positive lens, negative for negative lens
+
+<p style="color:blue;">returns:</p>
+
+- <span class="param">omega0p</span> - $\omega_0'$, radius of the waist after the transformation
+- <span class="param">sp</span> - $s'$, position of the waist after the transformation
 
 ----
 
+<strong class="object" id="convert_through_mirror">convert_through_mirror</strong>: `def convert_through_mirror(wavelength, omega0, s, roc)`
 
+Compute the transformation of Hermite-Gaussian Beam through a perfect mirror. The [model](#transformation-by-a-mirror) is shown above.
+
+See also <a class="module-object-refer-to" module="gaussbeam">convert_through_lens</a>.
+
+<p style="color:blue;">parameters:</p>
+
+- <span class="param">wavelength</span> - $\lambda$, wavelength of the beam
+- <span class="param">omega0</span> - $\omega_0$, radius of the waist
+- <span class="param">s</span> - $s$, position of the waist from the mirror
+- <span class="param">roc</span> - $roc$, radius of curvature of the mirror, positive for concave mirror, negative for convex mirror 
+
+<p style="color:blue;">returns:</p>
+
+- <span class="param">omega0p</span> - $\omega_0'$, radius of the waist after the transformation
+- <span class="param">sp</span> - $s'$, position of the waist after the transformation
 
 ----
 
