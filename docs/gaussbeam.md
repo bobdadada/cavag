@@ -1,6 +1,6 @@
 ## Physical Background
 
-### Definition of Hermite-Gaussian Beam
+### Definition
 
 The normalized Gaussian Beam or more general Hermite-Gaussian Beam has form
 $$
@@ -128,7 +128,7 @@ V_{mneff}=\sqrt{(2m+1)(2n+1)}V_{00eff} \tag{14}
 $$
 where $V_{00eff}$ is the mode volume of the fundamental mode at the same location.
 
-### Demonstration of the characteristics of Hermite-Gaussian Modes
+### Demonstration
 
 <div><img src="_assets/picture/res/gaussbeam/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
 
@@ -163,7 +163,7 @@ Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. 
 
 The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipynb](_assets/example/hermite_gaussian_beam.ipynb ':ignore :class=download').
 
-### Transformation of Hermite-Gaussian Modes
+### Transformation
 
 #### Transformation by a thin lens
 
@@ -208,11 +208,11 @@ $$
 $$
 A unfolded mirror acts like a lens with a focal distance $f'=R_0/2$.
 
-If we move the origin of the coordinates to the position of the mirror surface, change the definition of symbols, then the features of unfold mirror gives
+If we move the origin of the coordinates to the position of the mirror surface, change the definition of symbols, then the features of unfold mirror gives the following.
 
-!> The definitions of symbols $R',R,R_0$ have changed.
+!> The definitions of $R',R,R_0$ below have changed
 
-With our notations, features of the mirror imply that
+With our notations, similar to $(17)$, features of the mirror imply that
 $$
 \omega' = \omega \ \text{and} \ \frac{1}{R'}-\frac{1}{R} = \frac{2}{R_0}  \tag{18}
 $$
@@ -732,6 +732,8 @@ Here we define some helper functions. In order to facilitate the understanding o
 
 Given the wavelength and the waist radius of the fundamental mode beam, calculate the fundamental mode field radius at a certain position. The waist is at the origin, and the radius of curvature is positive in the positive direction of the coordinate axis. This function can be used directly in higher-order modes. 
 
+See <a class="module-object-refer-to" module="gaussbeam">remote2local</a>.
+
 <p style="color:blue;">parameters:</p>
 
 - <span class="param">wavelength</span> - $\lambda$, wavelength of the beam
@@ -745,9 +747,34 @@ Given the wavelength and the waist radius of the fundamental mode beam, calculat
 
 ----
 
+<strong class="object" id="remote2local">remote2local</strong>: `def remote2local(wavelength, omega, R)`
 
+Given the wavelength, the fundamental mode radius and the radius of curvature at current position, calculate the radius of the waist of the fundamental mode beam and the distance between the waist and the current position. The waist is at the origin, and the radius of curvature in the positive direction of the coordinate axis is positive. This function can be used directly in higher order modes.
+
+See <a class="module-object-refer-to" module="gaussbeam">local2remote</a>.
+
+<p style="color:blue;">parameters:</p>
+
+- <span class="param">wavelength</span> - $\lambda$, wavelength of the beam
+- <span class="param">omega</span> - $\omega$, radius of the fundamental mode field
+- <span class="param">R</span> - $R$, radius of curvature
+
+<p style="color:blue;">returns:</p>
+
+- <span class="param">omega0</span> - $\omega_0$, radius of the waist
+- <span class="param">z</span> - $z$, position
 
 ----
+
+<strong class="object" id="convert_through_mirror">convert_through_mirror</strong>: `def convert_through_mirror(wavelength, omega0, s, roc)`
+
+
+
+The [model](#transformation-by-a-thin-lens) is shown above.
+
+----
+
+
 
 ----
 

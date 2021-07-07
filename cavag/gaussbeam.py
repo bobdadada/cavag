@@ -10,7 +10,7 @@ __all__ = [
     'NormalizedGaussBeam', 'GaussBeam',
     'NormalizedEqualSymmetricHermiteGaussBeam', 'EqualSymmetricHermiteGaussBeam',
     'NormalizedEqualSymmetricGaussBeam', 'EqualSymmetricGaussBeam',
-    'local2remote', 'remote2local', 'convert_through_mirror', 'convert_through_lens'
+    'local2remote', 'remote2local', 'convert_through_lens', 'convert_through_mirror'
 ]
 
 
@@ -484,7 +484,6 @@ def remote2local(wavelength, omega, R):
     """
     已知波长、基模模场半径和曲率半径，计算基模束腰半径和位置。
     默认束腰在原点，且坐标轴正方向的曲率半径为正。此函数可以直接用于高阶模式。
-    此函数可以直接用于高阶模式。
     :param wavelength: 波长
     :param omega: 基模模场半径
     :param R: 曲率半径
@@ -494,20 +493,6 @@ def remote2local(wavelength, omega, R):
     omega0 = omega / np.sqrt(1 + (zrp / R) ** 2)
     z = R / (1 + (R / zrp) ** 2)
     return omega0, z
-
-
-def convert_through_mirror(wavelength, omega0, s, roc):
-    """
-    计算通过镜面反射后的Hermite-Gaussian光，且默认此镜面是轴对称的
-    :param wavelength: 波长
-    :param omega0: 基模束腰半径
-    :param s: 束腰相对于镜面的位置，且认为镜面在原点处，通常束腰在镜面左边为负。
-    :param roc: 镜面的曲率半径
-    :return: (omega0p, sp)反射后的束腰半径和位置
-    """
-    omega0p, spm = convert_through_lens(wavelength, omega0, s, roc/2)
-    sp = -spm
-    return omega0p, sp
 
 
 def convert_through_lens(wavelength, omega0, s, f):
@@ -523,3 +508,18 @@ def convert_through_lens(wavelength, omega0, s, f):
     Rp = 1 / (1 / R + 1 / f)
     omega0p, sp = remote2local(wavelength, omegap, Rp)
     return omega0p, sp
+
+
+def convert_through_mirror(wavelength, omega0, s, roc):
+    """
+    计算通过镜面反射后的Hermite-Gaussian光，且默认此镜面是轴对称的
+    :param wavelength: 波长
+    :param omega0: 基模束腰半径
+    :param s: 束腰相对于镜面的位置，且认为镜面在原点处，通常束腰在镜面左边为负。
+    :param roc: 镜面的曲率半径
+    :return: (omega0p, sp)反射后的束腰半径和位置
+    """
+    omega0p, spm = convert_through_lens(wavelength, omega0, s, roc/2)
+    sp = -spm
+    return omega0p, sp
+
