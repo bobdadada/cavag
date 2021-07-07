@@ -1,20 +1,22 @@
-digraph "packages_cavag" {
+digraph "packages" {
 charset="utf-8"
 rankdir=BT
 "1" [label="cavag._utils", shape="box"];
-"2" [label="cavag.fiber", shape="box"];
-"3" [label="cavag.fpcavity", shape="box"];
-"4" [label="cavag.gaussbeam", shape="box"];
-"5" [label="cavag.mirror", shape="box"];
-"6" [label="cavag.misc", shape="box"];
-"7" [label="cavag.utils", shape="box"];
-"2" -> "6" [arrowhead="open", arrowtail="none"];
-"3" -> "1" [arrowhead="open", arrowtail="none"];
-"3" -> "5" [arrowhead="open", arrowtail="none"];
-"4" -> "6" [arrowhead="open", arrowtail="none"];
+"3" [label="cavag.extension.fcqs", shape="box"];
+"4" [label="cavag.fiber", shape="box"];
+"5" [label="cavag.fpcavity", shape="box"];
+"6" [label="cavag.gaussbeam", shape="box"];
+"7" [label="cavag.mirror", shape="box"];
+"8" [label="cavag.misc", shape="box"];
+"9" [label="cavag.utils", shape="box"];
+"4" -> "8" [arrowhead="open", arrowtail="none"];
+"5" -> "1" [arrowhead="open", arrowtail="none"];
 "5" -> "6" [arrowhead="open", arrowtail="none"];
-"6" -> "1" [arrowhead="open", arrowtail="none"];
-"7" -> "2" [arrowhead="open", arrowtail="none"];
-"7" -> "3" [arrowhead="open", arrowtail="none"];
-"7" -> "5" [arrowhead="open", arrowtail="none"];
+"5" -> "8" [arrowhead="open", arrowtail="none"];
+"6" -> "8" [arrowhead="open", arrowtail="none"];
+"7" -> "8" [arrowhead="open", arrowtail="none"];
+"8" -> "1" [arrowhead="open", arrowtail="none"];
+"9" -> "4" [arrowhead="open", arrowtail="none"];
+"9" -> "5" [arrowhead="open", arrowtail="none"];
+"9" -> "7" [arrowhead="open", arrowtail="none"];
 }
