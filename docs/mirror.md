@@ -11,7 +11,7 @@
 
 #### 1. Mirror
 
-In many cases, we need the optical properties of the surface of  an object. The most easily measured optical properties are reflectivity $R$, transmittance $T$, and loss $L$. Here, we define classes related to the mirror surface, which can be regarded as a surface with a thickness of $0$.
+In many cases, we need the optical properties of the surface of  an object. The most easily measured optical properties are reflectivity $\mathcal{R}$, transmittance $\mathcal{T}$, and loss $\mathcal{L}$. Here, we define classes related to the mirror surface, which can be regarded as a surface with a thickness of $0$.
 
 ----
 
@@ -24,9 +24,9 @@ This class defines a mirror surface and is a subclass of `misc.RTL` and `misc.Po
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('roc', 'r', 't', 'l', 'position')` where
 
   - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature
-  - <span class="attr" style="color:red;">r</span> - $R$, optical reflectivity
-  - <span class="attr" style="color:red;">t</span> - $T$, optical transmittance
-  - <span class="attr" style="color:red;">l</span> - $L$, optical loss
+  - <span class="attr" style="color:red;">r</span> - $\mathcal{R}$, optical reflectivity
+  - <span class="attr" style="color:red;">t</span> - $\mathcal{T}$, optical transmittance
+  - <span class="attr" style="color:red;">l</span> - $\mathcal{L}$, optical loss
   - <span class="attr" style="color:red;">position</span> - the position of the mirror
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Mirror*, which can be modified as required. 
@@ -67,9 +67,9 @@ A class for a thin lens. In cavity-related applications, thin lens or `zero` abe
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('f', 'r', 't', 'l', 'position')` where
 
   - <span class="attr" style="color:red;">f</span> - $f$, focal distance
-  - <span class="attr" style="color:red;">r</span> - $R$, optical reflectivity
-  - <span class="attr" style="color:red;">t</span> - $T$, optical transmittance
-  - <span class="attr" style="color:red;">l</span> - $L$, optical loss
+  - <span class="attr" style="color:red;">r</span> - $\mathcal{R}$, optical reflectivity
+  - <span class="attr" style="color:red;">t</span> - $\mathcal{T}$, optical transmittance
+  - <span class="attr" style="color:red;">l</span> - $\mathcal{L}$, optical loss
   - <span class="attr" style="color:red;">position</span> - the position of the lens
   
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Lens*, which can be modified as required. 

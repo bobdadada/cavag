@@ -8,22 +8,21 @@ In this module, we define many commonly used auxiliary classes, all of which are
 
 #### 1. Reflectivity, Transmittance and Loss 
 
-Since reflectivity $R$, transmittance $T$, and loss $L$ are important in the mirror-related applications and often given in an equivalent form in practical applications, we need $RTL$ abstract class and a helper class for $R,T,L$ conversion. 
+Since reflectivity $\mathcal{R}$, transmittance $\mathcal{T}$, and loss $\mathcal{L}$ are important in the mirror-related applications and often given in an equivalent form in practical applications, we need an abstract class for $\mathcal{R},\mathcal{T},\mathcal{L}$ and a helper class for its conversion. 
 
 ----
 
 <strong class="object" id="RTL">RTL</strong>: `class RTL(_utils.PrintableObject)`
 
-This class define an abstract class describing $R,T,L$.
+This class define an abstract class describing $\mathcal{R},\mathcal{T},\mathcal{L}$.
 
 <p style="color:blue;">attributes:</p>
 
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('r', 't', 'l')` where
-
-  - <span class="attr" style="color:red;">r</span> - $R$, optical reflectivity, the value must be between $0$ and $1$
-  - <span class="attr" style="color:red;">t</span> - $T$, optical transmittance, the value must be between $0$ and $1$
-  - <span class="attr" style="color:red;">l</span> - $L$, optical loss, the value must be between $0$ and $1$
-
+  - <span class="attr" style="color:red;">r</span> - $\mathcal{R}$, optical reflectivity, the value must be between $0$ and $1$
+  - <span class="attr" style="color:red;">t</span> - $\mathcal{T}$, optical transmittance, the value must be between $0$ and $1$
+  - <span class="attr" style="color:red;">l</span> - $\mathcal{L}$, optical loss, the value must be between $0$ and $1$
+  
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *RTL*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
@@ -32,37 +31,37 @@ This class define an abstract class describing $R,T,L$.
 
   - properties provided by this class
     
-    - <span class="attr" style="color:red;">r</span> - $R$, optical reflectivity
-    - <span class="attr" style="color:red;">t</span> - $T$, optical transmittance
-    - <span class="attr" style="color:red;">l</span> - $L$, optical loss
+    - <span class="attr" style="color:red;">r</span> - $\mathcal{R}$, optical reflectivity
+    - <span class="attr" style="color:red;">t</span> - $\mathcal{T}$, optical transmittance
+    - <span class="attr" style="color:red;">l</span> - $\mathcal{L}$, optical loss
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='RTL', \*\*<span class="param">kwargs</span>)</span>  - Create a `RTL` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. For parameter <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span>, one can provide only two of them, and the remaining one can be calculated when the class is constructed. Note $R,T,L$ are normalized in the constructor, i.e, $R+T+L=1$.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='RTL', \*\*<span class="param">kwargs</span>)</span>  - Create a `RTL` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. For parameter <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span>, one can provide only two of them, and the remaining one can be calculated when the class is constructed. Note $\mathcal{R},\mathcal{T},\mathcal{L}$ are normalized in the constructor, i.e, $\mathcal{R}+\mathcal{T}+\mathcal{L}=1$.
   
-- <span class="method" style="color:red;">preprocess\_properties(<span class="param">\_norm</span>=True, \*\*<span class="param">propdict</span>)</span> - We rewrite the `preprocess_properties` method provided by <code>_utils.<a class="module-object-refer-to" module="introduction">Object</a></code> and provided an additional parameter <span class="param" style="color:red;">\_norm</span>. If <span class="param" style="color:red;">\_norm</span> is set to `True`, then the input parameters <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span> in <span class="param" style="color:red;">propdict</span> will be normalized, to make $R+T+L=1$.
+- <span class="method" style="color:red;">preprocess\_properties(<span class="param">\_norm</span>=True, \*\*<span class="param">propdict</span>)</span> - We rewrite the `preprocess_properties` method provided by <code>_utils.<a class="module-object-refer-to" module="introduction">Object</a></code> and provided an additional parameter <span class="param" style="color:red;">\_norm</span>. If <span class="param" style="color:red;">\_norm</span> is set to `True`, then the input parameters <span class="attr" style="color:red;">r</span>, <span class="attr" style="color:red;">t</span> and <span class="attr" style="color:red;">l</span> in <span class="param" style="color:red;">propdict</span> will be normalized, to make $\mathcal{R}+\mathcal{T}+\mathcal{L}=1$.
   
-- <span class="method" style="color:red;">add_loss(<span class="param">loss</span>)</span> - This method provides a way to add <span class="param" style="color:red;">loss</span> to the surface. In common cases, the loss can be divided into multiple parts. At this time, the loss will be added by this method, and the method will calculate the normalized $R,T,L$.
+- <span class="method" style="color:red;">add_loss(<span class="param">loss</span>)</span> - This method provides a way to add <span class="param" style="color:red;">loss</span> to the surface. In common cases, the loss can be divided into multiple parts. At this time, the loss will be added by this method, and the method will calculate the normalized $\mathcal{R},\mathcal{T},\mathcal{L}$.
 
 ----
 
 <strong class="object" id="RTLConverter">RTLConverter</strong>: `class RTLConverter`
 
-A helper class for the $R,T,L$ conversion. This class is mainly used to define a namespace, and all methods of the class are decorated as `@staticmethod`.
+A helper class for the $\mathcal{R},\mathcal{T},\mathcal{L}$ conversion. This class is mainly used to define a namespace, and all methods of the class are decorated as `@staticmethod`.
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">@(staticmethod): normalize(<span class="param">r</span>=None, <span class="param">t</span>=None, <span class="param">l</span>=None)</span> - The method is used to normalize the $R,T,L$, i.e. $R+T+L=1$. One can only provide only two of the parameters reflectivity - $R$ - <span class="param" style="color:red;">r</span>, transmittance - $T$ - <span class="param" style="color:red;">t</span>, loss - $L$ - <span class="param" style="color:red;">l</span>. Then this method will return the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): normalize(<span class="param">r</span>=None, <span class="param">t</span>=None, <span class="param">l</span>=None)</span> - The method is used to normalize the $\mathcal{R},\mathcal{T},\mathcal{L}$, i.e. $\mathcal{R}+\mathcal{T}+\mathcal{L}=1$. One can only provide only two of the parameters reflectivity - $\mathcal{R}$ - <span class="param" style="color:red;">r</span>, transmittance - $\mathcal{T}$ - <span class="param" style="color:red;">t</span>, loss - $\mathcal{L}$ - <span class="param" style="color:red;">l</span>. Then this method will return the normalized $\mathcal{R},\mathcal{T},\mathcal{L}$ in a tuple.
   
-- <span class="method" style="color:red;">@(staticmethod): rtl_by_r_t2l(<span class="param">r</span>, <span class="param">t2l</span>)</span> - By parameters reflectivity - $R$ - <span class="param" style="color:red;">r</span> and the ratio of transmittance to loss - $T/L$ - <span class="param" style="color:red;">t2l</span>, this method returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): rtl_by_r_t2l(<span class="param">r</span>, <span class="param">t2l</span>)</span> - By parameters reflectivity - $\mathcal{R}$ - <span class="param" style="color:red;">r</span> and the ratio of transmittance to loss - $\mathcal{T}/\mathcal{L}$ - <span class="param" style="color:red;">t2l</span>, this method returns the normalized $\mathcal{R},\mathcal{T},\mathcal{L}$ in a tuple.
   
-- <span class="method" style="color:red;">@(staticmethod): rtl_by_t_r2l(<span class="param">t</span>, <span class="param">r2l</span>)</span> - By parameters transmittance - $T$ - <span class="param" style="color:red;">t</span> and the ratio of reflectivity to loss - $R/L$ - <span class="param" style="color:red;">r2l</span>, this method returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): rtl_by_t_r2l(<span class="param">t</span>, <span class="param">r2l</span>)</span> - By parameters transmittance - $\mathcal{T}$ - <span class="param" style="color:red;">t</span> and the ratio of reflectivity to loss - $\mathcal{R}/\mathcal{L}$ - <span class="param" style="color:red;">r2l</span>, this method returns the normalized $\mathcal{R},\mathcal{T},\mathcal{L}$ in a tuple.
   
-- <span class="method" style="color:red;">@(staticmethod): add_reflectivity(<span class="param">m0</span>, <span class="param">re</span>)</span> - This method adds extra reflectivity - <span class="param" style="color:red;">re</span> to the original (reflectivity, transmittance, loss) tuple - <span class="param" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): add_reflectivity(<span class="param">m0</span>, <span class="param">re</span>)</span> - This method adds extra reflectivity - $\mathcal{R}_e$ - <span class="param" style="color:red;">re</span> to the original (reflectivity, transmittance, loss) tuple - $(\mathcal{R}_0,\mathcal{T}_0,\mathcal{L}_0)$ - <span class="param" style="color:red;">m0</span>, and returns the normalized $\mathcal{R},\mathcal{T},\mathcal{L}$ in a tuple.
   
-- <span class="method" style="color:red;">@(staticmethod): add_transmittance(<span class="param">m0</span>, <span class="param">te</span>)</span> - This method adds extra transmittance - <span class="param" style="color:red;">te</span> to the original (reflectivity, transmittance, loss) tuple - <span class="param" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): add_transmittance(<span class="param">m0</span>, <span class="param">te</span>)</span> - This method adds extra transmittance - $\mathcal{T}_e$ - <span class="param" style="color:red;">te</span> to the original (reflectivity, transmittance, loss) tuple - $(\mathcal{R}_0,\mathcal{T}_0,\mathcal{L}_0)$ - <span class="param" style="color:red;">m0</span>, and returns the normalized $\mathcal{R},\mathcal{T},\mathcal{L}$ in a tuple.
   
-- <span class="method" style="color:red;">@(staticmethod): add_loss(<span class="param">m0</span>, <span class="param">le</span>)</span> - This method adds extra loss - <span class="param" style="color:red;">le</span> to the original (reflectivity, transmittance, loss) tuple - <span class="param" style="color:red;">m0</span>, and returns the normalized $R,T,L$ in a tuple.
+- <span class="method" style="color:red;">@(staticmethod): add_loss(<span class="param">m0</span>, <span class="param">le</span>)</span> - This method adds extra loss - $\mathcal{L}_e$ - <span class="param" style="color:red;">le</span> to the original (reflectivity, transmittance, loss) tuple - $(\mathcal{R}_0,\mathcal{T}_0,\mathcal{L}_0)$ - <span class="param" style="color:red;">m0</span>, and returns the normalized $\mathcal{R},\mathcal{T},\mathcal{L}$ in a tuple.
 
 ----
 
