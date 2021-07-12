@@ -62,15 +62,19 @@ Q=\frac{\nu}{\delta\nu} \tag{10}
 $$
 !> Please note that some of the above symbols may be different from other reference books.
 
-By the 
-
 There are many ways to define the modal volume of a cavity, one of the most convenient is defined as
 $$
 \begin{aligned}
 V&=\frac{\int_V \mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2d^3 \mathbf{r}}{\max_{V}[\mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2]}\approx \frac{\int_{V}|u(\mathbf{r})|^2 d^3 \mathbf{r}}{\max_{V}|u(\mathbf{r})|^2}\\
-&=?\frac{L}{\max_{V}|u(\mathbf{r})|^2}
+&=\frac{L/2}{\max_{V}|u(\mathbf{r})|^2}
 \end{aligned} \tag{11}
 $$
+
+where
+$$
+u(\mathbf{r})=u_{mn}(x,y,z)\cos(kz)
+$$
+for a standing wave Hermite-Gauss field with  $m,n$ mode. See [gaussbeam](gaussbeam.md) for more details.
 
 ?where $u(\mathbf{r})$ is the Hermite-Gauss mode $=\frac{1}{4}\pi\omega_0^2L $.?
 
