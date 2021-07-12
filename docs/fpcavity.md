@@ -10,6 +10,8 @@ Left figure shows a typical optical resonant cavity, with cavity length $L$, rad
 
 <div style="clear: both"></div>
 
+**STRUCTURE**
+
 A stable cavity must satisfy the requirement that the paraxial mode travels infinitely many times without leaving the cavity, that is, the geometric optical loss of the paraxial light is zero. And the mathematical expression of that requirement is
 $$
 0\le g_l g_r\le1 \tag{1}
@@ -36,6 +38,9 @@ If the center position of the cavity is set to the origin, then the waist positi
 $$
 p_0=\frac{p_l-p_r}{2} \tag{6}
 $$
+
+**PERFORMANCE**
+
 The $\text{FSR}$ (Free Spectral Range) is given by
 $$
 \text{FSR} = \frac{2\pi c}{2 n_c L} \tag{7}
@@ -74,21 +79,25 @@ where
 $$
 u(\mathbf{r})=u_{mn}(x,y,z)\cos(kz)
 $$
-for a standing wave Hermite-Gauss field with  $m,n$ mode. See [gaussbeam](gaussbeam.md) for more details.
+for a standing wave Hermite-Gauss field with mode $m,n$. See [gaussbeam](gaussbeam.md) for more details. For the fundamental mode Gaussian beam with the waist position in the cavity, we see that the modal volume is given by
+$$
+V_{00}=\frac{L/2}{2/(\omega_0^2\pi)}=\frac{\pi\omega_0^2L}{4} \tag{12}
+$$
+But $V$ is slightly different for other situations.
 
-?where $u(\mathbf{r})$ is the Hermite-Gauss mode $=\frac{1}{4}\pi\omega_0^2L $.?
+**LOSS**
 
 There are a lot of losses in the cavity, and a lot of losses are on the mirror surface, mainly including:
 
 Clipping loss on the finite-diameter mirrors. Conservatively assume a cavity mode and consider its 'spillover' loss upon reflection on a finite-diameter mirror. For a single reflection,
 $$
-\mathcal{L}_{cl}=e^{-2(D/2)^2/\omega_m^2} \tag{12}
+\mathcal{L}_{cl}=e^{-2(D/2)^2/\omega_m^2} \tag{13}
 $$
 where $\omega_{m}$ is the mode radius of the mode impinging on the mirror of diameter $D$. Note the mode radius of higher-order modes is larger, so the clipping loss is larger under the same parameters.
 
 Scattering loss. A widely used estimate linking the roughness of the mirror surface to the scattering loss is
 $$
-\mathcal{L}_{sc}=\left(\frac{4\pi \sigma_{sc}}{\lambda}\right)^2 \tag{13}
+\mathcal{L}_{sc}=\left(\frac{4\pi \sigma_{sc}}{\lambda}\right)^2 \tag{14}
 $$
 where $\sigma_{sc}$ is the roughness of the surface, which is consistent with the definition of surface roughness in the field of mechanical manufacturing, a typical value is $0.2\text{nm}$. Better mirror manufacturing technology and coating technology can effectively reduce $\sigma_{sc}$, thereby reducing $\mathcal{L}_{sc}$.
 
