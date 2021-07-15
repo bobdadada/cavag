@@ -230,47 +230,47 @@ class NormalizedHermiteGaussBeam(Wavelength):
 
     @property
     def p0(self):
-        """束腰位置"""
+        """束腰位置[L]"""
         return self.get_property('p0')
 
     @property
     def omega0x(self):
-        """x方向束腰半径"""
+        """x方向束腰半径[L]"""
         return self.get_property('omega0x')
 
     @property
     def omega0y(self):
-        """y方向束腰半径"""
+        """y方向束腰半径[L]"""
         return self.get_property('omega0y')
 
     @property
     def thetax(self):
-        """x方向半发散角"""
+        """x方向半发散角[1]"""
         return self.get_property('thetax', lambda: self.__beams[0].theta)
 
     @property
     def thetay(self):
-        """y方向半发散角"""
+        """y方向半发散角[1]"""
         return self.get_property('thetay', lambda: self.__beams[1].theta)
 
     @property
     def mx(self) -> int:
-        """x方向光的模式数"""
+        """x方向光的模式数[1]"""
         return self.get_property('mx')
 
     @property
     def my(self) -> int:
-        """y方向光的模式数"""
+        """y方向光的模式数[1]"""
         return self.get_property('my')
 
     @property
     def z0x(self):
-        """x方向瑞利长度"""
+        """x方向瑞利长度[L]"""
         return self.get_property('z0x', lambda: self.__beams[0].z0)
 
     @property
     def z0y(self):
-        """y方向瑞利长度"""
+        """y方向瑞利长度[L]"""
         return self.get_property('z0y', lambda: self.__beams[1].z0)
 
     @property

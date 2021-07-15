@@ -10,7 +10,7 @@ Left figure shows a typical optical resonant cavity, with cavity length $L$, rad
 
 <div style="clear: both"></div>
 
-**STRUCTURE**
+**STRUCTURE:**
 
 A stable cavity must satisfy the requirement that the paraxial mode travels infinitely many times without leaving the cavity, that is, the geometric optical loss of the paraxial light is zero. And the mathematical expression of that requirement is
 $$
@@ -39,7 +39,7 @@ $$
 p_0=\frac{p_l-p_r}{2} \tag{6}
 $$
 
-**PERFORMANCE**
+**PERFORMANCE:**
 
 The $\text{FSR}$ (Free Spectral Range) is given by
 $$
@@ -85,7 +85,7 @@ V_{00}=\frac{L/2}{2/(\omega_0^2\pi)}=\frac{\pi\omega_0^2L}{4} \tag{12}
 $$
 But $V$ is slightly different for other situations.
 
-**LOSS**
+**LOSS:**
 
 There are a lot of losses in the cavity, and a lot of losses are on the mirror surface, mainly including:
 
@@ -103,8 +103,12 @@ where $\sigma_{sc}$ is the roughness of the surface, which is consistent with th
 
 ## Codes
 
+**This page corresponds to the module `fpcavity`** 
+
 
 ### Classes
+
+#### 1. Structure
 
 
 

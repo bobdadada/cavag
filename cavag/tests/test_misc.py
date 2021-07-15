@@ -59,9 +59,7 @@ class Test_RTLConverter(unittest.TestCase):
     
     def test_add_rtl(self):
         m0 = (0.1, 0.2, 0.7)
-        print(m0)
         r, t, l = RTLConverter.add_reflectivity(m0, 0.1)
-        print(r, t, l)
         self.assertEqual(r, 0.1*0.9+0.1)
         self.assertEqual(t, 0.2*0.9)
         self.assertEqual(l, 0.7*0.9)

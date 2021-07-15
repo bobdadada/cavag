@@ -8,26 +8,26 @@ from .gaussbeam import EqualSymmetricGaussBeam
 from .misc import RTL, Position
 
 __all__ = [
-    'AxisymmetricCavityStructure', 'EqualAxisymmetricCavityStructure',
-    'AxisymmetricCavity', 'EqualAxisymmetricCavity',
-    'AxisymmetricCavityMode', 'EqualAxisymmetricCavityMode',
+    'CavityStructure', 'EqualCavityStructure',
+    'Cavity', 'EqualCavity',
+    'CavityMode', 'EqualCavityMode',
     'judge_cavity_type',
     'calculate_loss_clipping', 'calculate_loss_scattering'
 ]
 
 
-class AxisymmetricCavityStructure(PrintableObject):
-    name = "AxisymmetricCavityStructure"
+class CavityStructure(PrintableObject):
+    name = "CavityStructure"
 
     modifiable_properties = ('length', 'rocl', 'rocr')
 
-    def __init__(self, name="AxisymmetricCavityStructure", **kwargs):
+    def __init__(self, name="CavityStructure", **kwargs):
         super().__init__(**kwargs)
         self.name = name
         
-        self.property_set.add_required(AxisymmetricCavityStructure.modifiable_properties)
+        self.property_set.add_required(CavityStructure.modifiable_properties)
         
-        for prop in AxisymmetricCavityStructure.modifiable_properties:
+        for prop in CavityStructure.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
 
     @property
@@ -69,19 +69,19 @@ class AxisymmetricCavityStructure(PrintableObject):
         return judge_cavity_type(self.length, self.rocl, self.rocr)[1]
 
 
-class EqualAxisymmetricCavityStructure(AxisymmetricCavityStructure):
-    name = "EqualAxisymmetricCavityStructure"
+class EqualCavityStructure(CavityStructure):
+    name = "EqualCavityStructure"
 
     modifiable_properties = ('length', 'roc')
 
-    def __init__(self, name="EqualAxisymmetricCavityStructure", **kwargs):
+    def __init__(self, name="EqualCavityStructure", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
         super().__init__(**kwargs)
         self.name = name
         
-        self.property_set.add_required(EqualAxisymmetricCavityStructure.modifiable_properties)
+        self.property_set.add_required(EqualCavityStructure.modifiable_properties)
         self.property_set['roc'] = roc
     
     def preprocess_properties(self, **propdict):
@@ -101,22 +101,22 @@ class EqualAxisymmetricCavityStructure(AxisymmetricCavityStructure):
         return self.get_property('g', lambda: 1-self.length/self.roc)
 
 
-class AxisymmetricCavity(AxisymmetricCavityStructure):
-    name = "AxisymmetricCavity"
+class Cavity(CavityStructure):
+    name = "Cavity"
 
     modifiable_properties = ('length', 'nc', 'lc', 'rocl', 'rocr', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
 
-    def __init__(self, name="AxisymmetricCavity", **kwargs):
+    def __init__(self, name="Cavity", **kwargs):
         kwargs.update(nc=kwargs.get('nc', 1))  # default air medium 
         kwargs.update(lc=kwargs.get('lc', 0))
 
         super().__init__(**kwargs)
         self.name = name
 
-        self.property_set.add_required(AxisymmetricCavity.modifiable_properties)
+        self.property_set.add_required(Cavity.modifiable_properties)
 
         __kwarg_rtls = [{}, {}]
-        for prop in AxisymmetricCavity.modifiable_properties:
+        for prop in Cavity.modifiable_properties:
             val = kwargs.get(prop, None)
             self.property_set[prop] = val
             if prop.endswith('l'):
@@ -211,12 +211,12 @@ class AxisymmetricCavity(AxisymmetricCavityStructure):
         return self.get_property('Q', lambda: constants.pi*self.nu/(self.kappa))
 
 
-class EqualAxisymmetricCavity(EqualAxisymmetricCavityStructure, AxisymmetricCavity):
-    name = "EqualAxisymmetricCavity"
+class EqualCavity(EqualCavityStructure, Cavity):
+    name = "EqualCavity"
 
     modifiable_properties = ('length', 'nc', 'lc', 'roc', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
 
-    def __init__(self, name="EqualAxisymmetricCavity", **kwargs):
+    def __init__(self, name="EqualCavity", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
@@ -226,12 +226,12 @@ class EqualAxisymmetricCavity(EqualAxisymmetricCavityStructure, AxisymmetricCavi
         self.property_set['roc'] = roc
 
 
-class AxisymmetricCavityMode(AxisymmetricCavityStructure, EqualSymmetricGaussBeam, Position):
-    name = 'AxisymmetricCavityMode'
+class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
+    name = 'CavityMode'
 
     modifiable_properties = ('length', 'wavelength', 'rocl', 'rocr', 'A0', 'position')
 
-    def __init__(self, name="AxisymmetricCavityMode", **kwargs):
+    def __init__(self, name="CavityMode", **kwargs):
         kwargs.update(A0=kwargs.get('A0', 1))
 
         super().__init__(**kwargs)
@@ -311,12 +311,12 @@ class AxisymmetricCavityMode(AxisymmetricCavityStructure, EqualSymmetricGaussBea
         return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.V_mode)))
 
 
-class EqualAxisymmetricCavityMode(EqualAxisymmetricCavityStructure, AxisymmetricCavityMode):
-    name = "EqualAxisymmetricCavityMode"
+class EqualCavityMode(EqualCavityStructure, CavityMode):
+    name = "EqualCavityMode"
 
     modifiable_properties = ('length', 'wavelength', 'roc', 'A0')
 
-    def __init__(self, name="EqualAxisymmetricCavityMode" ,**kwargs):
+    def __init__(self, name="EqualCavityMode" ,**kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
@@ -367,19 +367,19 @@ def judge_cavity_type(length, rocl, rocr):
     :param length: 腔长
     :param rocl: 左边腔镜ROC
     :param rocr: 右边腔镜ROC
-    :return: (stable, critical) stable: True-腔满足稳定条件，False-腔不满足稳定条件;
-                                critical: True-临界腔，False-非临界腔
+    :return: (s, c) s: True-腔满足稳定条件，False-腔不满足稳定条件;
+                    c: True-临界腔，False-非临界腔
     """
-    stable = False
-    critical = False
+    s = False
+    c = False
 
     glgr = (1-length/rocl)*(1-length/rocr)
     if glgr >= 0 and glgr <= 1:
-        stable = True
+        s = True
         if glgr == 0 or glgr == 1:
-            critical = True
+            c = True
 
-    return stable, critical
+    return s, c
 
 
 def calculate_loss_clipping(d, omegam):

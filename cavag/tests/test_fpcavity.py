@@ -4,14 +4,14 @@ import numpy as np
 from scipy import constants
 from cavag.fpcavity import *
 
-class Test_AxisymmetricCavityStructure(unittest.TestCase):
+class Test_CavityStructure(unittest.TestCase):
 
     def test_constructor(self):
         rocl, rocr, length = 300, 300, 400
         gl = 1 - length/rocl
         gr = 1 - length/rocr
         
-        ascs = AxisymmetricCavityStructure(rocl=rocl, rocr=rocr, length=length)
+        ascs = CavityStructure(rocl=rocl, rocr=rocr, length=length)
         
         self.assertEqual(ascs.rocl, rocl)
         self.assertEqual(ascs.rocr, rocr)
@@ -26,7 +26,7 @@ class Test_AxisymmetricCavityStructure(unittest.TestCase):
     def test_change_properties(self):
         rocl, rocr, length = 300, 300, 400
 
-        ascs = AxisymmetricCavityStructure(rocl=rocl, rocr=rocr, length=length)
+        ascs = CavityStructure(rocl=rocl, rocr=rocr, length=length)
 
         rocl = 200 
         gl = 1 - length/rocl
@@ -44,13 +44,13 @@ class Test_AxisymmetricCavityStructure(unittest.TestCase):
         self.assertEqual(ascs.isStable(), True)
         self.assertEqual(ascs.isCritical(), False)
 
-class Test_EqualAxisymmetricCavityStructure(unittest.TestCase):
+class Test_EqualCavityStructure(unittest.TestCase):
 
     def test_constructor(self):
         roc, length = 300, 500
         g = 1 - length/roc
         
-        eascs = EqualAxisymmetricCavityStructure(roc=roc, length=length)
+        eascs = EqualCavityStructure(roc=roc, length=length)
 
         self.assertEqual(eascs.roc, roc)
         self.assertEqual(eascs.rocl, roc)
@@ -67,7 +67,7 @@ class Test_EqualAxisymmetricCavityStructure(unittest.TestCase):
     def test_change_properties(self):
         roc, length = 300, 500
         
-        eascs = EqualAxisymmetricCavityStructure(roc=roc, length=length)
+        eascs = EqualCavityStructure(roc=roc, length=length)
 
         length, roc = 400, 300
         g = 1 - length/roc
@@ -86,7 +86,7 @@ class Test_EqualAxisymmetricCavityStructure(unittest.TestCase):
         self.assertEqual(eascs.isStable(), True)
         self.assertEqual(eascs.isCritical(), False)
 
-class Test_AxisymmetricCavity(unittest.TestCase):
+class Test_Cavity(unittest.TestCase):
 
     def test_constructor(self):
         length, rocl, rocr, rl, rr = 400, 300, 200, 0.9, 0.8
@@ -97,7 +97,7 @@ class Test_AxisymmetricCavity(unittest.TestCase):
         fsr = 2*constants.pi*constants.c/(2*length)
         finesse = fsr/(2*kappa)
                 
-        asc = AxisymmetricCavity(length=length, rocl=rocl, rocr=rocr, rl=rl, rr=rr)
+        asc = Cavity(length=length, rocl=rocl, rocr=rocr, rl=rl, rr=rr)
 
         self.assertEqual(asc.rl, rl)
         self.assertEqual(asc.rr, rr)
@@ -116,7 +116,7 @@ class Test_AxisymmetricCavity(unittest.TestCase):
     def test_change_properties(self):
         length, rocl, rocr, rl, rr = 400, 300, 200, 0.9, 0.8
 
-        asc = AxisymmetricCavity(length=length, rocl=rocl, rocr=rocr, rl=rl, rr=rr)
+        asc = Cavity(length=length, rocl=rocl, rocr=rocr, rl=rl, rr=rr)
 
         length, rocr = 300, 300
 
@@ -142,7 +142,7 @@ class Test_AxisymmetricCavity(unittest.TestCase):
         self.assertAlmostEqual(asc.fsr, fsr)
         self.assertAlmostEqual(asc.finesse, finesse)
 
-class Test_EqualAxisymmetricCavity(unittest.TestCase):
+class Test_EqualCavity(unittest.TestCase):
 
     def test_constructor(self):
         length, roc, rl, rr = 400, 300, 0.9, 0.8
@@ -152,7 +152,7 @@ class Test_EqualAxisymmetricCavity(unittest.TestCase):
         fsr = 2*constants.pi*constants.c/(2*length)
         finesse = fsr/(2*kappa)
                 
-        easc = EqualAxisymmetricCavity(length=length, roc=roc, rl=rl, rr=rr)
+        easc = EqualCavity(length=length, roc=roc, rl=rl, rr=rr)
 
         self.assertEqual(easc.rl, rl)
         self.assertEqual(easc.rr, rr)
@@ -173,7 +173,7 @@ class Test_EqualAxisymmetricCavity(unittest.TestCase):
     def test_change_properties(self):
         length, roc, rl, rr = 400, 300, 0.9, 0.8
                 
-        easc = EqualAxisymmetricCavity(length=length, roc=roc, rl=rl, rr=rr)
+        easc = EqualCavity(length=length, roc=roc, rl=rl, rr=rr)
 
         length, roc = 300, 400
         
@@ -200,7 +200,7 @@ class Test_EqualAxisymmetricCavity(unittest.TestCase):
         self.assertAlmostEqual(easc.fsr, fsr)
         self.assertAlmostEqual(easc.finesse, finesse)
 
-class Test_AxisymmetricCavityMode(unittest.TestCase):
+class Test_CavityMode(unittest.TestCase):
 
     def test_constructor(self):
         length, wavelength, rocl, rocr, A0 = 300, 9.8, 600, 400, 1
@@ -218,7 +218,7 @@ class Test_AxisymmetricCavityMode(unittest.TestCase):
         V_mode = length*omega0**2*constants.pi/4
         e = np.sqrt(constants.h*nu/(2*constants.epsilon_0*V_mode))
 
-        acm = AxisymmetricCavityMode(length=length, wavelength=wavelength,
+        acm = CavityMode(length=length, wavelength=wavelength,
                 rocl=rocl, rocr=rocr, A0=A0)
 
         self.assertEqual(acm.length, length)
@@ -242,7 +242,7 @@ class Test_AxisymmetricCavityMode(unittest.TestCase):
     def test_change_properties(self):
         length, wavelength, rocl, rocr, A0 = 300, 9.8, 600, 400, 1
         
-        acm = AxisymmetricCavityMode(length=length, wavelength=wavelength,
+        acm = CavityMode(length=length, wavelength=wavelength,
                 rocl=rocl, rocr=rocr, A0=A0)
         length, wavelength, rocl, rocr, A0 = 450, 9.2, 500, 600, 2
         acm.change_params(length=length, wavelength=wavelength,
@@ -279,7 +279,7 @@ class Test_AxisymmetricCavityMode(unittest.TestCase):
         self.assertEqual(acm.V_mode, V_mode)
         self.assertEqual(acm.e, e)
 
-class Test_EqualAxisymmetricCavityMode(unittest.TestCase):
+class Test_EqualCavityMode(unittest.TestCase):
    
     def test_constructor(self):
         length, wavelength, roc, A0 = 300, 9.8, 400, 1
@@ -300,7 +300,7 @@ class Test_EqualAxisymmetricCavityMode(unittest.TestCase):
         V_mode = length*omega0**2*constants.pi/4
         e = np.sqrt(constants.h*nu/(2*constants.epsilon_0*V_mode))
 
-        eacm = EqualAxisymmetricCavityMode(length=length, wavelength=wavelength,
+        eacm = EqualCavityMode(length=length, wavelength=wavelength,
                 roc=roc, A0=A0)
 
         self.assertEqual(eacm.length, length)
@@ -326,7 +326,7 @@ class Test_EqualAxisymmetricCavityMode(unittest.TestCase):
     def test_change_properties(self):
         length, wavelength, roc, A0 = 300, 9.8, 400, 1
         
-        eacm = EqualAxisymmetricCavityMode(length=length, wavelength=wavelength,
+        eacm = EqualCavityMode(length=length, wavelength=wavelength,
                 roc=roc, A0=A0)
         length, wavelength, roc, A0 = 400, 9.1, 300, 2
         eacm.change_params(length=length, wavelength=wavelength,
