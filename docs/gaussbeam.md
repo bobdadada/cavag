@@ -275,7 +275,7 @@ This class defines a general normalized Hermite-Gaussian beam in one dimension. 
     - <span class="attr" style="color:red;">m</span> - $m$, mode number
     - <span class="attr" style="color:red;">cm</span> - $c_m$, normalization factor of beam, defined by $c_{m}=\left(2/\pi\right)^{1/4}/\sqrt{\omega_0  2^{m} m!}$
     - <span class="attr" style="color:red;">z0</span> - $z_0$, Rayleigh length, defined by $\pi\omega_0^2/\lambda$
-    - <span class="attr" style="color:red;">theta</span> - $\theta$, half divergence angle in radian, defined by $\theta=\sqrt{2m+1}\arctan(\lambda/(\pi \omega_0))$
+    - <span class="attr" style="color:red;">thetam</span> - $\theta_m$, half divergence angle in radian, defined by $\theta_m=\sqrt{2m+1}\arctan(\lambda/(\pi \omega_0))$
     - <span class="attr" style="color:red;">hm</span> - $h_m$, Hermite polynomial $H_m$
 
   - properties provided by parent class
@@ -440,8 +440,8 @@ This class define a general normalized Hermite-Gaussian beam with definition $(1
     - <span class="attr" style="color:red;">cm</span> - $c_m$, total normalization factor of beam, defined by $c_{m}={c_{m}}_x{c_{m}}_y$
     - <span class="attr" style="color:red;">z0x</span> - ${z_0}_x$, Rayleigh length in $x$-direction, defined by $\pi{\omega_0}_x^2/\lambda$
     - <span class="attr" style="color:red;">z0y</span> - ${z_0}_y$, Rayleigh length in $y$-direction, defined by $\pi{\omega_0}_y^2/\lambda$
-    - <span class="attr" style="color:red;">thetax</span> - $\theta_x$, half divergence angle in radian in $x$-direction, defined by $\theta_x=\sqrt{2m_x+1}\arctan(\lambda/(\pi {\omega_0}_x))$
-    - <span class="attr" style="color:red;">thetay</span> - $\theta_y$, half divergence angle in radian in $y$-direction, defined by $\theta_y=\sqrt{2m_y+1}\arctan(\lambda/(\pi {\omega_0}_y))$
+    - <span class="attr" style="color:red;">thetamx</span> - ${\theta_m}_x$, half divergence angle in radian in $x$-direction, defined by ${\theta_m}_x=\sqrt{2m_x+1}\arctan(\lambda/(\pi {\omega_0}_x))$
+    - <span class="attr" style="color:red;">thetamy</span> - ${\theta_m}_y$, half divergence angle in radian in $y$-direction, defined by ${\theta_m}_y=\sqrt{2m_y+1}\arctan(\lambda/(\pi {\omega_0}_y))$
     - <span class="attr" style="color:red;">hmx</span> - ${h_m}_x$, Hermite polynomial ${H_m}_x$
     - <span class="attr" style="color:red;">hmy</span> - ${h_m}_y$, Hermite polynomial ${H_m}_y$
   
@@ -578,15 +578,25 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
 ----
 
-#### 3. The mode is the same in both x, y
+#### 3. The radius of mode is the same in both x, y
 
-In practical applications, Hermite-Gaussian beams with $m_x=m_y$ are commonly used.
+In common cases, we think that the beam waist of the fundamental Gaussian beam is the same in both $x$ and $y$, that is, ${\omega_0}_x={\omega_0}_y$. At this time, the mode in the $x$ and $y$ directions is degenerate. For example, a general optical fiber is axisymmetric, and the output beam satisfies ${\omega_0}_x={\omega_0}_y$. For these modes, the properties $z_0,R(z),\omega(z),\phi(z)$ defined by $(3)-(6)$ are equal in both $x$ and $y$ directions.
+
+----
+
+
+
+----
+
+#### 4. The mode is the same in both x, y
+
+In practical applications, Hermite-Gaussian beams with $m_x=m_y$ and ${\omega_0}_x={\omega_0}_y$ are commonly used. And for these objects, we omit subscript $x$, $y$.
 
 ----
 
 <strong class="object" id="NormalizedEqualSymmetricHermiteGaussBeam">NormalizedEqualSymmetricHermiteGaussBeam</strong>: `class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D)`
 
-This class defines a general normalized Hermite-Gaussian beam with $m_x=m_y$, and we ignore the subscript in the definition of the class.
+This class defines a general normalized Hermite-Gaussian beam with $m_x=m_y$ and ${\omega_0}_x={\omega_0}_y$, and we omit the subscript in the definition of the class.
 
 <p style="color:blue;">attributes:</p>
 
@@ -661,9 +671,9 @@ This class is a subclass of `NormalizedEqualSymmetricHermiteGaussBeam` with a gi
 
 ----
 
-<strong class="object" id="NormalizedEqualSymmetricGaussBeam">NormalizedEqualSymmetricGaussBeam</strong>: `class NormalizedEqualSymmetricGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam)`
+<strong class="object" id="NormalizedEqualGaussBeam">NormalizedEqualGaussBeam</strong>: `class NormalizedEqualGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam)`
 
-This class defines a class of Gaussian beam with mode number $m=0$.
+This class defines a class of Gaussian beam with mode number $m=0$ and ${\omega_0}_x={\omega_0}_y$.
 
 <p style="color:blue;">attributes:</p>
 
@@ -673,7 +683,7 @@ This class defines a class of Gaussian beam with mode number $m=0$.
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualSymmetricGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualGaussBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -685,13 +695,13 @@ This class defines a class of Gaussian beam with mode number $m=0$.
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualSymmetricGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualSymmetricGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - See <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricHermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
-<strong class="object" id="EqualSymmetricGaussBeam">EqualSymmetricGaussBeam</strong>: `class EqualSymmetricGaussBeam(EqualSymmetricHermiteGaussBeam)`
+<strong class="object" id="EqualGaussBeam">EqualGaussBeam</strong>: `class EqualGaussBeam(EqualSymmetricHermiteGaussBeam)`
 
 This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
@@ -704,7 +714,7 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualSymmetricGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualGaussBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -716,7 +726,7 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='EqualSymmetricGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `EqualSymmetricGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='EqualGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `EqualGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - See <a class="module-object-refer-to" module="gaussbeam">EqualSymmetricHermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 

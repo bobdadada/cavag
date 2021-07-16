@@ -93,7 +93,7 @@ Clipping loss on the finite-diameter mirrors. Conservatively assume a cavity mod
 $$
 \mathcal{L}_{cl}=e^{-2(D/2)^2/\omega_m^2} \tag{13}
 $$
-where $\omega_{m}$ is the mode radius of the mode impinging on the mirror of diameter $D$. Note the mode radius of higher-order modes is larger, so the clipping loss is larger under the same parameters.
+where $\omega_{m}$ is the radius of the mode impinging on the mirror of diameter $D$. Note the mode radius of higher-order modes is larger, so the clipping loss is larger under the same parameters.
 
 Scattering loss. A widely used estimate linking the roughness of the mirror surface to the scattering loss is
 $$

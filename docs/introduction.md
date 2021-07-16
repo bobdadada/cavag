@@ -50,10 +50,12 @@ Source Page: [gaussbeam](gaussbeam.md)
 - <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam</a>
 - <a class="module-object-refer-to" module="gaussbeam">NormalizedGaussBeam</a>
 - <a class="module-object-refer-to" module="gaussbeam">GaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualHermiteGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">EqualHermiteGaussBeam</a>
 - <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricHermiteGaussBeam</a>
 - <a class="module-object-refer-to" module="gaussbeam">EqualSymmetricHermiteGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">EqualSymmetricGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualGaussBeam</a>
+- <a class="module-object-refer-to" module="gaussbeam">EqualGaussBeam</a>
 
 **Function[s]**
 

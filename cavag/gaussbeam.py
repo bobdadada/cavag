@@ -8,8 +8,9 @@ __all__ = [
     'NormalizedGaussBeam1D', 'GaussBeam1D',
     'NormalizedHermiteGaussBeam', 'HermiteGaussBeam',
     'NormalizedGaussBeam', 'GaussBeam',
+    'NormalizedEqualHermiteGaussBeam', 'EqualHermiteGaussBeam',
     'NormalizedEqualSymmetricHermiteGaussBeam', 'EqualSymmetricHermiteGaussBeam',
-    'NormalizedEqualSymmetricGaussBeam', 'EqualSymmetricGaussBeam',
+    'NormalizedEqualGaussBeam', 'EqualGaussBeam',
     'local2remote', 'remote2local', 'convert_through_lens', 'convert_through_mirror'
 ]
 
@@ -60,9 +61,9 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         return self.get_property('z0', lambda:  constants.pi * (self.omega0) ** 2 / self.wavelength)
 
     @property
-    def theta(self):
+    def thetam(self):
         """半发散角[1]"""
-        return self.get_property('theta', lambda: np.sqrt(2*self.m+1)*np.arctan(self.wavelength/(constants.pi*self.omega0)))
+        return self.get_property('thetam', lambda: np.sqrt(2*self.m+1)*np.arctan(self.wavelength/(constants.pi*self.omega0)))
 
     @property
     def hm(self):
@@ -165,7 +166,7 @@ class GaussBeam1D(HermiteGaussBeam1D):
 class NormalizedHermiteGaussBeam(Wavelength):
     name = 'NormalizedHermiteGaussBeam'
 
-    # 波长, 束腰位置, x方向束腰半径, y方向束腰半径, x方向束腰位置, x方向模式数, y方向模式数
+    # 波长, 束腰位置, x方向束腰半径, y方向束腰半径, x方向模式数, y方向模式数
     modifiable_properties = (
         'wavelength', 'p0', 'omega0x', 'omega0y', 'mx', 'my')
 
@@ -199,6 +200,8 @@ class NormalizedHermiteGaussBeam(Wavelength):
         )
 
     def postprocess_properties(self, **propdict):
+        super().postprocess_properties(**propdict)
+
         xkw, ykw = {}, {}
         for k, v in propdict.items():
             if k.endswith('x'):
@@ -244,14 +247,14 @@ class NormalizedHermiteGaussBeam(Wavelength):
         return self.get_property('omega0y')
 
     @property
-    def thetax(self):
+    def thetamx(self):
         """x方向半发散角[1]"""
-        return self.get_property('thetax', lambda: self.__beams[0].theta)
+        return self.get_property('thetamx', lambda: self.__beams[0].thetam)
 
     @property
-    def thetay(self):
+    def thetamy(self):
         """y方向半发散角[1]"""
-        return self.get_property('thetay', lambda: self.__beams[1].theta)
+        return self.get_property('thetamy', lambda: self.__beams[1].thetam)
 
     @property
     def mx(self) -> int:
@@ -376,6 +379,78 @@ class GaussBeam(HermiteGaussBeam):
         self.name = name
 
 
+class NormalizedEqualHermiteGaussBeam(NormalizedHermiteGaussBeam):
+    name = 'NormalizedEqualHermiteGaussBeam'
+
+    # 波长, 束腰半径, 束腰位置, x方向模式数, y方向模式数
+    modifiable_properties = ('wavelength', 'p0', 'omega0', 'mx', 'my')
+
+    def __init__(self, name="NormalizedEqualHermiteGaussBeam", **kwargs):
+        omega0 = kwargs.get('omega0', None)
+        kwargs['omega0x'] = kwargs['omega0y'] = omega0
+        super().__init__(**kwargs)
+
+        self.name = name
+
+        self.property_set.add_required('omega0')
+        self.property_set['omega0'] = kwargs.get('omega0', None)
+
+    @property
+    def omega0(self):
+        """束腰半径"""
+        return self.get_property('omega0')
+
+    @property
+    def z0(self):
+        """瑞利长度[L]"""
+        return self.get_property('z0', lambda: self.z0x)
+    
+    def omega_f(self, z):
+        """模场半径函数"""
+        return self.omegax_f(z)
+
+    def R_f(self, z):
+        """波前曲率半径函数"""
+        return self.Rx_f(z)
+
+    def phi_f(self, z):
+        """phi相位函数"""
+        return self.phix_f(z)
+
+    def preprocess_properties(self, **propdict):
+        if 'omega0' in propdict:
+            propdict['omega0x'] = propdict['omega0y'] = propdict['omega0']
+
+        propdict = super().preprocess_properties(**propdict)
+
+        return propdict
+
+
+class EqualHermiteGaussBeam(NormalizedEqualHermiteGaussBeam):
+    name = 'EqualHermiteGaussBeam'
+
+    # 振幅, 波长, 束腰半径, 束腰位置, x方向模式数, y方向模式数
+    modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0', 'mx', 'my')
+
+    def __init__(self, name='EqualHermiteGaussBeam', **kwargs):
+        super().__init__(**kwargs)
+        self.name = name
+
+        self.property_set.add_required('A0')
+        self.property_set['A0'] = kwargs.get('A0', None)
+
+    @property
+    def A0(self):
+        """振幅"""
+        return self.get_property('A0')
+
+    def A_f(self, z):
+        """振幅函数"""
+        A0 = self.A0
+        A = super().A_f(z)
+        return A0*A
+
+
 class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
     name = 'NormalizedEqualSymmetricHermiteGaussBeam'
 
@@ -441,24 +516,24 @@ class EqualSymmetricHermiteGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
         return A0*A
 
 
-class NormalizedEqualSymmetricGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
-    name = 'NormalizedEqualSymmetricGaussBeam'
+class NormalizedEqualGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
+    name = 'NormalizedEqualGaussBeam'
 
     modifiable_properties = ('wavelength', 'p0', 'omega0')
 
-    def __init__(self, name='NormalizedEqualSymmetricGaussBeam', **kwargs):
+    def __init__(self, name='NormalizedEqualGaussBeam', **kwargs):
         kwargs.update(m=0)
 
         super().__init__(**kwargs)
         self.name = name
 
 
-class EqualSymmetricGaussBeam(EqualSymmetricHermiteGaussBeam):
-    name = 'EqualSymmetricGaussBeam'
+class EqualGaussBeam(EqualSymmetricHermiteGaussBeam):
+    name = 'EqualGaussBeam'
 
     modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0')
 
-    def __init__(self, name='EqualSymmetricGaussBeam', **kwargs):
+    def __init__(self, name='EqualGaussBeam', **kwargs):
         kwargs.update(m=0)
 
         super().__init__(**kwargs)
@@ -522,4 +597,3 @@ def convert_through_mirror(wavelength, omega0, s, roc):
     omega0p, spm = convert_through_lens(wavelength, omega0, s, roc/2)
     sp = -spm
     return omega0p, sp
-

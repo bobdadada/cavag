@@ -1,4 +1,4 @@
-!> This document and library are not yet complete, please go to the __release/1.0__ branch to download the first version of the first version of the code.
+!> This document and library are not yet complete, please go to the __release/1.0__ branch to download the first version of the code.
 
 # Cavag
 
@@ -9,7 +9,6 @@ The documentation is available at [bobdadada.github.io/cavag](https://bobdadada.
 > 1. solve Gaussian optical transmission model
 > 2. solve the Fabry-Perot cavity
 > 3. solve the Fiber Fabry-Perot Cavity
->
 
 **cavag** consists of the following modules:
 

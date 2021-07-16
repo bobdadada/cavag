@@ -302,7 +302,7 @@ class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
     # 模式体积(小NA近似)
     @property
     def V_mode(self):
-        """模式体积[L^3]"""
+        """模式体积[L^3]"""           
         return self.get_property('V_mode', lambda: self.length*(self.omega0)**2*constants.pi/4)
 
     @property
