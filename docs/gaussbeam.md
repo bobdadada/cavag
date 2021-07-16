@@ -259,7 +259,7 @@ This class defines a general normalized Hermite-Gaussian beam in one dimension. 
 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">m</span> - $m$, mode number
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedHermiteGaussBeam1D*, which can be modified as required. 
@@ -271,15 +271,16 @@ This class defines a general normalized Hermite-Gaussian beam in one dimension. 
   - properties provided by this class
 
     - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-    - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+    - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
+    - <span class="attr" style="color:red;">omega0m</span> - ${\omega_0}_m$, radius of the waist, defined by ${\omega_0}_m=\sqrt{2m+1}\omega_0$
     - <span class="attr" style="color:red;">m</span> - $m$, mode number
     - <span class="attr" style="color:red;">cm</span> - $c_m$, normalization factor of beam, defined by $c_{m}=\left(2/\pi\right)^{1/4}/\sqrt{\omega_0  2^{m} m!}$
     - <span class="attr" style="color:red;">z0</span> - $z_0$, Rayleigh length, defined by $\pi\omega_0^2/\lambda$
     - <span class="attr" style="color:red;">thetam</span> - $\theta_m$, half divergence angle in radian, defined by $\theta_m=\sqrt{2m+1}\arctan(\lambda/(\pi \omega_0))$
     - <span class="attr" style="color:red;">hm</span> - $h_m$, Hermite polynomial $H_m$
-
+  
   - properties provided by parent class
-
+  
     - see <a class="module-object-refer">misc.Wavelength</a> for details
 
 <p style="color:blue;">methods:</p>
@@ -288,7 +289,9 @@ This class defines a general normalized Hermite-Gaussian beam in one dimension. 
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude at position <span class="param">z</span>, the amplitude is defined by $1/(1+(z-p_0)^2/z_0^2)^{1/4}$.
 
-- <span class="method" style="color:red;">omega_f(<span class="param">z</span>)</span> - Compute the mode field radius at position <span class="param">z</span>, which is defined by $\omega_0\sqrt{1+(z-p_0)^2/z_0^2}$.
+- <span class="method" style="color:red;">omega_f(<span class="param">z</span>)</span> - Compute the radius of the equivalent fundamental mode at position <span class="param">z</span>, which is defined by $\omega_0\sqrt{1+(z-p_0)^2/z_0^2}$.
+
+- <span class="method" style="color:red;">omegam_f(<span class="param">z</span>)</span> - Compute the mode field radius at position <span class="param">z</span>, which is defined by $\sqrt{2m+1}\omega_0\sqrt{1+(z-p_0)^2/z_0^2}$.
 
 - <span class="method" style="color:red;">r_f(<span class="param">z</span>)</span> - Compute the radius of curvature at position <span class="param">z</span>, which is defined by $(z-p_0)(1+z_0^2/(z-p_0)^2)$.
 
@@ -313,7 +316,7 @@ This class is a subclass of `NormalizedHermiteGaussBeam1D` with a given magnitud
   - <span class="attr" style="color:red;">a0</span> - $a_0$, amplitude 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">m</span> - $m$, mode number
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *HermiteGaussBeam1D*, which can be modified as required. 
@@ -350,7 +353,7 @@ This class defines a class of Gaussian beam with mode number $m=0$.
 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedGaussBeam1D*, which can be modified as required. 
 
@@ -381,7 +384,7 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
   - <span class="attr" style="color:red;">a0</span> - $a_0$, amplitude 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *GaussBeam1D*, which can be modified as required. 
 
@@ -417,8 +420,8 @@ This class define a general normalized Hermite-Gaussian beam with definition $(1
 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0x</span> - ${\omega_0}_x$, radius of the waist in $x$-direction
-  - <span class="attr" style="color:red;">omega0y</span> - ${\omega_0}_y$, radius of the waist in $y$-direction
+  - <span class="attr" style="color:red;">omega0x</span> - ${\omega_0}_x$, radius of the waist of an equivalent fundamental mode in $x$-direction
+  - <span class="attr" style="color:red;">omega0y</span> - ${\omega_0}_y$, radius of the waist of an equivalent fundamental mode in $y$-direction
   - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
   - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $y$-direction
 
@@ -431,8 +434,10 @@ This class define a general normalized Hermite-Gaussian beam with definition $(1
   - properties provided by this class
 
     - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-    - <span class="attr" style="color:red;">omega0x</span> - ${\omega_0}_x$, radius of the waist in $x$-direction
-    - <span class="attr" style="color:red;">omega0y</span> - ${\omega_0}_y$, radius of the waist in $y$-direction
+    - <span class="attr" style="color:red;">omega0x</span> - ${\omega_0}_x$, radius of the waist of an equivalent fundamental mode in $x$-direction
+    - <span class="attr" style="color:red;">omega0mx</span> - ${{\omega_0}_m}_x$, radius of the waist in $x$-direction
+    - <span class="attr" style="color:red;">omega0y</span> - ${\omega_0}_y$, radius of the waist of an equivalent fundamental mode in $y$-direction
+    - <span class="attr" style="color:red;">omega0my</span> - ${{\omega_0}_m}_y$, radius of the waist in $y$-direction
     - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
     - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $y$-direction
     - <span class="attr" style="color:red;">cmx</span> - ${c_m}_x$, normalization factor of beam in $x$-direction, defined by ${c_{m}}_x=\left(2/\pi\right)^{1/4}/\sqrt{{\omega_0}_x 2^{m_x} m_x !}$
@@ -455,17 +460,21 @@ This class define a general normalized Hermite-Gaussian beam with definition $(1
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude at position <span class="param">z</span>, the amplitude is defined by $1/[(1+(z-p_0)^2/{z_0}_x^2)^{1/4}(1+(z-p_0)^2/{z_0}_y^2)^{1/4}]$.
 
-- <span class="method" style="color:red;">omegax_f(<span class="param">z</span>)</span> - Compute the mode field radius in $x$-direction at position <span class="param">z</span>
+- <span class="method" style="color:red;">omegax_f(<span class="param">z</span>)</span> - Compute the mode field radius of the equivalent fundamental mode in $x$-direction at position <span class="param">z</span>.
 
-- <span class="method" style="color:red;">omegay_f(<span class="param">z</span>)</span> - Compute the mode field radius in $y$-direction at position <span class="param">z</span>
+- <span class="method" style="color:red;">omegamx_f(<span class="param">z</span>)</span> - Compute the mode field radius in $x$-direction at position <span class="param">z</span>.
 
-- <span class="method" style="color:red;">rx_f(<span class="param">z</span>)</span> - Compute the radius of curvature in $x$-direction at position <span class="param">z</span>
+- <span class="method" style="color:red;">omegay_f(<span class="param">z</span>)</span> - Compute the mode field radius of the equivalent fundamental mode in $y$-direction at position <span class="param">z</span>.
 
-- <span class="method" style="color:red;">ry_f(<span class="param">z</span>)</span> - Compute the radius of curvature in $y$-direction at position <span class="param">z</span>
+- <span class="method" style="color:red;">omegamy_f(<span class="param">z</span>)</span> - Compute the mode field radius in $y$-direction at position <span class="param">z</span>.
 
-- <span class="method" style="color:red;">phix_f(<span class="param">z</span>)</span> - Compute $\phi$ phase in $x$-direction at position <span class="param">z</span>
+- <span class="method" style="color:red;">rx_f(<span class="param">z</span>)</span> - Compute the radius of curvature in $x$-direction at position <span class="param">z</span>.
 
-- <span class="method" style="color:red;">phiy_f(<span class="param">z</span>)</span> - Compute $\phi$ phase in $y$-direction at position <span class="param">z</span>
+- <span class="method" style="color:red;">ry_f(<span class="param">z</span>)</span> - Compute the radius of curvature in $y$-direction at position <span class="param">z</span>.
+
+- <span class="method" style="color:red;">phix_f(<span class="param">z</span>)</span> - Compute $\phi$ phase in $x$-direction at position <span class="param">z</span>.
+
+- <span class="method" style="color:red;">phiy_f(<span class="param">z</span>)</span> - Compute $\phi$ phase in $y$-direction at position <span class="param">z</span>.
 
 - <span class="method" style="color:red;">psimx_f(<span class="param">z</span>, <span class="param">x</span>)</span> - Compute $\psi_{m_x}$ at position <span class="param">z</span> and <span class="param">x</span>, which is defined by $H_{m_x}(\xi_x)e^{-\xi_x^2/2}$, where $\xi_x=\sqrt{2}x/\omega_x$.
 
@@ -488,8 +497,8 @@ This class is a subclass of `NormalizedHermiteGaussBeam` with a given magnitude 
   - <span class="attr" style="color:red;">a0</span> - $a_0$, amplitude 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0x</span> - ${\omega_0}_x$, radius of the waist in $x$-direction
-  - <span class="attr" style="color:red;">omega0y</span> - ${\omega_0}_y$, radius of the waist in $y$-direction
+  - <span class="attr" style="color:red;">omega0x</span> - ${\omega_0}_x$, radius of the waist of an equivalent fundamental mode in $x$-direction
+  - <span class="attr" style="color:red;">omega0y</span> - ${\omega_0}_y$, radius of the waist of an equivalent fundamental mode in $y$-direction
   - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
   - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $y$-direction
 
@@ -595,7 +604,7 @@ This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}
 - <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('wavelength', 'p0', 'omega0', 'mx', 'my')` where
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
   - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $x$-direction
   
@@ -607,18 +616,18 @@ This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}
 
   - properties provided by this class
 
-    - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+    - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
     - <span class="attr" style="color:red;">z0</span> - $z_0$, Rayleigh length, defined by $\pi\omega_0^2/\lambda$
-
+  
   - properties provided by parent class
-
+  
     - see <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
 - <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualHermiteGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualHermiteGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
-- <span class="method" style="color:red;">omega_f(<span class="param">z</span>)</span> - Compute the mode field radius at position <span class="param">z</span>.
+- <span class="method" style="color:red;">omega_f(<span class="param">z</span>)</span> - Compute the mode field radius of an equivalent fundamental mode at position <span class="param">z</span>.
 
 - <span class="method" style="color:red;">r_f(<span class="param">z</span>)</span> - Compute the radius of curvature at position <span class="param">z</span>.
 
@@ -641,7 +650,7 @@ This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}
   - <span class="attr" style="color:red;">a0</span> - $a_0$, amplitude 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
   - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $x$-direction
 
@@ -685,7 +694,7 @@ This class defines a general normalized Hermite-Gaussian beam with $m_x=m_y$ and
 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">m</span> - $m$, mode number
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualSymmetricHermiteGaussBeam*, which can be modified as required. 
@@ -725,7 +734,7 @@ This class is a subclass of `NormalizedEqualSymmetricHermiteGaussBeam` with a gi
   - <span class="attr" style="color:red;">a0</span> - $a_0$, amplitude 
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of the beam
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
-  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
+  - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">m</span> - $m$, mode number
 
 - <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualSymmetricHermiteGaussBeam*, which can be modified as required. 

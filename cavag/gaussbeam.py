@@ -1,3 +1,4 @@
+from math import sqrt
 import numpy as np
 from scipy import constants
 from scipy import special
@@ -47,8 +48,13 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
 
     @property
     def omega0(self):
-        """束腰半径[L]"""
+        """等价基模束腰半径[L]"""
         return self.get_property('omega0')
+
+    @property
+    def omega0m(self):
+        """束腰半径[L]"""
+        return self.get_property('omega0m', lambda: np.sqrt(2*self.m+1)*self.omega0)
 
     @property
     def m(self) -> int:
@@ -76,9 +82,14 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         return 1/(1+((z-p0)/z0)**2)**(1/4)
 
     def omega_f(self, z):
-        """模场半径函数"""
+        """等价基模半径函数"""
         omega0, z0, p0 = self.omega0, self.z0, self.p0
         return omega0*np.sqrt(1 + ((z-p0)/z0)**2)
+
+    def omegam_f(self, z):
+        """模场半径函数"""
+        omega = self.omega_f(z)
+        return np.sqrt(2*self.m+1)*omega
 
     def r_f(self, z):
         """波前曲率半径函数"""
@@ -117,7 +128,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
 class HermiteGaussBeam1D(NormalizedHermiteGaussBeam1D):
     name = 'HermiteGaussBeam1D'
 
-    # 振幅, 波长, 束腰位置, 束腰半径, 模式数
+    # 振幅, 波长, 束腰位置, 等价基模束腰半径, 模式数
     modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0', 'm')
 
     def __init__(self, name='HermiteGaussBeam1D', **kwargs):
@@ -166,7 +177,7 @@ class GaussBeam1D(HermiteGaussBeam1D):
 class NormalizedHermiteGaussBeam(Wavelength):
     name = 'NormalizedHermiteGaussBeam'
 
-    # 波长, 束腰位置, x方向束腰半径, y方向束腰半径, x方向模式数, y方向模式数
+    # 波长, 束腰位置, x方向等价基模束腰半径, y方向等价基模束腰半径, x方向模式数, y方向模式数
     modifiable_properties = (
         'wavelength', 'p0', 'omega0x', 'omega0y', 'mx', 'my')
 
@@ -240,13 +251,23 @@ class NormalizedHermiteGaussBeam(Wavelength):
 
     @property
     def omega0x(self):
-        """x方向束腰半径[L]"""
+        """x方向等价基模束腰半径[L]"""
         return self.get_property('omega0x')
 
     @property
     def omega0y(self):
-        """y方向束腰半径[L]"""
+        """y方向等价基模束腰半径[L]"""
         return self.get_property('omega0y')
+
+    @property
+    def omega0mx(self):
+        """x方向模场束腰半径[L]"""
+        return self.get_property('omega0mx', lambda: self.__beams[0].omega0m)
+
+    @property
+    def omega0my(self):
+        """y方向模场束腰半径[L]"""
+        return self.get_property('omega0my', lambda: self.__beams[1].omega0m)
 
     @property
     def thetamx(self):
@@ -293,12 +314,20 @@ class NormalizedHermiteGaussBeam(Wavelength):
         return self.__beams[0].a_f(z)*self.__beams[1].a_f(z)
 
     def omegax_f(self, z):
-        """x方向模场半径函数"""
+        """x方向等价基模半径函数"""
         return self.__beams[0].omega_f(z)
 
     def omegay_f(self, z):
-        """y方向模场半径函数"""
+        """y方向等价基模半径函数"""
         return self.__beams[1].omega_f(z)
+
+    def omegamx_f(self, z):
+        """x方向模场半径函数"""
+        return np.sqrt(2*self.mx+1)*(self.__beams[0].omega_f(z))
+
+    def omegamy_f(self, z):
+        """y方向模场半径函数"""
+        return np.sqrt(2*self.my+1)*(self.__beams[1].omega_f(z))
 
     def rx_f(self, z):
         """x方向波前曲率半径函数"""
@@ -334,7 +363,7 @@ class NormalizedHermiteGaussBeam(Wavelength):
 class HermiteGaussBeam(NormalizedHermiteGaussBeam):
     name = 'HermiteGaussBeam'
 
-    # 振幅, 波长, 束腰位置, x方向束腰半径, y方向束腰半径, x方向模式数, y方向模式数
+    # 振幅, 波长, 束腰位置, x方向等价基模束腰半径, y方向等价基模束腰半径, x方向模式数, y方向模式数
     modifiable_properties = ('a0', 'wavelength', 'p0',
                              'omega0x', 'omega0y', 'mx', 'my')
 
@@ -384,7 +413,7 @@ class GaussBeam(HermiteGaussBeam):
 class NormalizedEqualHermiteGaussBeam(NormalizedHermiteGaussBeam):
     name = 'NormalizedEqualHermiteGaussBeam'
 
-    # 波长, 束腰半径, 束腰位置, x方向模式数, y方向模式数
+    # 波长, 束腰位置, 等价基模束腰半径, x方向模式数, y方向模式数
     modifiable_properties = ('wavelength', 'p0', 'omega0', 'mx', 'my')
 
     def __init__(self, name="NormalizedEqualHermiteGaussBeam", **kwargs):
@@ -399,7 +428,7 @@ class NormalizedEqualHermiteGaussBeam(NormalizedHermiteGaussBeam):
 
     @property
     def omega0(self):
-        """束腰半径"""
+        """等价基模束腰半径"""
         return self.get_property('omega0')
 
     @property
@@ -408,7 +437,7 @@ class NormalizedEqualHermiteGaussBeam(NormalizedHermiteGaussBeam):
         return self.get_property('z0', lambda: self.z0x)
 
     def omega_f(self, z):
-        """模场半径函数"""
+        """等价基模半径函数"""
         return self.omegax_f(z)
 
     def r_f(self, z):
@@ -431,7 +460,7 @@ class NormalizedEqualHermiteGaussBeam(NormalizedHermiteGaussBeam):
 class EqualHermiteGaussBeam(NormalizedEqualHermiteGaussBeam):
     name = 'EqualHermiteGaussBeam'
 
-    # 振幅, 波长, 束腰半径, 束腰位置, x方向模式数, y方向模式数
+    # 振幅, 波长, 束腰位置, 等价基模束腰半径, x方向模式数, y方向模式数
     modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0', 'mx', 'my')
 
     def __init__(self, name='EqualHermiteGaussBeam', **kwargs):
@@ -456,7 +485,7 @@ class EqualHermiteGaussBeam(NormalizedEqualHermiteGaussBeam):
 class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
     name = 'NormalizedEqualSymmetricHermiteGaussBeam'
 
-    # 波长, 束腰半径, 束腰位置, 模式数
+    # 波长, 束腰位置, 等价基模束腰半径, 模式数
     modifiable_properties = ('wavelength', 'p0', 'omega0', 'm')
 
     def __init__(self, name='NormalizedEqualSymmetricHermiteGaussBeam', **kwargs):

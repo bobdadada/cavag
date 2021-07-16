@@ -21,6 +21,7 @@ class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
         self.assertEqual(nhgb1d.cm, cm)
         self.assertEqual(nhgb1d.p0, p0)
         self.assertEqual(nhgb1d.omega0, omega0)
+        self.assertEqual(nhgb1d.omega0m, np.sqrt(2*m+1)*omega0)
         self.assertEqual(nhgb1d.m, m)
         self.assertEqual(nhgb1d.z0, z0)
         self.assertAlmostEqual(nhgb1d.thetam, thetam)
@@ -28,7 +29,9 @@ class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
         self.assertAlmostEqual(nhgb1d.a_f(
             10), 1/(1+(10-p0)**2/z0**2)**(1/4))  # 振幅
         self.assertAlmostEqual(nhgb1d.omega_f(
-            10), omega0*np.sqrt(1+(10-p0)**2/z0**2))  # 模场半径
+            10), omega0*np.sqrt(1+(10-p0)**2/z0**2))  # 等价基模半径
+        self.assertAlmostEqual(nhgb1d.omegam_f(
+            10), omega0*np.sqrt(2*m+1)*np.sqrt(1+(10-p0)**2/z0**2))  # 模场半径
         self.assertAlmostEqual(nhgb1d.r_f(10), (10-p0)
                                * (1+z0**2/(10-p0)**2))  # 波前曲率半径
         self.assertAlmostEqual(nhgb1d.phi_f(
@@ -49,6 +52,7 @@ class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
         self.assertEqual(nhgb1d.cm, cm)
         self.assertEqual(nhgb1d.p0, p0)
         self.assertEqual(nhgb1d.omega0, omega0)
+        self.assertEqual(nhgb1d.omega0m, np.sqrt(2*m+1)*omega0)
         self.assertEqual(nhgb1d.m, m)
         self.assertEqual(nhgb1d.z0, z0)
 
@@ -68,6 +72,7 @@ class Test_HermiteGaussBeam1D(unittest.TestCase):
         self.assertEqual(hgb1d.cm, cm)
         self.assertEqual(hgb1d.p0, p0)
         self.assertEqual(hgb1d.omega0, omega0)
+        self.assertEqual(hgb1d.omega0m, np.sqrt(2*m+1)*omega0)
         self.assertEqual(hgb1d.m, m)
         self.assertEqual(hgb1d.z0, z0)
 
@@ -93,6 +98,7 @@ class Test_NormalizedGaussBeam1D(unittest.TestCase):
         self.assertEqual(ngb1d.cm, cm)
         self.assertEqual(ngb1d.p0, p0)
         self.assertEqual(ngb1d.omega0, omega0)
+        self.assertEqual(ngb1d.omega0m, omega0)
         self.assertEqual(ngb1d.m, 0)
         self.assertEqual(ngb1d.z0, z0)
 
@@ -152,6 +158,8 @@ class Test_NormalizedHermiteGaussBeam(unittest.TestCase):
         self.assertEqual(nhgb.p0, p0)
         self.assertEqual(nhgb.omega0x, omega0x)
         self.assertEqual(nhgb.omega0y, omega0y)
+        self.assertEqual(nhgb.omega0mx, np.sqrt(2*mx+1)*omega0x)
+        self.assertEqual(nhgb.omega0my, np.sqrt(2*my+1)*omega0y)
         self.assertEqual(nhgb.mx, mx)
         self.assertEqual(nhgb.my, my)
         self.assertEqual(nhgb.z0x, z0x)
@@ -181,6 +189,8 @@ class Test_NormalizedHermiteGaussBeam(unittest.TestCase):
         self.assertEqual(nhgb.p0, p0)
         self.assertEqual(nhgb.omega0x, omega0x)
         self.assertEqual(nhgb.omega0y, omega0y)
+        self.assertEqual(nhgb.omega0mx, np.sqrt(2*mx+1)*omega0x)
+        self.assertEqual(nhgb.omega0my, np.sqrt(2*my+1)*omega0y)
         self.assertEqual(nhgb.mx, mx)
         self.assertEqual(nhgb.my, my)
         self.assertEqual(nhgb.z0x, z0x)
@@ -211,6 +221,8 @@ class Test_HermiteGaussBeam(unittest.TestCase):
         self.assertEqual(hgb.p0, p0)
         self.assertEqual(hgb.omega0x, omega0x)
         self.assertEqual(hgb.omega0y, omega0y)
+        self.assertEqual(hgb.omega0mx, np.sqrt(2*mx+1)*omega0x)
+        self.assertEqual(hgb.omega0my, np.sqrt(2*my+1)*omega0y)
         self.assertEqual(hgb.mx, mx)
         self.assertEqual(hgb.my, my)
         self.assertEqual(hgb.z0x, z0x)
@@ -240,6 +252,8 @@ class Test_NormalizedGaussBeam(unittest.TestCase):
         self.assertEqual(ngb.p0, p0)
         self.assertEqual(ngb.omega0x, omega0x)
         self.assertEqual(ngb.omega0y, omega0y)
+        self.assertEqual(ngb.omega0mx, omega0x)
+        self.assertEqual(ngb.omega0my, omega0y)
         self.assertEqual(ngb.mx, 0)
         self.assertEqual(ngb.my, 0)
         self.assertEqual(ngb.z0x, z0x)
@@ -266,6 +280,8 @@ class Test_GaussBeam(unittest.TestCase):
         self.assertEqual(gb.p0, p0)
         self.assertEqual(gb.omega0x, omega0x)
         self.assertEqual(gb.omega0y, omega0y)
+        self.assertEqual(gb.omega0mx, omega0x)
+        self.assertEqual(gb.omega0my, omega0y)
         self.assertEqual(gb.mx, 0)
         self.assertEqual(gb.my, 0)
         self.assertEqual(gb.z0x, z0x)
@@ -300,6 +316,8 @@ class Test_NormalizedEqualHermiteGaussBeam(unittest.TestCase):
         self.assertEqual(nehgb.omega0, omega0)
         self.assertEqual(nehgb.omega0x, omega0)
         self.assertEqual(nehgb.omega0y, omega0)
+        self.assertEqual(nehgb.omega0mx, np.sqrt(2*mx+1)*omega0)
+        self.assertEqual(nehgb.omega0my, np.sqrt(2*my+1)*omega0)
         self.assertEqual(nehgb.z0, z0)
         self.assertEqual(nehgb.z0x, z0)
         self.assertEqual(nehgb.z0y, z0)
@@ -328,6 +346,8 @@ class Test_NormalizedEqualHermiteGaussBeam(unittest.TestCase):
         self.assertEqual(nehgb.omega0, omega0)
         self.assertEqual(nehgb.omega0x, omega0)
         self.assertEqual(nehgb.omega0y, omega0)
+        self.assertEqual(nehgb.omega0mx, np.sqrt(2*mx+1)*omega0)
+        self.assertEqual(nehgb.omega0my, np.sqrt(2*my+1)*omega0)
         self.assertEqual(nehgb.mx, mx)
         self.assertEqual(nehgb.my, my)
         self.assertEqual(nehgb.z0, z0)
@@ -358,6 +378,8 @@ class Test_EqualHermiteGaussBeam(unittest.TestCase):
         self.assertEqual(ehgb.omega0, omega0)
         self.assertEqual(ehgb.omega0x, omega0)
         self.assertEqual(ehgb.omega0y, omega0)
+        self.assertEqual(ehgb.omega0mx, np.sqrt(2*mx+1)*omega0)
+        self.assertEqual(ehgb.omega0my, np.sqrt(2*my+1)*omega0)
         self.assertEqual(ehgb.mx, mx)
         self.assertEqual(ehgb.my, my)
         self.assertEqual(ehgb.z0, z0)

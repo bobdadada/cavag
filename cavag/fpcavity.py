@@ -4,13 +4,13 @@ import numpy as np
 from scipy import constants
 
 from ._utils import PrintableObject
-from .gaussbeam import EqualSymmetricGaussBeam
+from .gaussbeam import EqualHermiteGaussBeam
 from .misc import RTL, Position
 
 __all__ = [
     'CavityStructure', 'EqualCavityStructure',
     'Cavity', 'EqualCavity',
-    'CavityMode', 'EqualCavityMode',
+    'CavityHermiteGaussMode', 'EqualCavityMode',
     'judge_cavity_type',
     'calculate_loss_clipping', 'calculate_loss_scattering'
 ]
@@ -24,9 +24,9 @@ class CavityStructure(PrintableObject):
     def __init__(self, name="CavityStructure", **kwargs):
         super().__init__(**kwargs)
         self.name = name
-        
+
         self.property_set.add_required(CavityStructure.modifiable_properties)
-        
+
         for prop in CavityStructure.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
 
@@ -34,17 +34,17 @@ class CavityStructure(PrintableObject):
     def length(self):
         """腔长[L]"""
         return self.get_property('length')
-    
+
     @property
     def rocl(self):
         """左腔镜曲率半径[L]"""
         return self.get_property('rocl')
-    
+
     @property
     def rocr(self):
         """右腔镜曲率半径[L]"""
         return self.get_property('rocr')
-    
+
     @property
     def gl(self):
         """左腔镜g因子[1]"""
@@ -54,7 +54,7 @@ class CavityStructure(PrintableObject):
     def gr(self):
         """右腔镜g因子[1]"""
         return self.get_property('gr', lambda: 1-self.length/self.rocr)
-    
+
     def isStable(self):
         r1, r2 = judge_cavity_type(self.length, self.rocl, self.rocr)
         if r1 is True:
@@ -80,10 +80,11 @@ class EqualCavityStructure(CavityStructure):
 
         super().__init__(**kwargs)
         self.name = name
-        
-        self.property_set.add_required(EqualCavityStructure.modifiable_properties)
+
+        self.property_set.add_required(
+            EqualCavityStructure.modifiable_properties)
         self.property_set['roc'] = roc
-    
+
     def preprocess_properties(self, **propdict):
         roc = propdict.get('roc', None)
         if roc is not None:
@@ -94,7 +95,7 @@ class EqualCavityStructure(CavityStructure):
     def roc(self):
         """对称腔曲率半径[L]"""
         return self.get_property('roc')
-    
+
     @property
     def g(self):
         """腔镜g因子[1]"""
@@ -104,10 +105,11 @@ class EqualCavityStructure(CavityStructure):
 class Cavity(CavityStructure):
     name = "Cavity"
 
-    modifiable_properties = ('length', 'nc', 'lc', 'rocl', 'rocr', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
+    modifiable_properties = ('length', 'nc', 'lc', 'rocl',
+                             'rocr', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
 
     def __init__(self, name="Cavity", **kwargs):
-        kwargs.update(nc=kwargs.get('nc', 1))  # default air medium 
+        kwargs.update(nc=kwargs.get('nc', 1))  # default air medium
         kwargs.update(lc=kwargs.get('lc', 0))
 
         super().__init__(**kwargs)
@@ -127,7 +129,7 @@ class Cavity(CavityStructure):
                 __kwarg_rtls[0][prop] = __kwarg_rtls[1][prop] = val
 
         self.__rtls = (RTL(name='left_rtl', **(__kwarg_rtls[0])),
-                        RTL(name='right_rtl', **(__kwarg_rtls[1])))
+                       RTL(name='right_rtl', **(__kwarg_rtls[1])))
 
     def postprocess_properties(self, **kwargs):
 
@@ -139,12 +141,12 @@ class Cavity(CavityStructure):
                 rkw[k[:-1]] = v
             else:
                 lkw[k] = rkw[k] = v
-            
+
         if lkw:
             self.__rtls[0].change_params(**lkw)
         if rkw:
             self.__rtls[1].change_params(**rkw)
-    
+
     @property
     def nc(self):
         """腔介质的折射率[1]"""
@@ -164,7 +166,7 @@ class Cavity(CavityStructure):
     def tl(self):
         """左腔镜透射率[1]"""
         return self.get_property('tl', lambda: self.__rtls[0].t)
-    
+
     @property
     def ll(self):
         """左腔镜损耗[1]"""
@@ -179,7 +181,7 @@ class Cavity(CavityStructure):
     def tr(self):
         """右腔镜透射率[1]"""
         return self.get_property('tr', lambda: self.__rtls[1].t)
-    
+
     @property
     def lr(self):
         """右腔镜损耗[1]"""
@@ -194,7 +196,7 @@ class Cavity(CavityStructure):
                                 "so the deviation of the `kappa` calculated by this approximate formula is large.")
             return constants.c*(2-(1-self.lc)*(self.rl+self.rr))/(4*self.length)
         return self.get_property('kappa', v_f)
-    
+
     @property
     def fsr(self):
         """FSR(圆频率)[1/T]"""
@@ -204,17 +206,18 @@ class Cavity(CavityStructure):
     def finesse(self):
         """精细度[1]"""
         return self.get_property('finesse', lambda: self.fsr/(2*self.kappa))
-    
+
     @property
-    def Q(self):
+    def q(self):
         """品质因子[1]"""
-        return self.get_property('Q', lambda: constants.pi*self.nu/(self.kappa))
+        return self.get_property('q', lambda: constants.pi*self.nu/(self.kappa))
 
 
 class EqualCavity(EqualCavityStructure, Cavity):
     name = "EqualCavity"
 
-    modifiable_properties = ('length', 'nc', 'lc', 'roc', 'rl', 'tl', 'll', 'rr', 'tr', 'lr')
+    modifiable_properties = ('length', 'nc', 'lc', 'roc',
+                             'rl', 'tl', 'll', 'rr', 'tr', 'lr')
 
     def __init__(self, name="EqualCavity", **kwargs):
         roc = kwargs.get('roc', None)
@@ -223,19 +226,21 @@ class EqualCavity(EqualCavityStructure, Cavity):
         super().__init__(**kwargs)
         self.name = name
 
-        self.property_set['roc'] = roc
 
+class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
+    name = 'CavityHermiteGaussMode'
 
-class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
-    name = 'CavityMode'
+    modifiable_properties = ('length', 'wavelength',
+                             'rocl', 'rocr', 'a0', 'position', 'mx', 'my')
 
-    modifiable_properties = ('length', 'wavelength', 'rocl', 'rocr', 'A0', 'position')
-
-    def __init__(self, name="CavityMode", **kwargs):
-        kwargs.update(A0=kwargs.get('A0', 1))
+    def __init__(self, name="CavityHermiteGaussMode", **kwargs):
+        kwargs.update(a0=kwargs.get('a0', 1))
 
         super().__init__(**kwargs)
         self.name = name
+
+        self.property_set.reset_required(
+            CavityHermiteGaussMode.modifiable_properties)
 
     @property
     def z0(self):
@@ -245,7 +250,7 @@ class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
             gr = self.gr
             glgr = self.gl*self.gr
             try:
-                z0 = np.sqrt(glgr*(1-glgr)/(gl+gr-2*glgr)** 2)*self.length
+                z0 = np.sqrt(glgr*(1-glgr)/(gl+gr-2*glgr) ** 2)*self.length
             except ZeroDivisionError:
                 z0 = 1/2*self.length
             return z0
@@ -278,7 +283,7 @@ class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
                 pr = self.length/2
             return pr
         return self.get_property('pr', v_f)
-    
+
     @property
     def p0(self):
         """束腰位置[L]"""
@@ -286,7 +291,7 @@ class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
 
     @property
     def omega0(self):
-        """束腰半径[L]"""
+        """等价基模束腰半径[L]"""
         return self.get_property('omega0', lambda: np.sqrt(self.wavelength*self.z0/constants.pi))
 
     @property
@@ -303,7 +308,12 @@ class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
     @property
     def v_mode(self):
         """模式体积[L^3]"""
-        return self.get_property('v_mode', lambda: self.length*(self.omega0)**2*constants.pi/4)
+        def v_f():
+            if (2*abs(self.p0) > self.length) or (self.mx > 0) or (self.my > 0):
+                logging.warning("This mode is not a fundamental mode, "
+                                "so the calculated mode volume is slightly different.")
+            return self.length*(self.omega0)**2*constants.pi/4
+        return self.get_property('v_mode', v_f)
 
     @property
     def e(self):
@@ -311,19 +321,17 @@ class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
         return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.v_mode)))
 
 
-class EqualCavityMode(EqualCavityStructure, CavityMode):
+class EqualCavityMode(EqualCavityStructure, CavityHermiteGaussMode):
     name = "EqualCavityMode"
 
-    modifiable_properties = ('length', 'wavelength', 'roc', 'A0')
+    modifiable_properties = ('length', 'wavelength', 'roc', 'a0')
 
-    def __init__(self, name="EqualCavityMode" ,**kwargs):
+    def __init__(self, name="EqualCavityMode", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
         super().__init__(**kwargs)
         self.name = name
-
-        self.property_set['roc'] = roc
 
     @property
     def z0(self):
@@ -343,7 +351,7 @@ class EqualCavityMode(EqualCavityStructure, CavityMode):
     def p0(self):
         """束腰位置[L]"""
         return self.get_property('p0', lambda: self.position)
-    
+
     @property
     def pl(self):
         """左腔镜相对束腰位置[L]"""
@@ -357,7 +365,7 @@ class EqualCavityMode(EqualCavityStructure, CavityMode):
     @property
     def omegam(self):
         """腔面模场半径[L]"""
-        return self.get_property('omegam', self.omega0*np.sqrt(1+(self.length/2/ self.z0)**2))
+        return self.get_property('omegam', self.omega0*np.sqrt(1+(self.length/2 / self.z0)**2))
 
 
 def judge_cavity_type(length, rocl, rocr):
@@ -400,4 +408,3 @@ def calculate_loss_scattering(sigmasc, wavelength):
     :return: 腔面的散射损耗
     """
     return (4*constants.pi*sigmasc/wavelength)**2
-
