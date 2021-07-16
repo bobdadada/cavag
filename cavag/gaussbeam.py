@@ -70,7 +70,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         """Hermite多项式"""
         return self.get_property('hm', lambda:  special.hermite(self.m))
 
-    def A_f(self, z):
+    def a_f(self, z):
         """振幅函数"""
         z0, p0 = self.z0, self.p0
         return 1/(1+((z-p0)/z0)**2)**(1/4)
@@ -80,7 +80,7 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
         omega0, z0, p0 = self.omega0, self.z0, self.p0
         return omega0*np.sqrt(1 + ((z-p0)/z0)**2)
 
-    def R_f(self, z):
+    def r_f(self, z):
         """波前曲率半径函数"""
         z0, p0 = self.z0, self.p0
         return (z-p0)*(1+(z0/(z-p0))**2)
@@ -101,15 +101,15 @@ class NormalizedHermiteGaussBeam1D(Wavelength):
     def u_f(self, z, x):
         """强度函数"""
         cm = self.cm
-        A = self.A_f(z)
+        a = self.a_f(z)
         psi = self.psim_f(z, x)
         phi = self.phi_f(z)
         k = self.k
-        R = self.R_f(z)
+        r = self.r_f(z)
         m = self.m
 
-        ampl = cm*A*psi
-        phase = -k/(2*R)*x**2+(m+1/2)*phi
+        ampl = cm*a*psi
+        phase = -k/(2*r)*x**2+(m+1/2)*phi
 
         return ampl, phase
 
@@ -118,25 +118,25 @@ class HermiteGaussBeam1D(NormalizedHermiteGaussBeam1D):
     name = 'HermiteGaussBeam1D'
 
     # 振幅, 波长, 束腰位置, 束腰半径, 模式数
-    modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0', 'm')
+    modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0', 'm')
 
     def __init__(self, name='HermiteGaussBeam1D', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
-        self.property_set.add_required('A0')
-        self.property_set['A0'] = kwargs.get('A0', None)
+        self.property_set.add_required('a0')
+        self.property_set['a0'] = kwargs.get('a0', None)
 
     @property
-    def A0(self):
+    def a0(self):
         """振幅"""
-        return self.get_property('A0')
+        return self.get_property('a0')
 
-    def A_f(self, z):
+    def a_f(self, z):
         """振幅函数"""
-        A0 = self.A0
-        A = super().A_f(z)
-        return A0*A
+        a0 = self.a0
+        a = super().a_f(z)
+        return a0*a
 
 
 class NormalizedGaussBeam1D(NormalizedHermiteGaussBeam1D):
@@ -154,7 +154,7 @@ class NormalizedGaussBeam1D(NormalizedHermiteGaussBeam1D):
 class GaussBeam1D(HermiteGaussBeam1D):
     name = 'GaussBeam1D'
 
-    modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0')
+    modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0')
 
     def __init__(self, name='GaussBeam1D', **kwargs):
         kwargs.update(m=0)
@@ -286,9 +286,9 @@ class NormalizedHermiteGaussBeam(Wavelength):
         """y方向Hermite多项式"""
         return self.get_property('hmy', lambda: self.__beams[1].hm)
 
-    def A_f(self, z):
+    def a_f(self, z):
         """振幅函数"""
-        return self.__beams[0].A_f(z)*self.__beams[1].A_f(z)
+        return self.__beams[0].a_f(z)*self.__beams[1].a_f(z)
 
     def omegax_f(self, z):
         """x方向模场半径函数"""
@@ -298,13 +298,13 @@ class NormalizedHermiteGaussBeam(Wavelength):
         """y方向模场半径函数"""
         return self.__beams[1].omega_f(z)
 
-    def Rx_f(self, z):
+    def rx_f(self, z):
         """x方向波前曲率半径函数"""
-        return self.__beams[0].R_f(z)
+        return self.__beams[0].r_f(z)
 
-    def Ry_f(self, z):
+    def ry_f(self, z):
         """y方向波前曲率半径函数"""
-        return self.__beams[1].R_f(z)
+        return self.__beams[1].r_f(z)
 
     def phix_f(self, z):
         """x方向phi相位函数"""
@@ -333,26 +333,26 @@ class HermiteGaussBeam(NormalizedHermiteGaussBeam):
     name = 'HermiteGaussBeam'
 
     # 振幅, 波长, 束腰位置, x方向束腰半径, y方向束腰半径, x方向模式数, y方向模式数
-    modifiable_properties = ('A0', 'wavelength', 'p0',
+    modifiable_properties = ('a0', 'wavelength', 'p0',
                              'omega0x', 'omega0y', 'mx', 'my')
 
     def __init__(self, name='HermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
-        self.property_set.add_required('A0')
-        self.property_set['A0'] = kwargs.get('A0', None)
+        self.property_set.add_required('a0')
+        self.property_set['a0'] = kwargs.get('a0', None)
 
     @property
-    def A0(self):
+    def a0(self):
         """振幅"""
-        return self.get_property('A0')
+        return self.get_property('a0')
 
-    def A_f(self, z):
+    def a_f(self, z):
         """振幅函数"""
-        A0 = self.A0
-        A = super().A_f(z)
-        return A0*A
+        a0 = self.a0
+        a = super().a_f(z)
+        return a0*a
 
 
 class NormalizedGaussBeam(NormalizedHermiteGaussBeam):
@@ -370,7 +370,7 @@ class NormalizedGaussBeam(NormalizedHermiteGaussBeam):
 class GaussBeam(HermiteGaussBeam):
     name = 'HermiteGaussBeam'
 
-    modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0x', 'omega0y')
+    modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0x', 'omega0y')
 
     def __init__(self, name='HermiteGaussBeam', **kwargs):
         kwargs.update(mx=0, my=0)
@@ -404,14 +404,14 @@ class NormalizedEqualHermiteGaussBeam(NormalizedHermiteGaussBeam):
     def z0(self):
         """瑞利长度[L]"""
         return self.get_property('z0', lambda: self.z0x)
-    
+
     def omega_f(self, z):
         """模场半径函数"""
         return self.omegax_f(z)
 
-    def R_f(self, z):
+    def r_f(self, z):
         """波前曲率半径函数"""
-        return self.Rx_f(z)
+        return self.rx_f(z)
 
     def phi_f(self, z):
         """phi相位函数"""
@@ -430,25 +430,25 @@ class EqualHermiteGaussBeam(NormalizedEqualHermiteGaussBeam):
     name = 'EqualHermiteGaussBeam'
 
     # 振幅, 波长, 束腰半径, 束腰位置, x方向模式数, y方向模式数
-    modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0', 'mx', 'my')
+    modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0', 'mx', 'my')
 
     def __init__(self, name='EqualHermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
-        self.property_set.add_required('A0')
-        self.property_set['A0'] = kwargs.get('A0', None)
+        self.property_set.add_required('a0')
+        self.property_set['a0'] = kwargs.get('a0', None)
 
     @property
-    def A0(self):
+    def a0(self):
         """振幅"""
-        return self.get_property('A0')
+        return self.get_property('a0')
 
-    def A_f(self, z):
+    def a_f(self, z):
         """振幅函数"""
-        A0 = self.A0
-        A = super().A_f(z)
-        return A0*A
+        a0 = self.a0
+        a = super().a_f(z)
+        return a0*a
 
 
 class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
@@ -472,22 +472,22 @@ class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
         """总归一化因子"""
         return self.get_property('cm', lambda: (super(NormalizedEqualSymmetricHermiteGaussBeam, self).cm)**2)
 
-    def A_f(self, z):
+    def a_f(self, z):
         """振幅函数"""
-        return (super().A_f(z))**2
+        return (super().a_f(z))**2
 
     def u_f(self, z, x, y):
         """强度函数"""
         cm = self.cm
-        A = self.A_f(z)
+        a = self.a_f(z)
         psi = self.psim_f(z, x)*self.psim_f(z, y)
         phi = self.phi_f(z)
         k = self.k
-        R = self.R_f(z)
+        r = self.r_f(z)
         m = self.m
 
-        ampl = cm*A*psi
-        phase = -k/(2*R)*(x**2+y**2)+(2*m+1/2)*phi
+        ampl = cm*a*psi
+        phase = -k/(2*r)*(x**2+y**2)+(2*m+1/2)*phi
 
         return ampl, phase
 
@@ -495,25 +495,25 @@ class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D):
 class EqualSymmetricHermiteGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
     name = 'EqualSymmetricHermiteGaussBeam'
 
-    modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0', 'm')
+    modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0', 'm')
 
     def __init__(self, name='EqualSymmetricHermiteGaussBeam', **kwargs):
         super().__init__(**kwargs)
         self.name = name
 
-        self.property_set.add_required('A0')
-        self.property_set['A0'] = kwargs.get('A0', None)
+        self.property_set.add_required('a0')
+        self.property_set['a0'] = kwargs.get('a0', None)
 
     @property
-    def A0(self):
+    def a0(self):
         """振幅"""
-        return self.get_property('A0')
+        return self.get_property('a0')
 
-    def A_f(self, z):
+    def a_f(self, z):
         """振幅函数"""
-        A0 = self.A0
-        A = super().A_f(z)
-        return A0*A
+        a0 = self.a0
+        a = super().a_f(z)
+        return a0*a
 
 
 class NormalizedEqualGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
@@ -531,7 +531,7 @@ class NormalizedEqualGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam):
 class EqualGaussBeam(EqualSymmetricHermiteGaussBeam):
     name = 'EqualGaussBeam'
 
-    modifiable_properties = ('A0', 'wavelength', 'p0', 'omega0')
+    modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0')
 
     def __init__(self, name='EqualGaussBeam', **kwargs):
         kwargs.update(m=0)
@@ -547,26 +547,26 @@ def local2remote(wavelength, omega0, z):
     :param wavelength: 波长
     :param omega0: 基模束腰半径
     :param z: 距离
-    :return: (omega, R)基模模场半径和曲率半径
+    :return: (omega, r)基模模场半径和曲率半径
     """
     zr = constants.pi * omega0 ** 2 / wavelength
     omega = omega0 * np.sqrt(1 + (z / zr) ** 2)
-    R = z * (1 + (zr / z) ** 2)
-    return omega, R
+    r = z * (1 + (zr / z) ** 2)
+    return omega, r
 
 
-def remote2local(wavelength, omega, R):
+def remote2local(wavelength, omega, r):
     """
     已知波长、基模模场半径和曲率半径，计算基模束腰半径和位置。
     默认束腰在原点，且坐标轴正方向的曲率半径为正。此函数可以直接用于高阶模式。
     :param wavelength: 波长
     :param omega: 基模模场半径
-    :param R: 曲率半径
+    :param r: 曲率半径
     :return: (omega0, z)基模束腰半径和位置
     """
     zrp = constants.pi * omega ** 2 / wavelength
-    omega0 = omega / np.sqrt(1 + (zrp / R) ** 2)
-    z = R / (1 + (R / zrp) ** 2)
+    omega0 = omega / np.sqrt(1 + (zrp / r) ** 2)
+    z = r / (1 + (r / zrp) ** 2)
     return omega0, z
 
 
@@ -579,9 +579,9 @@ def convert_through_lens(wavelength, omega0, s, f):
     :param f: 透镜的焦距
     :return: (omega0p, sp)透射后的束腰半径和位置
     """
-    omegap, R = local2remote(wavelength, omega0, s)
-    Rp = 1 / (1 / R + 1 / f)
-    omega0p, sp = remote2local(wavelength, omegap, Rp)
+    omegap, r = local2remote(wavelength, omega0, s)
+    rp = 1 / (1 / r + 1 / f)
+    omega0p, sp = remote2local(wavelength, omegap, rp)
     return omega0p, sp
 
 
