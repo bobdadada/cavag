@@ -301,14 +301,14 @@ class CavityMode(CavityStructure, EqualSymmetricGaussBeam, Position):
 
     # 模式体积(小NA近似)
     @property
-    def V_mode(self):
-        """模式体积[L^3]"""           
-        return self.get_property('V_mode', lambda: self.length*(self.omega0)**2*constants.pi/4)
+    def v_mode(self):
+        """模式体积[L^3]"""
+        return self.get_property('v_mode', lambda: self.length*(self.omega0)**2*constants.pi/4)
 
     @property
     def e(self):
         """单光子电场强度[ML/T^3I]"""
-        return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.V_mode)))
+        return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.v_mode)))
 
 
 class EqualCavityMode(EqualCavityStructure, CavityMode):

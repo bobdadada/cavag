@@ -216,6 +216,8 @@ class NormalizedHermiteGaussBeam(Wavelength):
         if ykw:
             self.__beams[1].change_params(**ykw)
 
+        return propdict
+
     @property
     def cmx(self):
         """x方向归一化因子"""
