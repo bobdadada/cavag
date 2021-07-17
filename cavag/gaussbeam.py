@@ -191,53 +191,34 @@ class NormalizedHermiteGaussBeam(Wavelength):
         for prop in NormalizedHermiteGaussBeam.modifiable_properties:
             self.property_set[prop] = kwargs.get(prop, None)
 
-        __kwarg_beams = ({
-            'wavelength': kwargs.get('wavelength', None),
-            'p0': kwargs.get('p0', None),
-            'omega0': kwargs.get('omega0x', None),
-            'm': kwargs.get('mx', None),
-        }, {
-            'wavelength': kwargs.get('wavelength', None),
-            'p0': kwargs.get('p0', None),
-            'omega0': kwargs.get('omega0y', None),
-            'm': kwargs.get('my', None),
-        })
+        # beam cache
+        self.__beams = {'x': None, 'y': None}
 
-        self.__beams = (
-            NormalizedHermiteGaussBeam1D(
-                name='x-direction', **(__kwarg_beams[0])),
-            NormalizedHermiteGaussBeam1D(
-                namm='y-direction', **(__kwarg_beams[1])),
-        )
+    def change_params(self, *args, **kwargs):
+        self.__beams['x'] = None
+        self.__beams['y'] = None
+        super().change_params(*args, **kwargs)
 
-    def postprocess_properties(self, **propdict):
-        super().postprocess_properties(**propdict)
-
-        xkw, ykw = {}, {}
-        for k, v in propdict.items():
-            if k.endswith('x'):
-                xkw[k[:-1]] = v
-            elif k.endswith('y'):
-                ykw[k[:-1]] = v
-            else:
-                xkw[k] = ykw[k] = v
-
-        if xkw:
-            self.__beams[0].change_params(**xkw)
-        if ykw:
-            self.__beams[1].change_params(**ykw)
-
-        return propdict
+    def __get_beam(self, d):
+        if self.__beams[d]:
+            beam = self.__beams[d]
+        else:
+            beam = NormalizedHermiteGaussBeam1D(
+                wavelength=self.wavelength, p0=self.p0,
+                omega0=getattr(self, 'omega0'+d), m=getattr(self, 'm'+d)
+            )
+            self.__beams[d] = beam
+        return beam
 
     @property
     def cmx(self):
         """x方向归一化因子"""
-        return self.get_property('cmx', lambda: self.__beams[0].cm)
+        return self.get_property('cmx', lambda: self.__get_beam('x').cm)
 
     @property
     def cmy(self):
         """y方向归一化因子"""
-        return self.get_property('cmy', lambda: self.__beams[1].cm)
+        return self.get_property('cmy', lambda: self.__get_beam('y').cm)
 
     @property
     def cm(self):
@@ -262,22 +243,22 @@ class NormalizedHermiteGaussBeam(Wavelength):
     @property
     def omega0mx(self):
         """x方向模场束腰半径[L]"""
-        return self.get_property('omega0mx', lambda: self.__beams[0].omega0m)
+        return self.get_property('omega0mx', lambda: self.__get_beam('x').omega0m)
 
     @property
     def omega0my(self):
         """y方向模场束腰半径[L]"""
-        return self.get_property('omega0my', lambda: self.__beams[1].omega0m)
+        return self.get_property('omega0my', lambda: self.__get_beam('y').omega0m)
 
     @property
     def thetamx(self):
         """x方向半发散角[1]"""
-        return self.get_property('thetamx', lambda: self.__beams[0].thetam)
+        return self.get_property('thetamx', lambda: self.__get_beam('x').thetam)
 
     @property
     def thetamy(self):
         """y方向半发散角[1]"""
-        return self.get_property('thetamy', lambda: self.__beams[1].thetam)
+        return self.get_property('thetamy', lambda: self.__get_beam('y').thetam)
 
     @property
     def mx(self) -> int:
@@ -292,71 +273,71 @@ class NormalizedHermiteGaussBeam(Wavelength):
     @property
     def z0x(self):
         """x方向瑞利长度[L]"""
-        return self.get_property('z0x', lambda: self.__beams[0].z0)
+        return self.get_property('z0x', lambda: self.__get_beam('x').z0)
 
     @property
     def z0y(self):
         """y方向瑞利长度[L]"""
-        return self.get_property('z0y', lambda: self.__beams[1].z0)
+        return self.get_property('z0y', lambda: self.__get_beam('y').z0)
 
     @property
     def hmx(self):
         """x方向Hermite多项式"""
-        return self.get_property('hmx', lambda: self.__beams[0].hm)
+        return self.get_property('hmx', lambda: self.__get_beam('x').hm)
 
     @property
     def hmy(self):
         """y方向Hermite多项式"""
-        return self.get_property('hmy', lambda: self.__beams[1].hm)
+        return self.get_property('hmy', lambda: self.__get_beam('y').hm)
 
     def a_f(self, z):
         """振幅函数"""
-        return self.__beams[0].a_f(z)*self.__beams[1].a_f(z)
+        return (self.__get_beam('x').a_f(z))*(self.__get_beam('y').a_f(z))
 
     def omegax_f(self, z):
         """x方向等价基模半径函数"""
-        return self.__beams[0].omega_f(z)
+        return self.__get_beam('x').omega_f(z)
 
     def omegay_f(self, z):
         """y方向等价基模半径函数"""
-        return self.__beams[1].omega_f(z)
+        return self.__get_beam('y').omega_f(z)
 
     def omegamx_f(self, z):
         """x方向模场半径函数"""
-        return np.sqrt(2*self.mx+1)*(self.__beams[0].omega_f(z))
+        return self.__get_beam('x').omegam_f(z)
 
     def omegamy_f(self, z):
         """y方向模场半径函数"""
-        return np.sqrt(2*self.my+1)*(self.__beams[1].omega_f(z))
+        return self.__get_beam('y').omegam_f(z)
 
     def rx_f(self, z):
         """x方向波前曲率半径函数"""
-        return self.__beams[0].r_f(z)
+        return self.__get_beam('x').r_f(z)
 
     def ry_f(self, z):
         """y方向波前曲率半径函数"""
-        return self.__beams[1].r_f(z)
+        return self.__get_beam('y').r_f(z)
 
     def phix_f(self, z):
         """x方向phi相位函数"""
-        return self.__beams[0].phi_f(z)
+        return self.__get_beam('x').phi_f(z)
 
     def phiy_f(self, z):
         """y方向phi相位函数"""
-        return self.__beams[1].phi_f(z)
+        return self.__get_beam('y').phi_f(z)
 
     def psimx_f(self, z, x):
         """x方向HG函数"""
-        return self.__beams[0].psim_f(z, x)
+        return self.__get_beam('x').psim_f(z, x)
 
     def psimy_f(self, z, y):
         """y方向HG函数"""
-        return self.__beams[1].psim_f(z, y)
+        return self.__get_beam('y').psim_f(z, y)
 
     def u_f(self, z, x, y):
         """强度函数"""
-        amplx, phasex = self.__beams[0].u_f(z, x)
-        amply, phasey = self.__beams[1].u_f(z, y)
+        amplx, phasex = self.__get_beam('x').u_f(z, x)
+        amply, phasey = self.__get_beam('y').u_f(z, y)
         return amplx*amply, phasex+phasey
 
 

@@ -89,7 +89,7 @@ class EqualCavityStructure(CavityStructure):
         roc = propdict.get('roc', None)
         if roc is not None:
             propdict.update(rocl=roc, rocr=roc)
-        return propdict
+        return super().preprocess_properties(**propdict)
 
     @property
     def roc(self):
@@ -117,35 +117,50 @@ class Cavity(CavityStructure):
 
         self.property_set.add_required(Cavity.modifiable_properties)
 
+
         __kwarg_rtls = [{}, {}]
         for prop in Cavity.modifiable_properties:
             val = kwargs.get(prop, None)
             self.property_set[prop] = val
-            if prop.endswith('l'):
-                __kwarg_rtls[0][prop] = val
-            elif prop.endswith('r'):
-                __kwarg_rtls[1][prop] = val
+            if prop in ('rl', 'tl', 'll'):
+                __kwarg_rtls[0][prop[:-1]] = val
+            elif prop in ('rr', 'tr', 'lr'):
+                __kwarg_rtls[1][prop[:-1]] = val
             else:
-                __kwarg_rtls[0][prop] = __kwarg_rtls[1][prop] = val
+                self.property_set[prop] = val
+        
+        # rtl cache
 
-        self.__rtls = (RTL(name='left_rtl', **(__kwarg_rtls[0])),
-                       RTL(name='right_rtl', **(__kwarg_rtls[1])))
+        self.__rtls = {'l': RTL(**(__kwarg_rtls[0])), 'r': RTL(**(__kwarg_rtls[1]))}
+    
+    def __get_rtl(self, d):
+        if self.__rtls[d]:
+            rtl = self.__rtls[d]
+        else:
+            rtl = RTL(r=getattr(self, 'r'+d), t=getattr(self, 't'+d), l=getattr(self, 'l'+d))
+            self.__rtls[d] = rtl
+        return rtl
 
-    def postprocess_properties(self, **kwargs):
+    def postprocess_properties(self, **propdict):
+        propdict = super().postprocess_properties(**propdict)
 
         lkw, rkw = {}, {}
-        for k, v in kwargs.items():
-            if k.endswith('l'):
+        for k, v in propdict.items():
+            if k in ('rl', 'tl', 'll'):
                 lkw[k[:-1]] = v
-            elif k.endswith('r'):
+            elif k in ('rr', 'tr', 'lr'):
                 rkw[k[:-1]] = v
-            else:
-                lkw[k] = rkw[k] = v
 
         if lkw:
-            self.__rtls[0].change_params(**lkw)
+            for k in ('rl', 'tl', 'll'):
+                self.property_set[k] = None
+            self.__get_rtl('l').change_params(**lkw)
         if rkw:
-            self.__rtls[1].change_params(**rkw)
+            for k in ('rr', 'tr', 'lr'):
+                self.property_set[k] = None
+            self.__get_rtl('r').change_params(**rkw)
+        
+        return propdict
 
     @property
     def nc(self):
@@ -160,32 +175,32 @@ class Cavity(CavityStructure):
     @property
     def rl(self):
         """左腔镜反射率[1]"""
-        return self.get_property('rl', lambda: self.__rtls[0].r)
+        return self.get_property('rl', lambda: self.__get_rtl('l').r)
 
     @property
     def tl(self):
         """左腔镜透射率[1]"""
-        return self.get_property('tl', lambda: self.__rtls[0].t)
+        return self.get_property('tl', lambda: self.__get_rtl('l').t)
 
     @property
     def ll(self):
         """左腔镜损耗[1]"""
-        return self.get_property('ll', lambda: self.__rtls[0].l)
+        return self.get_property('ll', lambda: self.__get_rtl('l').l)
 
     @property
     def rr(self):
         """右腔镜反射率[1]"""
-        return self.get_property('rr', lambda: self.__rtls[1].r)
+        return self.get_property('rr', lambda: self.__get_rtl('r').r)
 
     @property
     def tr(self):
         """右腔镜透射率[1]"""
-        return self.get_property('tr', lambda: self.__rtls[1].t)
+        return self.get_property('tr', lambda: self.__get_rtl('r').t)
 
     @property
     def lr(self):
         """右腔镜损耗[1]"""
-        return self.get_property('lr', lambda: self.__rtls[1].l)
+        return self.get_property('lr', lambda: self.__get_rtl('r').l)
 
     @property
     def kappa(self):
@@ -320,6 +335,7 @@ class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
         """单光子电场强度[ML/T^3I]"""
         return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.v_mode)))
 
+    pass # 须在每个函数位置添加描述驻波的cos(kz)项
 
 class EqualCavityMode(EqualCavityStructure, CavityHermiteGaussMode):
     name = "EqualCavityMode"

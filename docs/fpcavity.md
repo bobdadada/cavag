@@ -77,9 +77,13 @@ $$
 
 where
 $$
-u(\mathbf{r})=u_{mn}(x,y,z)\cos(kz)
+u(\mathbf{r})=u_{mn}(x,y,z)\cos(kz+\psi)
 $$
-for a standing wave Hermite-Gauss field with mode $m,n$. See [gaussbeam](gaussbeam.md) for more details. For the fundamental mode Gaussian beam with the waist position in the cavity, we see that the modal volume is given by
+for a standing wave Hermite-Gauss field with mode $m,n$. Note
+$$
+?k=\frac{2\pi n_c}{\lambda}=\frac{2n\pi }{2L}
+$$
+And we need some additional information to determine the phase term $\psi$. See [gaussbeam](gaussbeam.md) for more details. For the fundamental mode Gaussian beam with the waist position in the cavity, we see that the modal volume is given by
 $$
 V_{00}=\frac{L/2}{2/(\omega_0^2\pi)}=\frac{\pi\omega_0^2L}{4} \tag{12}
 $$
