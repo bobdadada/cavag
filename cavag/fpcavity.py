@@ -324,10 +324,20 @@ class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
     def v_mode(self):
         """模式体积[L^3]"""
         def v_f():
-            if (2*abs(self.p0) > self.length) or (self.mx > 0) or (self.my > 0):
-                logging.warning("This mode is not a fundamental mode, "
+            if self.mx > 0:
+                cx = (6.927*self.mx-2.104)**(1/6)
+                logging.warning("mx > 0, mode volumn is computed by an approximation")
+            else:
+                cx = 1
+            if self.my > 0:
+                cy = (6.927*self.my-2.104)**(1/6)
+                logging.warning("my > 0, mode volumn is computed by an approximation")
+            else:
+                cy = 1
+            if (self.pl < 0) or (self.pr < 0):
+                logging.warning("The waist is not in the cavity,"
                                 "so the calculated mode volume is slightly different.")
-            return self.length*(self.omega0)**2*constants.pi/4
+            return cx*cy*self.length*(self.omega0)**2*constants.pi/4
         return self.get_property('v_mode', v_f)
 
     @property

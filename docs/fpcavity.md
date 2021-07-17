@@ -77,17 +77,25 @@ $$
 
 where
 $$
-u(\mathbf{r})=u_{mn}(x,y,z)\cos(kz+\psi)
+u(\mathbf{r})=\frac{u_{mn}(x,y,z)e^{-j(kz+\psi)}+u^*_{mn}(x,y,z)e^{j(kz+\psi)}}{2} \tag{12}
 $$
-for a standing wave Hermite-Gauss field with mode $m,n$. Note
+for a standing wave Hermite-Gauss field with mode $m,n$. Note the standing wave condition requires
 $$
-?k=\frac{2\pi n_c}{\lambda}=\frac{2n\pi }{2L}
+p\pi=kL-(m+n+1)\phi(p_r)-(m+n+1)\phi(p_l) \tag{13}
 $$
-And we need some additional information to determine the phase term $\psi$. See [gaussbeam](gaussbeam.md) for more details. For the fundamental mode Gaussian beam with the waist position in the cavity, we see that the modal volume is given by
+where $p\in \mathbb{Z}$, $k=2\pi/\lambda$, $\phi(z)=\arctan(z/z_0)$, $z_0$ is the Rayleigh length. The above formula can be simplified to 
 $$
-V_{00}=\frac{L/2}{2/(\omega_0^2\pi)}=\frac{\pi\omega_0^2L}{4} \tag{12}
+p\pi\approx kL-(m+n+1)\frac{\pi}{2} \tag{14}
 $$
-But $V$ is slightly different for other situations.
+for big cavity. And we need some additional information to determine the phase term $\psi$. In many cases, the absolute phase $\psi$ is not important, we only care about relative phase with respect to a standard source. See [gaussbeam](gaussbeam.md) for more details. If the position of the waist is in the cavity, then we get
+$$
+V_{00}=\frac{L/2}{2/(\omega_0^2\pi)}=\frac{\pi\omega_0^2L}{4} \tag{15}
+$$
+and an approximation for $m,n>0$ is given by
+$$
+V_{mn}\approx\sqrt[6]{6.927m-2.104}\sqrt[6]{6.927n-2.104}V_{00} \tag{16}
+$$
+If the position of the waist is not in the cavity, $V$ is slightly different.
 
 **LOSS:**
 
@@ -95,13 +103,13 @@ There are a lot of losses in the cavity, and a lot of losses are on the mirror s
 
 Clipping loss on the finite-diameter mirrors. Conservatively assume a cavity mode and consider its 'spillover' loss upon reflection on a finite-diameter mirror. For a single reflection,
 $$
-\mathcal{L}_{cl}=e^{-2(D/2)^2/\omega_m^2} \tag{13}
+\mathcal{L}_{cl}=e^{-2(D/2)^2/\omega_m^2} \tag{17}
 $$
 where $\omega_{m}$ is the radius of the mode impinging on the mirror of diameter $D$. Note the mode radius of higher-order modes is larger, so the clipping loss is larger under the same parameters.
 
 Scattering loss. A widely used estimate linking the roughness of the mirror surface to the scattering loss is
 $$
-\mathcal{L}_{sc}=\left(\frac{4\pi \sigma_{sc}}{\lambda}\right)^2 \tag{14}
+\mathcal{L}_{sc}=\left(\frac{4\pi \sigma_{sc}}{\lambda}\right)^2 \tag{18}
 $$
 where $\sigma_{sc}$ is the roughness of the surface, which is consistent with the definition of surface roughness in the field of mechanical manufacturing, a typical value is $0.2\text{nm}$. Better mirror manufacturing technology and coating technology can effectively reduce $\sigma_{sc}$, thereby reducing $\mathcal{L}_{sc}$.
 
@@ -130,3 +138,4 @@ where $\sigma_{sc}$ is the roughness of the surface, which is consistent with th
 ## References
 
 [1]: D Hunger et al "[A fiber Fabry–Perot cavity with high finesse](_assets/paper/Hunger_A_fiber_Fabry–Perot_cavity_with_high_finesse.pdf ':ignore :target=_blank')," *New J. Phys.* **12** 065038 (2010)
+
