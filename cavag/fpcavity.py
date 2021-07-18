@@ -1,4 +1,5 @@
 import logging
+from re import DOTALL
 
 import numpy as np
 from scipy import constants
@@ -117,7 +118,6 @@ class Cavity(CavityStructure):
 
         self.property_set.add_required(Cavity.modifiable_properties)
 
-
         __kwarg_rtls = [{}, {}]
         for prop in Cavity.modifiable_properties:
             val = kwargs.get(prop, None)
@@ -128,16 +128,18 @@ class Cavity(CavityStructure):
                 __kwarg_rtls[1][prop[:-1]] = val
             else:
                 self.property_set[prop] = val
-        
+
         # rtl cache
 
-        self.__rtls = {'l': RTL(**(__kwarg_rtls[0])), 'r': RTL(**(__kwarg_rtls[1]))}
-    
+        self.__rtls = {
+            'l': RTL(**(__kwarg_rtls[0])), 'r': RTL(**(__kwarg_rtls[1]))}
+
     def __get_rtl(self, d):
         if self.__rtls[d]:
             rtl = self.__rtls[d]
         else:
-            rtl = RTL(r=getattr(self, 'r'+d), t=getattr(self, 't'+d), l=getattr(self, 'l'+d))
+            rtl = RTL(r=getattr(self, 'r'+d),
+                      t=getattr(self, 't'+d), l=getattr(self, 'l'+d))
             self.__rtls[d] = rtl
         return rtl
 
@@ -159,7 +161,7 @@ class Cavity(CavityStructure):
             for k in ('rr', 'tr', 'lr'):
                 self.property_set[k] = None
             self.__get_rtl('r').change_params(**rkw)
-        
+
         return propdict
 
     @property
@@ -246,7 +248,7 @@ class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
     name = 'CavityHermiteGaussMode'
 
     modifiable_properties = ('length', 'wavelength',
-                             'rocl', 'rocr', 'a0', 'position', 'mx', 'my')
+                             'rocl', 'rocr', 'a0', 'position', 'mx', 'my', 'xi')
 
     def __init__(self, name="CavityHermiteGaussMode", **kwargs):
         kwargs.update(a0=kwargs.get('a0', 1))
@@ -256,6 +258,8 @@ class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
 
         self.property_set.reset_required(
             CavityHermiteGaussMode.modifiable_properties)
+
+        self.property_set['psi'] = kwargs.get('psi', 0)
 
     @property
     def z0(self):
@@ -326,12 +330,14 @@ class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
         def v_f():
             if self.mx > 0:
                 cx = (6.927*self.mx-2.104)**(1/6)
-                logging.warning("mx > 0, mode volumn is computed by an approximation")
+                logging.warning(
+                    "mx > 0, mode volumn is computed by an approximation")
             else:
                 cx = 1
             if self.my > 0:
                 cy = (6.927*self.my-2.104)**(1/6)
-                logging.warning("my > 0, mode volumn is computed by an approximation")
+                logging.warning(
+                    "my > 0, mode volumn is computed by an approximation")
             else:
                 cy = 1
             if (self.pl < 0) or (self.pr < 0):
@@ -345,18 +351,23 @@ class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
         """单光子电场强度[ML/T^3I]"""
         return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.v_mode)))
 
-    pass # 须在每个函数位置添加描述驻波的cos(kz)项
+    def u_f(self, z, x, y):
+        ampl, phase = super().u_f(z, x, y)
+        return ampl, np.cos(phase-self.xi-self.k*z)
 
-class EqualCavityMode(EqualCavityStructure, CavityHermiteGaussMode):
-    name = "EqualCavityMode"
 
-    modifiable_properties = ('length', 'wavelength', 'roc', 'a0')
+class EqualCavityHermiteGaussMode(EqualCavityStructure, CavityHermiteGaussMode):
+    name = "EqualCavityHermiteGaussMode"
 
-    def __init__(self, name="EqualCavityMode", **kwargs):
+    modifiable_properties = ('length', 'wavelength',
+                             'roc', 'a0', 'position', 'mx', 'my', 'xi')
+
+    def __init__(self, name="EqualCavityHermiteGaussMode", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
         super().__init__(**kwargs)
+        self.property_set.add_required('roc')
         self.name = name
 
     @property
@@ -393,6 +404,64 @@ class EqualCavityMode(EqualCavityStructure, CavityHermiteGaussMode):
         """腔面模场半径[L]"""
         return self.get_property('omegam', self.omega0*np.sqrt(1+(self.length/2 / self.z0)**2))
 
+
+## -------------------------------------------
+# TO DO
+
+def get_wavelengthf(length, rocl, rocr, mx, my):
+    """
+    获取满足腔相位条件的波长函数
+    :param length: 腔长
+    :param rocl: 左边腔镜ROC
+    :param rocR: 右边腔镜ROC
+    :param mx: x方向模式数
+    :param my: y方向模式数
+    :return: func(p) -> wavelength 用于计算每个横模级数对应的波长的函数
+    """
+    gl, gr = 1-length/rocl, 1-length/rocr
+    glgr = gl*gr
+    try:
+        pl = gr*(1-gl)/(gl+gr-2*glgr)*length
+        pr = gl*(1-gr)/(gl+gr-2*glgr)*length
+        z0 = np.sqrt(glgr*(1-glgr)/(gl+gr-2*glgr)**2)*length
+    except ZeroDivisionError:
+        z0 = pl = pr = length/2
+
+    def func(p):
+        return 2*np.pi*length/(p*np.pi+(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0)))
+    return func
+
+def get_available_wavelength(wavelength0, length, rocl, rocr, mx, my):
+    """
+    获取满足腔相位条件的波长
+    :param wavelength0: 所要接近的波长
+    :param length: 腔长
+    :param rocl: 左边腔镜ROC
+    :param rocR: 右边腔镜ROC
+    :param mx: x方向模式数
+    :param my: y方向模式数
+    :return: wavelength 满足条件的波长
+    """
+    gl, gr = 1-length/rocl, 1-length/rocr
+    glgr = gl*gr
+    try:
+        pl = gr*(1-gl)/(gl+gr-2*glgr)*length
+        pr = gl*(1-gr)/(gl+gr-2*glgr)*length
+        z0 = np.sqrt(glgr*(1-glgr)/(gl+gr-2*glgr)**2)*length
+    except ZeroDivisionError:
+        z0 = pl = pr = length/2
+    
+    p0 = 2*length/wavelength0-(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0))/np.pi
+
+    wavelength1 = 2*np.pi*length/(int(p0)*np.pi+(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0)))
+    wavelength2 = 2*np.pi*length/(int(p0)*np.pi+np.pi+(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0)))
+
+    if abs(wavelength1-wavelength0) < abs(wavelength2-wavelength0):
+        return int(p0), wavelength1
+    else:
+        return int(p0)+1, wavelength2
+
+# -----------------------------------------------------------------------------------
 
 def judge_cavity_type(length, rocl, rocr):
     """

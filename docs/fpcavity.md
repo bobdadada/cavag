@@ -77,17 +77,17 @@ $$
 
 where
 $$
-u(\mathbf{r})=\frac{u_{mn}(x,y,z)e^{-j(kz+\psi)}+u^*_{mn}(x,y,z)e^{j(kz+\psi)}}{2} \tag{12}
+u(\mathbf{r})=\frac{u_{mn}(x,y,z)e^{-j(kz+\xi)}+u^*_{mn}(x,y,z)e^{j(kz+\xi)}}{2} \tag{12}
 $$
 for a standing wave Hermite-Gauss field with mode $m,n$. Note the standing wave condition requires
 $$
 p\pi=kL-(m+n+1)\phi(p_r)-(m+n+1)\phi(p_l) \tag{13}
 $$
-where $p\in \mathbb{Z}$, $k=2\pi/\lambda$, $\phi(z)=\arctan(z/z_0)$, $z_0$ is the Rayleigh length. The above formula can be simplified to 
+where $p \in \mathbb{Z}$, $k=2\pi/\lambda$, $\phi(z)=\arctan(z/z_0)$, $z_0$ is the Rayleigh length. The above formula can be simplified to 
 $$
 p\pi\approx kL-(m+n+1)\frac{\pi}{2} \tag{14}
 $$
-for big cavity. And we need some additional information to determine the phase term $\psi$. In many cases, the absolute phase $\psi$ is not important, we only care about relative phase with respect to a standard source. See [gaussbeam](gaussbeam.md) for more details. If the position of the waist is in the cavity, then we get
+for big cavity. And we need some additional information to determine the phase term $\xi$. In many cases, the absolute phase $\xi$ is not important, we only care about relative phase with respect to a standard source. See [gaussbeam](gaussbeam.md) for more details. If the position of the waist is in the cavity, then we get
 $$
 V_{00}=\frac{L/2}{2/(\omega_0^2\pi)}=\frac{\pi\omega_0^2L}{4} \tag{15}
 $$
