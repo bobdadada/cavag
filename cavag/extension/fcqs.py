@@ -3,8 +3,8 @@ import numpy as np
 from scipy import constants
 
 __all__ = [
-    'calculate_g', 'calculate_C1', 'calculate_neta_e',
-    'calculate_neta_ext',
+    'calculate_g', 'calculate_C1', 'calculate_eta_e',
+    'calculate_eta_ext',
 ]
 
 def calculate_g(V_mode, nu, gamma):
@@ -29,7 +29,7 @@ def calculate_C1(g, kappa, gammat):
     return g**2/(kappa*gammat)
 
 
-def calculate_neta_e(C1):
+def calculate_eta_e(C1):
     """
     计算单原子发射几率
     :param C1: 耦合因子
@@ -38,7 +38,7 @@ def calculate_neta_e(C1):
     return 2*C1/(2*C1+1)
 
 
-def calculate_neta_ext(kappa, gammat):
+def calculate_eta_ext(kappa, gammat):
     """
     计算腔耦合光子提取几率
     :param kappa: 腔泄露损耗
