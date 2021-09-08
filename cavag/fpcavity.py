@@ -16,8 +16,8 @@ __all__ = [
     'Cavity', 'SymmetricCavity', 'CavityGaussMode', 'SymmetricCavity',
     'SymmetricCavityGaussMode', 'judge_stable_cavity',
     'calculate_loss_clipping', 'calculate_loss_scattering',
-    'calculate_g', 'calculate_C1', 'calculate_neta_e',
-    'calculate_neta_ext', 'calculate_neta_mode', 'calculate_neta_trans',
+    'calculate_g', 'calculate_C1', 'calculate_eta_e',
+    'calculate_eta_ext', 'calculate_eta_mode', 'calculate_eta_trans',
     'plot_cavitygaussmode'
 ]
 
@@ -331,7 +331,7 @@ def calculate_C1(g, kappa, gamma):
     return g ** 2 / (kappa * gamma)
 
 
-def calculate_neta_e(C1):
+def calculate_eta_e(C1):
     """
     计算单原子发射几率
     :param C1: 耦合因子
@@ -340,7 +340,7 @@ def calculate_neta_e(C1):
     return 2 * C1 / (2 * C1 + 1)
 
 
-def calculate_neta_ext(kappa, gamma):
+def calculate_eta_ext(kappa, gamma):
     """
     计算腔耦合光子提取几率
     :param kappa: 腔泄露损耗
@@ -350,7 +350,7 @@ def calculate_neta_ext(kappa, gamma):
     return 2 * kappa / (2 * kappa + gamma)
 
 
-def calculate_neta_mode(fiber, gaussmode, direction='l'):
+def calculate_eta_mode(fiber, gaussmode, direction='l'):
     """
     计算光纤-腔模耦合效率
     """
@@ -370,7 +370,7 @@ def calculate_neta_mode(fiber, gaussmode, direction='l'):
                     constants.pi * nf * omegam * omegaf / (wavelength * ROC)))
 
 
-def calculate_neta_trans(ml, mr, direction='l'):
+def calculate_eta_trans(ml, mr, direction='l'):
     """
     计算单个方向光子的等效透过率，为某个方向上膜的透过率/(总损耗+总透过率)
     :param ml: 左边腔膜的(反射率, 透射率, 损耗)元胞
