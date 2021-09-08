@@ -20,8 +20,8 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
     from cavag.fiber import Fiber
     from cavag.fpcavity import (CavityGaussMode, Cavity, judge_stable_cavity,
             calculate_loss_clipping, calculate_loss_scattering, calculate_g,
-            calculate_neta_ext, calculate_neta_e, calculate_C1,
-            calculate_neta_mode, calculate_neta_trans)
+            calculate_eta_ext, calculate_eta_e, calculate_C1,
+            calculate_eta_mode, calculate_eta_trans)
     from cavag.mirror import calculate_rtl, add_loss
 
     ROCl, Dl, Rl0, T2L0l, sigmascl = surL
@@ -60,18 +60,18 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
     g = calculate_g(gaussmode, gamma)
     kappa = cavity.kappa
     C1 = calculate_C1(g, kappa, gamma)
-    neta_e = calculate_neta_e(C1)
-    neta_ext = calculate_neta_ext(kappa, gamma)
+    eta_e = calculate_eta_e(C1)
+    eta_ext = calculate_eta_ext(kappa, gamma)
 
-    neta_mode_l, neta_mode_r = calculate_neta_mode(fiberl, gaussmode, 'l'), calculate_neta_mode(fiberr, gaussmode, 'r')
-    neta_trans_l, neta_trans_r = calculate_neta_trans((Rl, Tl, Ll), (Rr, Tr, Lr), 'l'), calculate_neta_trans((Rl, Tl, Ll), (Rr, Tr, Lr), 'r')
-    neta_modetrans_l = neta_mode_l * (1 - neta_mode_r) * neta_trans_l
-    neta_modetrans_r = neta_mode_r * (1 - neta_mode_l) * neta_trans_r
+    eta_mode_l, eta_mode_r = calculate_eta_mode(fiberl, gaussmode, 'l'), calculate_eta_mode(fiberr, gaussmode, 'r')
+    eta_trans_l, eta_trans_r = calculate_eta_trans((Rl, Tl, Ll), (Rr, Tr, Lr), 'l'), calculate_eta_trans((Rl, Tl, Ll), (Rr, Tr, Lr), 'r')
+    eta_modetrans_l = eta_mode_l * (1 - eta_mode_r) * eta_trans_l
+    eta_modetrans_r = eta_mode_r * (1 - eta_mode_l) * eta_trans_r
     if direction == 'l':
-        neta_modetrans_eff = neta_modetrans_l
+        eta_modetrans_eff = eta_modetrans_l
     elif direction == 'r':
-        neta_modetrans_eff = neta_modetrans_r
+        eta_modetrans_eff = eta_modetrans_r
     else:
-        neta_modetrans_eff = neta_modetrans_l + neta_modetrans_r
+        eta_modetrans_eff = eta_modetrans_l + eta_modetrans_r
 
-    return neta_e * neta_ext * neta_modetrans_eff
+    return eta_e * eta_ext * eta_modetrans_eff
