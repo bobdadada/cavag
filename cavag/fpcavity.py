@@ -1,8 +1,9 @@
 from collections import namedtuple
 
-import matplotlib.pyplot as plt
+import numpy as np
 import scipy as sp
 from scipy import constants
+import matplotlib.pyplot as plt
 
 # 解决中文显示问题
 plt.rcParams['font.sans-serif'] = ['KaiTi']  # 指定默认字体
@@ -16,7 +17,7 @@ __all__ = [
     'Cavity', 'SymmetricCavity', 'CavityGaussMode', 'SymmetricCavity',
     'SymmetricCavityGaussMode', 'judge_stable_cavity',
     'calculate_loss_clipping', 'calculate_loss_scattering',
-    'calculate_g', 'calculate_C1', 'calculate_eta_e',
+    'calculate_mu', 'calculate_g', 'calculate_C1', 'calculate_eta_e',
     'calculate_eta_ext', 'calculate_eta_mode', 'calculate_eta_trans',
     'plot_cavitygaussmode'
 ]
@@ -310,14 +311,26 @@ def calculate_loss_scattering(sigmasc, wavelength):
     return (4 * constants.pi * sigmasc / wavelength) ** 2
 
 
-def calculate_g(gaussmode, gamma):
+def calculate_mu(wavelength, gamma):
+    """
+    计算跃迁电偶极距
+    :param wavelength: 高斯驻波场
+    :param gamma: 驻波场对应频率跃迁的真空自发辐射速率
+    :return: 跃迁电偶极距
+    """
+    nu = constants.c/wavelength
+    return np.sqrt(3*np.pi*constants.epsilon_0*constants.hbar*constants.c**3*gamma/(2*np.pi*nu)**3)
+
+
+def calculate_g(e, A, mu):
     """
     计算腔模-离子耦合效率
-    :param gaussmode: 高斯驻波场
-    :param gamma: 驻波场对应频率跃迁的真空自发辐射速率
+    :param e: 高斯驻波场电场密度
+    :param A: 高斯驻波场振幅衰减
+    :param mu: 驻波场对应频率跃迁的跃迁电偶极距
     :return: 耦合系数g
     """
-    return sp.sqrt((3 * gamma * sp.pi * constants.c ** 3) / (2 * gaussmode.V * (2 * sp.pi * gaussmode.nu) ** 2))
+    return mu*e*A/constants.hbar
 
 
 def calculate_C1(g, kappa, gamma):

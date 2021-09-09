@@ -57,7 +57,9 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
         return -1
 
     # 计算相应的因子，并获得总效率
-    g = calculate_g(gaussmode, gamma)
+    mu = calculate_mu(wavelength, gamma)
+    A = 1/np.sqrt(1+(L/2/gaussmode.z0)**2)  # 中心处振幅衰减
+    g = calculate_g(gaussmode.e, A, mu)
     kappa = cavity.kappa
     C1 = calculate_C1(g, kappa, gamma)
     eta_e = calculate_eta_e(C1)
