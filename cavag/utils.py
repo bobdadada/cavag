@@ -66,9 +66,10 @@ def calculate_fpcavity_total_efficiency(L, surL, fiberL, surR, fiberR, wavelengt
     eta_ext = calculate_eta_ext(kappa, gamma)
 
     eta_mode_l, eta_mode_r = calculate_eta_mode(fiberl, gaussmode, 'l'), calculate_eta_mode(fiberr, gaussmode, 'r')
-    eta_trans_l, eta_trans_r = calculate_eta_trans((Rl, Tl, Ll), (Rr, Tr, Lr), 'l'), calculate_eta_trans((Rl, Tl, Ll), (Rr, Tr, Lr), 'r')
-    eta_modetrans_l = eta_mode_l * (1 - eta_mode_r) * eta_trans_l
-    eta_modetrans_r = eta_mode_r * (1 - eta_mode_l) * eta_trans_r
+
+    eta_modetrans_l = eta_mode_l*eta_mode_l*(1+Rr)/2/(1-Rl*Rr)*Tl/(Tl+Ll)
+    eta_modetrans_r = eta_mode_r*eta_mode_r*(1+Rl)/2/(1-Rl*Rr)*Tr/(Tr+Lr)
+    
     if direction == 'l':
         eta_modetrans_eff = eta_modetrans_l
     elif direction == 'r':
