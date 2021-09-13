@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from cavag._utils import PrintableObject
 
 class Example(PrintableObject):
@@ -62,7 +63,7 @@ print(proplist)
 # Get the value of each property
 for prop in proplist:
     print(getattr(exm, prop))
-    
+
 # Change the parameters. Generally, parameters are the properties
 # defined in modifiable_properties, and setting _filter=True in change_params 
 # will filter out these parameters.

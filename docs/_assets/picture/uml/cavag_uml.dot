@@ -5,7 +5,7 @@ rankdir=BT
 "3" [label="cavag.extension.fcqs", shape="box"];
 "4" [label="cavag.fiber", shape="box"];
 "5" [label="cavag.fpcavity", shape="box"];
-"6" [label="cavag.gaussbeam", shape="box"];
+"6" [label="cavag.hgbeam", shape="box"];
 "7" [label="cavag.mirror", shape="box"];
 "8" [label="cavag.misc", shape="box"];
 "9" [label="cavag.utils", shape="box"];

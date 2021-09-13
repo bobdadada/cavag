@@ -130,7 +130,7 @@ where $V_{00eff}$ is the mode volume of the fundamental mode at the same locatio
 
 ### Demonstration
 
-<div><img src="_assets/picture/res/gaussbeam/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
+<div><img src="_assets/picture/res/hgbeam/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
 
 The figure on the left shows the waist shape of some modes. It is easy to find that although the equation $(3)$ is equivalently satisfied for each mode, the beam waist of different modes cannot be represented by $\omega_0$ only, and only the waist radius of fundamental Gaussian mode can be represented by $\omega_0$.
 
@@ -139,7 +139,7 @@ In addition, as $m$ or $n$ increases, the number of nodes increases and the rang
 
 <div style="clear: both"></div>
 
-<div><img src="_assets/picture/res/gaussbeam/random_comb_hermite_gaussian.png" alt="random_comb_hermite_gaussian" style="float:left; height:300px;"></div>
+<div><img src="_assets/picture/res/hgbeam/random_comb_hermite_gaussian.png" alt="random_comb_hermite_gaussian" style="float:left; height:300px;"></div>
 
 A waist of a random combinations of some mode are shown in this figure. It can be seen that the graph of a random combination of the Hermite-Gaussian modes becomes very weird. 
 
@@ -155,7 +155,7 @@ The final inequality represents a typical difference between classical and quant
 
 <div style="clear: both"></div>
 
-<div><img src="_assets/picture/res/gaussbeam/intensity_center_waist_normalized_hg.png" alt="intensity_center_waist_normalized_hg" style="float:left; height:300px;"></div>
+<div><img src="_assets/picture/res/hgbeam/intensity_center_waist_normalized_hg.png" alt="intensity_center_waist_normalized_hg" style="float:left; height:300px;"></div>
 
 Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. And the second figure shows the intensity at the center of the waist of each normalized Hermite-Gaussian mode. We also find an oscillation characteristic in this figure.
 
@@ -239,7 +239,7 @@ This can be verified in any linear system.
 
 ## Codes
 
-**This page corresponds to the module `gaussbeam`**
+**This page corresponds to the module `hgbeam`**
 
 ### Classes
 
@@ -249,7 +249,7 @@ Generally speaking, Hermite-Gaussian beam needs to be described by all three coo
 
 ----
 
-<strong class="object" id="NormalizedHermiteGaussBeam1D">NormalizedHermiteGaussBeam1D</strong>: `class NormalizedHermiteGaussBeam1D(misc.Wavelength)`
+<strong class="object" id="NormalizedHGBeam1D">NormalizedHGBeam1D</strong>: `class NormalizedHGBeam1D(misc.Wavelength)`
 
 This class defines a general normalized Hermite-Gaussian beam in one dimension. And it is a subclass of `misc.Wavelength`. The normalization condition required $\int^{\infty}_{-\infty}dx_0 |u(x_0)|^2=1$.
 
@@ -262,7 +262,7 @@ This class defines a general normalized Hermite-Gaussian beam in one dimension. 
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">m</span> - $m$, mode number
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedHermiteGaussBeam1D*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedHGBeam1D*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -285,7 +285,7 @@ This class defines a general normalized Hermite-Gaussian beam in one dimension. 
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedHermiteGaussBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedHermiteGaussBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedHGBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedHGBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude at position <span class="param">z</span>, the amplitude is defined by $1/(1+(z-p_0)^2/z_0^2)^{1/4}$.
 
@@ -305,9 +305,9 @@ This class defines a general normalized Hermite-Gaussian beam in one dimension. 
 
 ----
 
-<strong class="object" id="HermiteGaussBeam1D">HermiteGaussBeam1D</strong>: `class HermiteGaussBeam1D(NormalizedHermiteGaussBeam1D)`
+<strong class="object" id="HGBeam1D">HGBeam1D</strong>: `class HGBeam1D(NormalizedHGBeam1D)`
 
-This class is a subclass of `NormalizedHermiteGaussBeam1D` with a given magnitude of amplitude. In classical physics, a single mode can have any magnitude of intensity. 
+This class is a subclass of `NormalizedHGBeam1D` with a given magnitude of amplitude. In classical physics, a single mode can have any magnitude of intensity. 
 
 <p style="color:blue;">attributes:</p>
 
@@ -319,7 +319,7 @@ This class is a subclass of `NormalizedHermiteGaussBeam1D` with a given magnitud
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">m</span> - $m$, mode number
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *HermiteGaussBeam1D*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *HGBeam1D*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -331,19 +331,19 @@ This class is a subclass of `NormalizedHermiteGaussBeam1D` with a given magnitud
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam1D</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam1D</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='HermiteGaussBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `HermiteGaussBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='HGBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `HGBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude of this mode at position <span class="param">z</span>. In our implementation, this amplitude is defined by $a_0/(1+(z-p_0)^2/z_0^2)^{1/4}$.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam1D</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam1D</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
-<strong class="object" id="NormalizedGaussBeam1D">NormalizedGaussBeam1D</strong>: `class NormalizedGaussBeam1D(NormalizedHermiteGaussBeam1D)`
+<strong class="object" id="NormalizedGBeam1D">NormalizedGBeam1D</strong>: `class NormalizedGBeam1D(NormalizedHGBeam1D)`
 
 This class defines a class of Gaussian beam with mode number $m=0$.
 
@@ -355,7 +355,7 @@ This class defines a class of Gaussian beam with mode number $m=0$.
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedGaussBeam1D*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedGBeam1D*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -363,17 +363,17 @@ This class defines a class of Gaussian beam with mode number $m=0$.
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam1D</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam1D</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedGaussBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedGaussBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedGBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedGBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam1D</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam1D</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
-<strong class="object" id="GaussBeam1D">GaussBeam1D</strong>: `class GaussBeam1D(HermiteGaussBeam1D)`
+<strong class="object" id="GBeam1D">GBeam1D</strong>: `class GBeam1D(HGBeam1D)`
 
 This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
@@ -386,7 +386,7 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *GaussBeam1D*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *GBeam1D*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -394,13 +394,13 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam1D</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">HGBeam1D</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='GaussBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `GaussBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='GBeam1D', \*\*<span class="param">kwargs</span>)</span> - Create a `GBeam1D` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
-- See <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam1D</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">HGBeam1D</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
@@ -410,7 +410,7 @@ In practical applications, we often need to consider various Hermite-Gaussian mo
 
 ----
 
-<strong class="object" id="NormalizedHermiteGaussBeam">NormalizedHermiteGaussBeam</strong>: `class NormalizedHermiteGaussBeam(Wavelength)`
+<strong class="object" id="NormalizedHGBeam">NormalizedHGBeam</strong>: `class NormalizedHGBeam(Wavelength)`
 
 This class define a general normalized Hermite-Gaussian beam with definition $(1)$.
 
@@ -425,7 +425,7 @@ This class define a general normalized Hermite-Gaussian beam with definition $(1
   - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
   - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $y$-direction
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedHermiteGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedHGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -456,7 +456,7 @@ This class define a general normalized Hermite-Gaussian beam with definition $(1
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedHermiteGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedHermiteGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedHGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedHGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude at position <span class="param">z</span>, the amplitude is defined by $1/[(1+(z-p_0)^2/{z_0}_x^2)^{1/4}(1+(z-p_0)^2/{z_0}_y^2)^{1/4}]$.
 
@@ -486,9 +486,9 @@ This class define a general normalized Hermite-Gaussian beam with definition $(1
 
 ----
 
-<strong class="object" id="HermiteGaussBeam">HermiteGaussBeam</strong>: `class HermiteGaussBeam(NormalizedHermiteGaussBeam)`
+<strong class="object" id="HGBeam">HGBeam</strong>: `class HGBeam(NormalizedHGBeam)`
 
-This class is a subclass of `NormalizedHermiteGaussBeam` with a given magnitude of amplitude. In classical physics, a single mode can have any magnitude of intensity. 
+This class is a subclass of `NormalizedHGBeam` with a given magnitude of amplitude. In classical physics, a single mode can have any magnitude of intensity. 
 
 <p style="color:blue;">attributes:</p>
 
@@ -502,7 +502,7 @@ This class is a subclass of `NormalizedHermiteGaussBeam` with a given magnitude 
   - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
   - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $y$-direction
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *HermiteGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *HGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -514,19 +514,19 @@ This class is a subclass of `NormalizedHermiteGaussBeam` with a given magnitude 
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='HermiteGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `HermiteGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='HGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `HGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude of this mode at position <span class="param">z</span>. In our implementation, this amplitude is defined by $a_0/[(1+(z-p_0)^2/{z_0}_x^2)^{1/4}(1+(z-p_0)^2/{z_0}_y^2)^{1/4}]$.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
-<strong class="object" id="NormalizedGaussBeam">NormalizedGaussBeam</strong>: `class NormalizedGaussBeam(NormalizedHermiteGaussBeam)`
+<strong class="object" id="NormalizedGBeam">NormalizedGBeam</strong>: `class NormalizedGBeam(NormalizedHGBeam)`
 
 This class defines a class of Gaussian beam with mode number $m=0$.
 
@@ -539,7 +539,7 @@ This class defines a class of Gaussian beam with mode number $m=0$.
   - <span class="attr" style="color:red;">omega0x</span> - ${\omega_0}_x$, radius of the waist in $x$-direction
   - <span class="attr" style="color:red;">omega0y</span> - ${\omega_0}_y$, radius of the waist in $y$-direction
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -547,17 +547,17 @@ This class defines a class of Gaussian beam with mode number $m=0$.
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
-<strong class="object" id="GaussBeam">GaussBeam</strong>: `class GaussBeam(HermiteGaussBeam)`
+<strong class="object" id="GBeam">GBeam</strong>: `class GBeam(HGBeam)`
 
 This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
@@ -571,7 +571,7 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
   - <span class="attr" style="color:red;">omega0x</span> - ${\omega_0}_x$, radius of the waist in $x$-direction
   - <span class="attr" style="color:red;">omega0y</span> - ${\omega_0}_y$, radius of the waist in $y$-direction
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *GaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *GBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -579,13 +579,13 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">HGBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='GaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `GaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='GBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `GBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
-- See <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">HGBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
@@ -595,7 +595,7 @@ In common cases, we think that the beam waist of the fundamental Gaussian beam i
 
 ----
 
-<strong class="object" id="NormalizedEqualHermiteGaussBeam">NormalizedEqualHermiteGaussBeam</strong>: `class NormalizedEqualHermiteGaussBeam(NormalizedHermiteGaussBeam)`
+<strong class="object" id="NormalizedEqualHGBeam">NormalizedEqualHGBeam</strong>: `class NormalizedEqualHGBeam(NormalizedHGBeam)`
 
 This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}_y$.
 
@@ -608,7 +608,7 @@ This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}
   - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
   - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $x$-direction
   
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualHermiteGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualHGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -621,11 +621,11 @@ This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}
   
   - properties provided by parent class
   
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualHermiteGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualHermiteGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualHGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualHGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - <span class="method" style="color:red;">omega_f(<span class="param">z</span>)</span> - Compute the mode field radius of an equivalent fundamental mode at position <span class="param">z</span>.
 
@@ -633,13 +633,13 @@ This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}
 
 - <span class="method" style="color:red;">phi_f(<span class="param">z</span>)</span> - Compute $\phi$ phase at position <span class="param">z</span>.
 
-- <span class="method" style="color:red;">preprocess_properties(\*\*<span class="param">propdict</span>)</span> - Pre-process properties, which are used to adjust the change of property names between this class and the parent class <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a>, see <a class="module-object-refer-to" module="introduction">Object</a> for more details.
+- <span class="method" style="color:red;">preprocess_properties(\*\*<span class="param">propdict</span>)</span> - Pre-process properties, which are used to adjust the change of property names between this class and the parent class <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam</a>, see <a class="module-object-refer-to" module="introduction">Object</a> for more details.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam</a> for other methods.
 
 ----
 
-<strong class="object" id="EqualHermiteGaussBeam">EqualHermiteGaussBeam</strong>: `class EqualHermiteGaussBeam(NormalizedEqualHermiteGaussBeam)`
+<strong class="object" id="EqualHGBeam">EqualHGBeam</strong>: `class EqualHGBeam(NormalizedEqualHGBeam)`
 
 This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}_y$ and a given magnitude of amplitude.
 
@@ -654,7 +654,7 @@ This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}
   - <span class="attr" style="color:red;">mx</span> - $m_x$, mode number in $x$-direction
   - <span class="attr" style="color:red;">my</span> - $m_y$, mode number in $x$-direction
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualHermiteGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualHGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -666,15 +666,15 @@ This class defines a general Hermite Gaussian beam with ${\omega_0}_x={\omega_0}
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualHermiteGaussBeam</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedEqualHGBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='EqualHermiteGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `EqualHermiteGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='EqualHGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `EqualHGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude of this mode at position <span class="param">z</span>. In our implementation, this amplitude is defined by $a_0/[(1+(z-p_0)^2/z_0^2)^{1/2}]$.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualHermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedEqualHGBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
@@ -684,7 +684,7 @@ In practical applications, Hermite-Gaussian beams with $m_x=m_y$ and ${\omega_0}
 
 ----
 
-<strong class="object" id="NormalizedEqualSymmetricHermiteGaussBeam">NormalizedEqualSymmetricHermiteGaussBeam</strong>: `class NormalizedEqualSymmetricHermiteGaussBeam(NormalizedHermiteGaussBeam1D)`
+<strong class="object" id="NormalizedEqualSymmetricHGBeam">NormalizedEqualSymmetricHGBeam</strong>: `class NormalizedEqualSymmetricHGBeam(NormalizedHGBeam1D)`
 
 This class defines a general normalized Hermite-Gaussian beam with $m_x=m_y$ and ${\omega_0}_x={\omega_0}_y$, and we omit the subscript in the definition of the class.
 
@@ -697,7 +697,7 @@ This class defines a general normalized Hermite-Gaussian beam with $m_x=m_y$ and
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">m</span> - $m$, mode number
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualSymmetricHermiteGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualSymmetricHGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -709,23 +709,23 @@ This class defines a general normalized Hermite-Gaussian beam with $m_x=m_y$ and
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam1D</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam1D</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualSymmetricHermiteGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualSymmetricHermiteGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualSymmetricHGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualSymmetricHGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude at position <span class="param">z</span>, the amplitude is defined by $1/(1+(z-p_0)^2/z_0^2)^{1/2}$.
 
 - <span class="method" style="color:red;">u_f(<span class="param">z</span>, <span class="param">x</span>, <span class="param">y</span>)</span> - Compute $u$ at position <span class="param">z</span>, <span class="param">x</span> and <span class="param">y</span>, see the formula $(1)$. This function will return the total amplitude $a_t$ and total phase $\phi_t$, and $u=a_te^{j\phi_t}$.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam1D</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam1D</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
-<strong class="object" id="EqualSymmetricHermiteGaussBeam">EqualSymmetricHermiteGaussBeam</strong>: `class EqualSymmetricHermiteGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam)`
+<strong class="object" id="EqualSymmetricHGBeam">EqualSymmetricHGBeam</strong>: `class EqualSymmetricHGBeam(NormalizedEqualSymmetricHGBeam)`
 
-This class is a subclass of `NormalizedEqualSymmetricHermiteGaussBeam` with a given magnitude of amplitude. In classical physics, a single mode can have any magnitude of intensity. 
+This class is a subclass of `NormalizedEqualSymmetricHGBeam` with a given magnitude of amplitude. In classical physics, a single mode can have any magnitude of intensity. 
 
 <p style="color:blue;">attributes:</p>
 
@@ -737,7 +737,7 @@ This class is a subclass of `NormalizedEqualSymmetricHermiteGaussBeam` with a gi
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist of an equivalent fundamental mode
   - <span class="attr" style="color:red;">m</span> - $m$, mode number
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualSymmetricHermiteGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualSymmetricHGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -749,19 +749,19 @@ This class is a subclass of `NormalizedEqualSymmetricHermiteGaussBeam` with a gi
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricHermiteGaussBeam</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedEqualSymmetricHGBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='EqualSymmetricHermiteGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `EqualSymmetricHermiteGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='EqualSymmetricHGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `EqualSymmetricHGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
 - <span class="method" style="color:red;">a_f(<span class="param">z</span>)</span> - Compute the amplitude of this mode at position <span class="param">z</span>. In our implementation, this amplitude is defined by $a_0/(1+(z-p_0)^2/z_0^2)^{1/2}$.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricHermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedEqualSymmetricHGBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
-<strong class="object" id="NormalizedEqualGaussBeam">NormalizedEqualGaussBeam</strong>: `class NormalizedEqualGaussBeam(NormalizedEqualSymmetricHermiteGaussBeam)`
+<strong class="object" id="NormalizedEqualGBeam">NormalizedEqualGBeam</strong>: `class NormalizedEqualGBeam(NormalizedEqualSymmetricHGBeam)`
 
 This class defines a class of Gaussian beam with mode number $m=0$ and ${\omega_0}_x={\omega_0}_y$.
 
@@ -773,7 +773,7 @@ This class defines a class of Gaussian beam with mode number $m=0$ and ${\omega_
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *NormalizedEqualGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -781,17 +781,17 @@ This class defines a class of Gaussian beam with mode number $m=0$ and ${\omega_
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricHermiteGaussBeam</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">NormalizedEqualSymmetricHGBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='NormalizedEqualGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `NormalizedEqualGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
-- See <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricHermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">NormalizedEqualSymmetricHGBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
-<strong class="object" id="EqualGaussBeam">EqualGaussBeam</strong>: `class EqualGaussBeam(EqualSymmetricHermiteGaussBeam)`
+<strong class="object" id="EqualGBeam">EqualGBeam</strong>: `class EqualGBeam(EqualSymmetricHGBeam)`
 
 This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
@@ -804,7 +804,7 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
   - <span class="attr" style="color:red;">p0</span> - $p_0$, position of the waist
   - <span class="attr" style="color:red;">omega0</span> - $\omega_0$, radius of the waist
 
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualGaussBeam*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. default to be *EqualGBeam*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> - Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -812,13 +812,13 @@ This class defines a Gaussian beam with arbitrary magnitude of amplitude.
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="gaussbeam">EqualSymmetricHermiteGaussBeam</a> for details
+    - see <a class="module-object-refer-to" module="hgbeam">EqualSymmetricHGBeam</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='EqualGaussBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `EqualGaussBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='EqualGBeam', \*\*<span class="param">kwargs</span>)</span> - Create a `EqualGBeam` object by named parameters consistent with <span class="attr" style="color:red;">modifiable\_properties</span>.
 
-- See <a class="module-object-refer-to" module="gaussbeam">EqualSymmetricHermiteGaussBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
+- See <a class="module-object-refer-to" module="hgbeam">EqualSymmetricHGBeam</a> and <a class="module-object-refer-to" module="introduction">Object</a> for other methods.
 
 ----
 
@@ -832,7 +832,7 @@ Here we define some helper functions. In order to facilitate the understanding o
 
 Given the wavelength and the waist radius of the fundamental mode beam, calculate the fundamental mode field radius at a certain position. The waist is at the origin, and the radius of curvature is positive in the positive direction of the coordinate axis. This function can be used directly in higher-order modes. 
 
-See also <a class="module-object-refer-to" module="gaussbeam">remote2local</a>.
+See also <a class="module-object-refer-to" module="hgbeam">remote2local</a>.
 
 <p style="color:blue;">parameters:</p>
 
@@ -851,7 +851,7 @@ See also <a class="module-object-refer-to" module="gaussbeam">remote2local</a>.
 
 Given the wavelength, the fundamental mode radius and the radius of curvature at current position, calculate the radius of the waist of the fundamental mode beam and the distance between the waist and the current position. The waist is at the origin, and the radius of curvature in the positive direction of the coordinate axis is positive. This function can be used directly in higher order modes.
 
-See also <a class="module-object-refer-to" module="gaussbeam">local2remote</a>.
+See also <a class="module-object-refer-to" module="hgbeam">local2remote</a>.
 
 <p style="color:blue;">parameters:</p>
 
@@ -870,7 +870,7 @@ See also <a class="module-object-refer-to" module="gaussbeam">local2remote</a>.
 
 Compute the transformation of Hermite-Gaussian Beam through a perfect thin lens. The [model](#transformation-by-a-lens) is shown above.
 
-See also <a class="module-object-refer-to" module="gaussbeam">convert_through_mirror</a>.
+See also <a class="module-object-refer-to" module="hgbeam">convert_through_mirror</a>.
 
 <p style="color:blue;">parameters:</p>
 
@@ -890,7 +890,7 @@ See also <a class="module-object-refer-to" module="gaussbeam">convert_through_mi
 
 Compute the transformation of Hermite-Gaussian Beam through a perfect mirror. The [model](#transformation-by-a-mirror) is shown above.
 
-See also <a class="module-object-refer-to" module="gaussbeam">convert_through_lens</a>.
+See also <a class="module-object-refer-to" module="hgbeam">convert_through_lens</a>.
 
 <p style="color:blue;">parameters:</p>
 

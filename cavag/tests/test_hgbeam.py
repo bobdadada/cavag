@@ -3,10 +3,10 @@ import unittest
 import numpy as np
 from scipy import constants
 from scipy import special
-from cavag.gaussbeam import *
+from cavag.hgbeam import *
 
 
-class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
+class Test_NormalizedHGBeam1D(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0, m = 1550e-9, 0, 4e-6, 3
@@ -15,7 +15,7 @@ class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
         z0 = constants.pi*omega0**2/wavelength
         thetam = np.sqrt(2*m+1)*np.arctan(omega0/z0)
 
-        nhgb1d = NormalizedHermiteGaussBeam1D(
+        nhgb1d = NormalizedHGBeam1D(
             wavelength=wavelength, p0=p0, omega0=omega0, m=m)
 
         self.assertEqual(nhgb1d.cm, cm)
@@ -39,7 +39,7 @@ class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
 
     def test_change_properties(self):
         wavelength, p0, omega0, m = 980e-9, 0, 1e-6, 3
-        nhgb1d = NormalizedHermiteGaussBeam1D(
+        nhgb1d = NormalizedHGBeam1D(
             wavelength=wavelength, p0=p0, omega0=omega0, m=m)
 
         m = 0
@@ -57,7 +57,7 @@ class Test_NormalizedHermiteGaussBeam1D(unittest.TestCase):
         self.assertEqual(nhgb1d.z0, z0)
 
 
-class Test_HermiteGaussBeam1D(unittest.TestCase):
+class Test_HGBeam1D(unittest.TestCase):
 
     def test_constructor(self):
         a0, wavelength, p0, omega0, m = 2, 980e-9, 0, 1e-6, 3
@@ -65,7 +65,7 @@ class Test_HermiteGaussBeam1D(unittest.TestCase):
             np.sqrt(omega0*(2**m)*special.factorial(m))
         z0 = constants.pi*omega0**2/wavelength
 
-        hgb1d = HermiteGaussBeam1D(
+        hgb1d = HGBeam1D(
             a0=a0, wavelength=wavelength, p0=p0, omega0=omega0, m=m)
 
         self.assertEqual(hgb1d.a0, a0)
@@ -85,14 +85,14 @@ class Test_HermiteGaussBeam1D(unittest.TestCase):
         self.assertAlmostEqual(hgb1d.phi_f(10), np.arctan((10-p0)/z0))  # phi相位
 
 
-class Test_NormalizedGaussBeam1D(unittest.TestCase):
+class Test_NormalizedGBeam1D(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0 = 980e-9, 0, 1e-6
         cm = (2/constants.pi)**(1/4)/np.sqrt(omega0)
         z0 = constants.pi*omega0**2/wavelength
 
-        ngb1d = NormalizedGaussBeam1D(
+        ngb1d = NormalizedGBeam1D(
             wavelength=wavelength, p0=p0, omega0=omega0)
 
         self.assertEqual(ngb1d.cm, cm)
@@ -111,14 +111,14 @@ class Test_NormalizedGaussBeam1D(unittest.TestCase):
         self.assertAlmostEqual(ngb1d.phi_f(10), np.arctan((10-p0)/z0))  # phi相位
 
 
-class Test_GaussBeam1D(unittest.TestCase):
+class Test_GBeam1D(unittest.TestCase):
 
     def test_constructor(self):
         a0, wavelength, p0, omega0 = 2, 980e-9, 0, 1e-6
         cm = (2/constants.pi)**(1/4)/np.sqrt(omega0)
         z0 = constants.pi*omega0**2/wavelength
 
-        gb1d = GaussBeam1D(a0=a0, wavelength=wavelength, p0=p0, omega0=omega0)
+        gb1d = GBeam1D(a0=a0, wavelength=wavelength, p0=p0, omega0=omega0)
 
         self.assertEqual(gb1d.cm, cm)
         self.assertEqual(gb1d.p0, p0)
@@ -135,7 +135,7 @@ class Test_GaussBeam1D(unittest.TestCase):
         self.assertAlmostEqual(gb1d.phi_f(10), np.arctan((10-p0)/z0))  # phi相位
 
 
-class Test_NormalizedHermiteGaussBeam(unittest.TestCase):
+class Test_NormalizedHGBeam(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0x, omega0y, mx, my = 980e-9, 0, 1e-6, 1.2e-6, 1, 2
@@ -149,7 +149,7 @@ class Test_NormalizedHermiteGaussBeam(unittest.TestCase):
         z0x = constants.pi*omega0x**2/wavelength
         z0y = constants.pi*omega0y**2/wavelength
 
-        nhgb = NormalizedHermiteGaussBeam(wavelength=wavelength,
+        nhgb = NormalizedHGBeam(wavelength=wavelength,
                                           p0=p0, omega0x=omega0x, omega0y=omega0y, mx=mx, my=my)
 
         self.assertEqual(nhgb.cmx, cmx)
@@ -168,7 +168,7 @@ class Test_NormalizedHermiteGaussBeam(unittest.TestCase):
     def test_change_properties(self):
         wavelength, p0, omega0x, omega0y, mx, my = 980e-9, 0, 1e-6, 1.2e-6, 1, 2
 
-        nhgb = NormalizedHermiteGaussBeam(wavelength=wavelength,
+        nhgb = NormalizedHGBeam(wavelength=wavelength,
                                           p0=p0, omega0x=omega0x, omega0y=omega0y, mx=mx, my=my)
 
         mx, my = 2, 3
@@ -197,7 +197,7 @@ class Test_NormalizedHermiteGaussBeam(unittest.TestCase):
         self.assertEqual(nhgb.z0y, z0y)
 
 
-class Test_HermiteGaussBeam(unittest.TestCase):
+class Test_HGBeam(unittest.TestCase):
 
     def test_constructor(self):
         a0, wavelength, p0, omega0x, omega0y, mx, my = 3, 980e-9, 0, 1e-6, 1.2e-6, 1, 2
@@ -211,7 +211,7 @@ class Test_HermiteGaussBeam(unittest.TestCase):
         z0x = constants.pi*omega0x**2/wavelength
         z0y = constants.pi*omega0y**2/wavelength
 
-        hgb = HermiteGaussBeam(a0=a0, wavelength=wavelength,
+        hgb = HGBeam(a0=a0, wavelength=wavelength,
                                p0=p0, omega0x=omega0x, omega0y=omega0y, mx=mx, my=my)
 
         self.assertEqual(hgb.a0, a0)
@@ -232,7 +232,7 @@ class Test_HermiteGaussBeam(unittest.TestCase):
             hgb.a_f(10), a0/(1+(10-p0)**2/z0x**2)**(1/4)/(1+(10-p0)**2/z0y**2)**(1/4))  # 振幅
 
 
-class Test_NormalizedGaussBeam(unittest.TestCase):
+class Test_NormalizedGBeam(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0x, omega0y = 980e-9, 0, 1e-6, 1.2e-6
@@ -243,7 +243,7 @@ class Test_NormalizedGaussBeam(unittest.TestCase):
         z0x = constants.pi*omega0x**2/wavelength
         z0y = constants.pi*omega0y**2/wavelength
 
-        ngb = NormalizedGaussBeam(wavelength=wavelength,
+        ngb = NormalizedGBeam(wavelength=wavelength,
                                   p0=p0, omega0x=omega0x, omega0y=omega0y)
 
         self.assertEqual(ngb.cmx, cmx)
@@ -260,7 +260,7 @@ class Test_NormalizedGaussBeam(unittest.TestCase):
         self.assertEqual(ngb.z0y, z0y)
 
 
-class Test_GaussBeam(unittest.TestCase):
+class Test_GBeam(unittest.TestCase):
 
     def test_constructor(self):
         a0, wavelength, p0, omega0x, omega0y = 4, 980e-9, 0, 1e-6, 1.2e-6
@@ -271,7 +271,7 @@ class Test_GaussBeam(unittest.TestCase):
         z0x = constants.pi*omega0x**2/wavelength
         z0y = constants.pi*omega0y**2/wavelength
 
-        gb = GaussBeam(wavelength=wavelength,
+        gb = GBeam(wavelength=wavelength,
                        p0=p0, omega0x=omega0x, omega0y=omega0y, a0=a0)
 
         self.assertEqual(gb.cmx, cmx)
@@ -291,7 +291,7 @@ class Test_GaussBeam(unittest.TestCase):
             gb.a_f(10), a0/(1+(10-p0)**2/z0x**2)**(1/4)/(1+(10-p0)**2/z0y**2)**(1/4))  # 振幅
 
 
-class Test_NormalizedEqualHermiteGaussBeam(unittest.TestCase):
+class Test_NormalizedEqualHGBeam(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0, mx, my = 980e-9, 0, 1.2e-6, 1, 2
@@ -304,7 +304,7 @@ class Test_NormalizedEqualHermiteGaussBeam(unittest.TestCase):
                                              (2**(mx+my))*special.factorial(mx)*special.factorial(my))
         z0 = constants.pi*omega0**2/wavelength
 
-        nehgb = NormalizedEqualHermiteGaussBeam(wavelength=wavelength,
+        nehgb = NormalizedEqualHGBeam(wavelength=wavelength,
                                                 p0=p0, omega0=omega0, mx=mx, my=my)
 
         self.assertEqual(nehgb.mx, mx)
@@ -325,7 +325,7 @@ class Test_NormalizedEqualHermiteGaussBeam(unittest.TestCase):
     def test_change_properties(self):
         wavelength, p0, omega0, mx, my = 980e-9, 0, 1.2e-6, 1, 2
 
-        nehgb = NormalizedEqualHermiteGaussBeam(wavelength=wavelength,
+        nehgb = NormalizedEqualHGBeam(wavelength=wavelength,
                                                 p0=p0, omega0=omega0, mx=mx, my=my)
 
         mx, my = 2, 3
@@ -355,7 +355,7 @@ class Test_NormalizedEqualHermiteGaussBeam(unittest.TestCase):
         self.assertEqual(nehgb.z0y, z0)
 
 
-class Test_EqualHermiteGaussBeam(unittest.TestCase):
+class Test_EqualHGBeam(unittest.TestCase):
 
     def test_constructor(self):
         a0,  wavelength, p0, omega0, mx, my = 4, 980e-9, 0, 1.2e-6, 1, 2
@@ -368,7 +368,7 @@ class Test_EqualHermiteGaussBeam(unittest.TestCase):
                                              (2**(mx+my))*special.factorial(mx)*special.factorial(my))
         z0 = constants.pi*omega0**2/wavelength
 
-        ehgb = EqualHermiteGaussBeam(a0=a0, wavelength=wavelength,
+        ehgb = EqualHGBeam(a0=a0, wavelength=wavelength,
                                      p0=p0, omega0=omega0, mx=mx, my=my)
 
         self.assertEqual(ehgb.cmx, cmx)
@@ -390,7 +390,7 @@ class Test_EqualHermiteGaussBeam(unittest.TestCase):
             ehgb.a_f(10), a0/(1+(10-p0)**2/z0**2)**(1/4)/(1+(10-p0)**2/z0**2)**(1/4))  # 振幅
 
 
-class Test_NormalizedEqualSymmetricHermiteGaussBeam(unittest.TestCase):
+class Test_NormalizedEqualSymmetricHGBeam(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0, m = 980e-9, 0, 1e-6, 3
@@ -398,7 +398,7 @@ class Test_NormalizedEqualSymmetricHermiteGaussBeam(unittest.TestCase):
         cm = (2/constants.pi)**(1/2)/(omega0*(2**m)*special.factorial(m))
         z0 = constants.pi*omega0**2/wavelength
 
-        neshgb = NormalizedEqualSymmetricHermiteGaussBeam(wavelength=wavelength, p0=p0, omega0=omega0,
+        neshgb = NormalizedEqualSymmetricHGBeam(wavelength=wavelength, p0=p0, omega0=omega0,
                                                           m=m)
 
         self.assertAlmostEqual(neshgb.cm, cm)
@@ -408,7 +408,7 @@ class Test_NormalizedEqualSymmetricHermiteGaussBeam(unittest.TestCase):
 
     def test_subclass(self):
 
-        class Subclass(NormalizedEqualSymmetricHermiteGaussBeam):
+        class Subclass(NormalizedEqualSymmetricHGBeam):
 
             @property
             def cm(self):
@@ -426,7 +426,7 @@ class Test_NormalizedEqualSymmetricHermiteGaussBeam(unittest.TestCase):
         self.assertAlmostEqual(instance.a_v, 1)
 
 
-class Test_EqualSymmetricHermiteGaussBeam(unittest.TestCase):
+class Test_EqualSymmetricHGBeam(unittest.TestCase):
 
     def test_constructor(self):
         a0, wavelength, p0, omega0, m = 2, 980e-9, 0, 1e-6, 3
@@ -434,7 +434,7 @@ class Test_EqualSymmetricHermiteGaussBeam(unittest.TestCase):
         cm = (2/constants.pi)**(1/2)/(omega0*(2**m)*special.factorial(m))
         z0 = constants.pi*omega0**2/wavelength
 
-        eshgb = EqualSymmetricHermiteGaussBeam(a0=a0, wavelength=wavelength, p0=p0, omega0=omega0,
+        eshgb = EqualSymmetricHGBeam(a0=a0, wavelength=wavelength, p0=p0, omega0=omega0,
                                                m=m)
 
         self.assertAlmostEqual(eshgb.cm, cm)
@@ -443,7 +443,7 @@ class Test_EqualSymmetricHermiteGaussBeam(unittest.TestCase):
             eshgb.a_f(10), a0/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
 
 
-class Test_NormalizedEqualGaussBeam(unittest.TestCase):
+class Test_NormalizedEqualGBeam(unittest.TestCase):
 
     def test_constructor(self):
         wavelength, p0, omega0 = 980e-9, 0, 1e-6
@@ -451,7 +451,7 @@ class Test_NormalizedEqualGaussBeam(unittest.TestCase):
         cm = (2/constants.pi)**(1/2)/(omega0)
         z0 = constants.pi*omega0**2/wavelength
 
-        negb = NormalizedEqualGaussBeam(
+        negb = NormalizedEqualGBeam(
             wavelength=wavelength, p0=p0, omega0=omega0)
 
         self.assertAlmostEqual(negb.cm, cm)
@@ -460,7 +460,7 @@ class Test_NormalizedEqualGaussBeam(unittest.TestCase):
             negb.a_f(10), 1/(1+(10-p0)**2/z0**2)**(1/2))  # 振幅
 
 
-class Test_EqualGaussBeam(unittest.TestCase):
+class Test_EqualGBeam(unittest.TestCase):
 
     def test_constructor(self):
         a0, wavelength, p0, omega0 = 3, 980e-9, 0, 1e-6
@@ -468,7 +468,7 @@ class Test_EqualGaussBeam(unittest.TestCase):
         cm = (2/constants.pi)**(1/2)/(omega0)
         z0 = constants.pi*omega0**2/wavelength
 
-        egb = EqualGaussBeam(a0=a0, wavelength=wavelength,
+        egb = EqualGBeam(a0=a0, wavelength=wavelength,
                              p0=p0, omega0=omega0)
 
         self.assertAlmostEqual(egb.cm, cm)

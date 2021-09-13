@@ -22,22 +22,31 @@ g_l=1-\frac{L}{\text{ROC}_l}\quad g_r=1-\frac{L}{\text{ROC}_r} \tag{2}
 $$
 When $0<g_l g_r<1$, the cavity must be stable. But when $g_l g_r=0$ or $g_l g_r=1$, the stability of this cavity, which is also called critical cavity, is determined by its structure. For a stable cavity structure, the cavity has the following properties:
 
-Ralei length $z_0$,
-$$
-z_0=L\sqrt{\frac{g_lg_r(1-g_lg_r)}{(g_l+g_r-2g_lg_r)^2}} \tag{3}
-$$
-The position of the left cavity surface relative to the waist $p_l$,
-$$
-p_l=L\frac{g_r(1-g_l)}{g_l+g_r-2g_lg_r} \tag{4}
-$$
-The position of the right cavity surface relative to the waist $p_r$,
-$$
-p_r=L\frac{g_l(1-g_r)}{g_l+g_r-2g_lg_r} \tag{5}
-$$
-If the center position of the cavity is set to the origin, then the waist position $p_0$,
-$$
-p_0=\frac{p_l-p_r}{2} \tag{6}
-$$
+- Ralei length $z_0$,
+
+  $$
+  z_0=L\sqrt{\frac{g_lg_r(1-g_lg_r)}{(g_l+g_r-2g_lg_r)^2}} \tag{3}
+  $$
+
+- The position of the left cavity surface relative to the waist $p_l$,
+
+  $$
+  p_l=L\frac{g_r(1-g_l)}{g_l+g_r-2g_lg_r} \tag{4}
+  $$
+
+- The position of the right cavity surface relative to the waist $p_r$,
+
+  $$
+  p_r=L\frac{g_l(1-g_r)}{g_l+g_r-2g_lg_r} \tag{5}
+  $$
+
+- The position of the waist $p_0$,
+
+  If the center position of the cavity is set to the origin, then the waist position $p_0$,
+  $$
+  p_0=\frac{p_l-p_r}{2} \tag{6}
+  $$
+  
 
 **PERFORMANCE:**
 
@@ -56,30 +65,31 @@ where $\mathcal{L}_c$ is single-pass effective cavity loss, and $2-(1-\mathcal{L
 The cavity finesse is defined by
 $$
 \begin{aligned}
-\text{finesse}&=\frac{\text{FSR}}{2\pi \delta\nu}=\frac{\text{FSR}}{2\kappa}\\
-&=\frac{\pi\sqrt{1-\mathcal{L}_c}\sqrt[4]{\mathcal{R}_l \mathcal{R}_r}}{\sqrt{[1+(1-\mathcal{L}_c)\sqrt{\mathcal{R}_l \mathcal{R}_r}]^2-2(1-\mathcal{L}_c)(\mathcal{R}_l+\mathcal{R}_r)}}\\
+\text{finesse}&=\frac{\text{FSR}}{2\pi \delta\nu}=\frac{\text{FSR}}{2\kappa} \\
+&=\frac{\pi\sqrt{1-\mathcal{L}_c}\sqrt[4]{\mathcal{R}_l \mathcal{R}_r}}{\sqrt{[1+(1-\mathcal{L}_c)\sqrt{\mathcal{R}_l \mathcal{R}_r}]^2-2(1-\mathcal{L}_c)(\mathcal{R}_l+\mathcal{R}_r)}} \\
 &\approx\frac{2\pi}{2-(1-\mathcal{L}_c)(\mathcal{R}_l+\mathcal{R}_r)}
 \end{aligned} \tag{9}
 $$
+
 The quality factor $Q$ of the cavity is defined by
 $$
 Q=\frac{\nu}{\delta\nu} \tag{10}
 $$
+
 !> Please note that some of the above symbols may be different from other reference books.
 
 There are many ways to define the modal volume of a cavity, one of the most convenient is defined as
 $$
 \begin{aligned}
-V&=\frac{\int_V \mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2d^3 \mathbf{r}}{\max_{V}[\mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2]}\approx \frac{\int_{V}|u(\mathbf{r})|^2 d^3 \mathbf{r}}{\max_{V}|u(\mathbf{r})|^2}\\
+V&=\frac{\int_V \mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2d^3 \mathbf{r}}{\max_{V}[\mathbf{\epsilon}(\mathbf{r})|\mathbf{E}(\mathbf{r})|^2]} \approx \frac{\int_{V}|u(\mathbf{r})|^2 d^3 \mathbf{r}}{\max_{V}|u(\mathbf{r})|^2} \\
 &=\frac{L/2}{\max_{V}|u(\mathbf{r})|^2}
 \end{aligned} \tag{11}
 $$
-
 where
 $$
 u(\mathbf{r})=\frac{u_{mn}(x,y,z)e^{-j(kz+\xi)}+u^*_{mn}(x,y,z)e^{j(kz+\xi)}}{2} \tag{12}
 $$
-for a standing wave Hermite-Gauss field with mode $m,n$. Note the standing wave condition requires
+for a standing wave Hermite-Gaussian field with mode $m,n$. Note the standing wave condition requires
 $$
 p\pi=kL-(m+n+1)\phi(p_r)-(m+n+1)\phi(p_l) \tag{13}
 $$
@@ -87,7 +97,7 @@ where $p \in \mathbb{Z}$, $k=2\pi/\lambda$, $\phi(z)=\arctan(z/z_0)$, $z_0$ is t
 $$
 p\pi\approx kL-(m+n+1)\frac{\pi}{2} \tag{14}
 $$
-for big cavity. And we need some additional information to determine the phase term $\xi$. In many cases, the absolute phase $\xi$ is not important, we only care about relative phase with respect to a standard source. See [gaussbeam](gaussbeam.md) for more details. If the position of the waist is in the cavity, then we get
+for a big cavity. And we need some additional information to determine the phase term $\xi$. In many cases, the absolute phase $\xi$ is not important, we only care about relative phase with respect to a standard source. See [hgbeam](hgbeam.md) for more details. If the position of the waist is in the cavity, then we get
 $$
 V_{00}=\frac{L/2}{2/(\omega_0^2\pi)}=\frac{\pi\omega_0^2L}{4} \tag{15}
 $$
@@ -95,23 +105,27 @@ and an approximation for $m,n>0$ is given by
 $$
 V_{mn}\approx\sqrt[6]{6.927m-2.104}\sqrt[6]{6.927n-2.104}V_{00} \tag{16}
 $$
-If the position of the waist is not in the cavity, $V$ is slightly different.
+If the position of the waist is not in the cavity, $V_{mn}$ for any $m,n$ is slightly different.
 
 **LOSS:**
 
 There are a lot of losses in the cavity, and a lot of losses are on the mirror surface, mainly including:
 
-Clipping loss on the finite-diameter mirrors. Conservatively assume a cavity mode and consider its 'spillover' loss upon reflection on a finite-diameter mirror. For a single reflection,
-$$
-\mathcal{L}_{cl}=e^{-2(D/2)^2/\omega_m^2} \tag{17}
-$$
-where $\omega_{m}$ is the radius of the mode impinging on the mirror of diameter $D$. Note the mode radius of higher-order modes is larger, so the clipping loss is larger under the same parameters.
+- Clipping loss on the finite-diameter mirrors. 
 
-Scattering loss. A widely used estimate linking the roughness of the mirror surface to the scattering loss is
-$$
-\mathcal{L}_{sc}=\left(\frac{4\pi \sigma_{sc}}{\lambda}\right)^2 \tag{18}
-$$
-where $\sigma_{sc}$ is the roughness of the surface, which is consistent with the definition of surface roughness in the field of mechanical manufacturing, a typical value is $0.2\text{nm}$. Better mirror manufacturing technology and coating technology can effectively reduce $\sigma_{sc}$, thereby reducing $\mathcal{L}_{sc}$.
+  Conservatively assume a cavity mode and consider its 'spillover' loss upon reflection on a finite-diameter mirror. For a single reflection,
+  $$
+  \mathcal{L}_{cl}=e^{-2(D/2)^2/\omega_m^2} \tag{17}
+  $$
+  where $\omega_{m}$ is the radius of the mode impinging on the mirror of diameter $D$. Note the mode radius of higher-order modes is larger, so the clipping loss is larger under the same parameters.
+
+- Scattering loss. 
+
+  A widely used estimate linking the roughness of the mirror surface to the scattering loss is
+  $$
+  \mathcal{L}_{sc}=\left(\frac{4\pi \sigma_{sc}}{\lambda}\right)^2 \tag{18}
+  $$
+  where $\sigma_{sc}$ is the roughness of the surface, which is consistent with the definition of surface roughness in the field of mechanical manufacturing, a typical value is $0.2\text{nm}$. Better mirror manufacturing technology and coating technology can effectively reduce $\sigma_{sc}$, thereby reducing $\mathcal{L}_{sc}$.
 
 ## Codes
 

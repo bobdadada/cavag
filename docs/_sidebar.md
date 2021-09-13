@@ -3,7 +3,7 @@
 - [introduction](introduction.md)
 - [fiber](fiber.md)
 - [fpcavity](fpcavity)
-- [gaussbeam](gaussbeam.md)
+- [hgbeam](hgbeam.md)
 - [mirror](mirror.md)
 - [misc](misc.md) 
 - [extension[s]](extension.md)

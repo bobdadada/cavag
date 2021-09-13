@@ -5,13 +5,13 @@ import numpy as np
 from scipy import constants
 
 from ._utils import PrintableObject
-from .gaussbeam import EqualHermiteGaussBeam
+from .hgbeam import EqualHGBeam
 from .misc import RTL, Position
 
 __all__ = [
     'CavityStructure', 'EqualCavityStructure',
     'Cavity', 'EqualCavity',
-    'CavityHermiteGaussMode', 'EqualCavityMode',
+    'CavityMode', 'EqualCavityMode',
     'judge_cavity_type',
     'calculate_loss_clipping', 'calculate_loss_scattering'
 ]
@@ -244,20 +244,22 @@ class EqualCavity(EqualCavityStructure, Cavity):
         self.name = name
 
 
-class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
-    name = 'CavityHermiteGaussMode'
+class CavityMode(CavityStructure, EqualHGBeam, Position):
+    name = 'CavityMode'
 
     modifiable_properties = ('length', 'wavelength',
                              'rocl', 'rocr', 'a0', 'position', 'mx', 'my', 'xi')
 
-    def __init__(self, name="CavityHermiteGaussMode", **kwargs):
+    def __init__(self, name="CavityMode", **kwargs):
         kwargs.update(a0=kwargs.get('a0', 1))
+        kwargs.update(mx=kwargs.get('mx', 0))
+        kwargs.update(my=kwargs.get('my', 0))
 
         super().__init__(**kwargs)
         self.name = name
 
         self.property_set.reset_required(
-            CavityHermiteGaussMode.modifiable_properties)
+            CavityMode.modifiable_properties)
 
         self.property_set['psi'] = kwargs.get('psi', 0)
 
@@ -356,13 +358,13 @@ class CavityHermiteGaussMode(CavityStructure, EqualHermiteGaussBeam, Position):
         return ampl, np.cos(phase-self.xi-self.k*z)
 
 
-class EqualCavityHermiteGaussMode(EqualCavityStructure, CavityHermiteGaussMode):
-    name = "EqualCavityHermiteGaussMode"
+class EqualCavityMode(EqualCavityStructure, CavityMode):
+    name = "EqualCavityMode"
 
     modifiable_properties = ('length', 'wavelength',
                              'roc', 'a0', 'position', 'mx', 'my', 'xi')
 
-    def __init__(self, name="EqualCavityHermiteGaussMode", **kwargs):
+    def __init__(self, name="EqualCavityMode", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
