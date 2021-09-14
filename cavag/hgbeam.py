@@ -66,10 +66,17 @@ __all__ = [
 
 class NormalizedHGBeam1D(Wavelength):
     """
+    此类描述了归一化的一维Herimite-Gaussian光，即横向只考虑x轴并向z轴方向传播的HG光。
+    实际应用中，Herimite-Gaussian的x轴和y轴的模式是相对独立的，通常我们只关心某一个横向。
+
+    此类可以通过以下属性构建：
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 等价基模的束腰半径
+        m - 横向模式数
     """
     name = 'NormalizedHGBeam1D'
 
-    # 波长, 束腰位置, 束腰半径, 模式数
     modifiable_properties = ('wavelength', 'p0', 'omega0', 'm')
 
     def __init__(self, name='NormalizedHGBeam1D', **kwargs):
@@ -176,9 +183,19 @@ class NormalizedHGBeam1D(Wavelength):
 
 
 class HGBeam1D(NormalizedHGBeam1D):
+    """
+    此类描述了一维Herimite-Gaussian光，即横向只考虑x轴并向z轴方向传播的HG光。
+    实际应用中，Herimite-Gaussian的x轴和y轴的模式是相对独立的，通常我们只关心某一个横向。
+
+    此类可以通过以下属性构建：
+        a0 - 幅度
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 等价基模的束腰半径
+        m - 横向模式数
+    """
     name = 'HGBeam1D'
 
-    # 振幅, 波长, 束腰位置, 等价基模束腰半径, 模式数
     modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0', 'm')
 
     def __init__(self, name='HGBeam1D', **kwargs):
@@ -201,9 +218,17 @@ class HGBeam1D(NormalizedHGBeam1D):
 
 
 class NormalizedGBeam1D(NormalizedHGBeam1D):
+    """
+    此类描述了归一化的一维Gaussian光，即模式数为0的归一化的一维Herimite-Gaussian光。
+
+    此类可以通过以下属性构建：
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 束腰半径
+    """
     name = 'NormalizedGBeam1D'
 
-    modifiable_properties = ('wavelength', 'omega0', 'p0')
+    modifiable_properties = ('wavelength', 'p0', 'omega0')
 
     def __init__(self, name='NormalizedGBeam1D', **kwargs):
         kwargs.update(m=0)
@@ -213,6 +238,15 @@ class NormalizedGBeam1D(NormalizedHGBeam1D):
 
 
 class GBeam1D(HGBeam1D):
+    """
+    此类描述了一维Gaussian光，即模式数为0的一维Herimite-Gaussian光。
+
+    此类可以通过以下属性构建：
+        a0 - 幅度
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 束腰半径
+    """
     name = 'GBeam1D'
 
     modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0')
@@ -225,9 +259,19 @@ class GBeam1D(HGBeam1D):
 
 
 class NormalizedHGBeam(Wavelength):
+    """
+    此类描述了归一化的Herimite-Gaussian光。
+
+    此类可以通过以下属性构建：
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0x - x方向等价基模的束腰半径
+        omega0y - y方向等价基模的束腰半径
+        mx -  x方向模式数
+        my -  y方向模式数
+    """
     name = 'NormalizedHGBeam'
 
-    # 波长, 束腰位置, x方向等价基模束腰半径, y方向等价基模束腰半径, x方向模式数, y方向模式数
     modifiable_properties = (
         'wavelength', 'p0', 'omega0x', 'omega0y', 'mx', 'my')
 
@@ -392,9 +436,20 @@ class NormalizedHGBeam(Wavelength):
 
 
 class HGBeam(NormalizedHGBeam):
+    """
+    此类描述了Herimite-Gaussian光。
+
+    此类可以通过以下属性构建：
+        a0 - 幅度
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0x - x方向等价基模的束腰半径
+        omega0y - y方向等价基模的束腰半径
+        mx -  x方向模式数
+        my -  y方向模式数
+    """
     name = 'HGBeam'
 
-    # 振幅, 波长, 束腰位置, x方向等价基模束腰半径, y方向等价基模束腰半径, x方向模式数, y方向模式数
     modifiable_properties = ('a0', 'wavelength', 'p0',
                              'omega0x', 'omega0y', 'mx', 'my')
 
@@ -418,6 +473,15 @@ class HGBeam(NormalizedHGBeam):
 
 
 class NormalizedGBeam(NormalizedHGBeam):
+    """
+    此类描述了归一化的Gaussian光，即x、y方向上模式数都为0的Herimite-Gassian光。
+
+    此类可以通过以下属性构建：
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0x - x方向的束腰半径
+        omega0y - y方向的束腰半径
+    """
     name = 'NormalizedGBeam'
 
     modifiable_properties = ('wavelength', 'p0', 'omega0x', 'omega0y')
@@ -430,6 +494,16 @@ class NormalizedGBeam(NormalizedHGBeam):
 
 
 class GBeam(HGBeam):
+    """
+    此类描述了Gaussian光，即x、y方向上模式数都为0的Herimite-Gassian光。
+
+    此类可以通过以下属性构建：
+        a0 - 幅度
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0x - x方向的束腰半径
+        omega0y - y方向的束腰半径
+    """
     name = 'HGBeam'
 
     modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0x', 'omega0y')
@@ -442,9 +516,19 @@ class GBeam(HGBeam):
 
 
 class NormalizedEqualHGBeam(NormalizedHGBeam):
+    """
+    此类描述了x、y方向等价基模束腰半径相等的归一化Herimite-Gaussian光。
+    在轴对称的模型结构中，x、y方向等价基模束腰半径是相等的。
+
+    此类可以通过以下属性构建：
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 等价基模的束腰半径
+        mx - x方向模式数
+        my - y方向模式数
+    """
     name = 'NormalizedEqualHGBeam'
 
-    # 波长, 束腰位置, 等价基模束腰半径, x方向模式数, y方向模式数
     modifiable_properties = ('wavelength', 'p0', 'omega0', 'mx', 'my')
 
     def __init__(self, name="NormalizedEqualHGBeam", **kwargs):
@@ -489,9 +573,19 @@ class NormalizedEqualHGBeam(NormalizedHGBeam):
 
 
 class EqualHGBeam(NormalizedEqualHGBeam):
+    """
+    此类描述了x、y方向等价基模束腰半径相等的Herimite-Gaussian光。
+
+    此类可以通过以下属性构建：
+        a0 - 幅度
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 等价基模的束腰半径
+        mx - x方向模式数
+        my - y方向模式数
+    """
     name = 'EqualHGBeam'
 
-    # 振幅, 波长, 束腰位置, 等价基模束腰半径, x方向模式数, y方向模式数
     modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0', 'mx', 'my')
 
     def __init__(self, name='EqualHGBeam', **kwargs):
@@ -514,9 +608,18 @@ class EqualHGBeam(NormalizedEqualHGBeam):
 
 
 class NormalizedEqualSymmetricHGBeam(NormalizedHGBeam1D):
+    """
+    此类描述了x、y方向模式数和等价基模束腰半径都相等的归一化Herimite-Gaussian光。
+    此光束可以看成x、y方向简并的一维Herimite-Gaussian光。
+
+    此类可以通过以下属性构建：
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 等价基模的束腰半径
+        m - 模式数
+    """
     name = 'NormalizedEqualSymmetricHGBeam'
 
-    # 波长, 束腰位置, 等价基模束腰半径, 模式数
     modifiable_properties = ('wavelength', 'p0', 'omega0', 'm')
 
     def __init__(self, name='NormalizedEqualSymmetricHGBeam', **kwargs):
@@ -555,6 +658,17 @@ class NormalizedEqualSymmetricHGBeam(NormalizedHGBeam1D):
 
 
 class EqualSymmetricHGBeam(NormalizedEqualSymmetricHGBeam):
+    """
+    此类描述了x、y方向模式数和等价基模束腰半径都相等的Herimite-Gaussian光。
+    此光束可以看成x、y方向简并的一维Herimite-Gaussian光。
+
+    此类可以通过以下属性构建：
+        a0 - 幅度
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 等价基模的束腰半径
+        m - 模式数
+    """
     name = 'EqualSymmetricHGBeam'
 
     modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0', 'm')
@@ -579,6 +693,15 @@ class EqualSymmetricHGBeam(NormalizedEqualSymmetricHGBeam):
 
 
 class NormalizedEqualGBeam(NormalizedEqualSymmetricHGBeam):
+    """
+    此类描述了x、y束腰半径都相等的归一化Gaussian光。
+    Gaussian光的x、y方向模式数都为0。
+
+    此类可以通过以下属性构建：
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 束腰半径
+    """
     name = 'NormalizedEqualGBeam'
 
     modifiable_properties = ('wavelength', 'p0', 'omega0')
@@ -591,6 +714,16 @@ class NormalizedEqualGBeam(NormalizedEqualSymmetricHGBeam):
 
 
 class EqualGBeam(EqualSymmetricHGBeam):
+    """
+    此类描述了x、y束腰半径都相等的Gaussian光。
+    Gaussian光的x、y方向模式数都为0。
+
+    此类可以通过以下属性构建：
+        a0 - 幅度
+        wavelength - 波长
+        p0 - 束腰的位置
+        omega0 - 束腰半径
+    """
     name = 'EqualGBeam'
 
     modifiable_properties = ('a0', 'wavelength', 'p0', 'omega0')

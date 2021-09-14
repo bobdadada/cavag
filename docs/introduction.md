@@ -23,12 +23,12 @@ Source Page: [fpcavity](fpcavity)
 
 **Class[es]**
 
-- <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavityStructure</a>
-- <a class="module-object-refer-to" module="fpcavity">EqualAxisymmetricCavityStructure</a>
-- <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavity</a>
-- <a class="module-object-refer-to" module="fpcavity">EqualAxisymmetricCavity</a>
-- <a class="module-object-refer-to" module="fpcavity">AxisymmetricCavityMode</a>
-- <a class="module-object-refer-to" module="fpcavity">EqualAxisymmetricCavityMode</a>
+- <a class="module-object-refer-to" module="fpcavity">CavityStructure</a>
+- <a class="module-object-refer-to" module="fpcavity">EqualCavityStructure</a>
+- <a class="module-object-refer-to" module="fpcavity">Cavity</a>
+- <a class="module-object-refer-to" module="fpcavity">EqualCavity</a>
+- <a class="module-object-refer-to" module="fpcavity">CavityMode</a>
+- <a class="module-object-refer-to" module="fpcavity">EqualCavityMode</a>
 
 **Function[s]**
 
@@ -36,33 +36,33 @@ Source Page: [fpcavity](fpcavity)
 - <a class="module-object-refer-to" module="fpcavity">calculate_loss_clipping</a>
 - <a class="module-object-refer-to" module="fpcavity">calculate_loss_scattering</a>
 
-<!-- tab:gaussbeam -->
+<!-- tab:hgbeam -->
 
-Source Page: [gaussbeam](gaussbeam.md)
+Source Page: [hgbeam](hgbeam.md)
 
 **Class[es]**
 
-- <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam1D</a>
-- <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam1D</a>
-- <a class="module-object-refer-to" module="gaussbeam">NormalizedGaussBeam1D</a>
-- <a class="module-object-refer-to" module="gaussbeam">GaussBeam1D</a>
-- <a class="module-object-refer-to" module="gaussbeam">NormalizedHermiteGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">HermiteGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">NormalizedGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">GaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualHermiteGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">EqualHermiteGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualSymmetricHermiteGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">EqualSymmetricHermiteGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">NormalizedEqualGaussBeam</a>
-- <a class="module-object-refer-to" module="gaussbeam">EqualGaussBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam1D</a>
+- <a class="module-object-refer-to" module="hgbeam">HGBeam1D</a>
+- <a class="module-object-refer-to" module="hgbeam">NormalizedGBeam1D</a>
+- <a class="module-object-refer-to" module="hgbeam">GBeam1D</a>
+- <a class="module-object-refer-to" module="hgbeam">NormalizedHGBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">HGBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">NormalizedGBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">GBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">NormalizedEqualHGBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">EqualHGBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">NormalizedEqualSymmetricHGBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">EqualSymmetricHGBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">NormalizedEqualGBeam</a>
+- <a class="module-object-refer-to" module="hgbeam">EqualGBeam</a>
 
 **Function[s]**
 
-- <a class="module-object-refer-to" module="gaussbeam">local2remote</a>
-- <a class="module-object-refer-to" module="gaussbeam">remote2local</a>
-- <a class="module-object-refer-to" module="gaussbeam">convert_through_mirror</a>
-- <a class="module-object-refer-to" module="gaussbeam">convert_through_lens</a>
+- <a class="module-object-refer-to" module="hgbeam">local2remote</a>
+- <a class="module-object-refer-to" module="hgbeam">remote2local</a>
+- <a class="module-object-refer-to" module="hgbeam">convert_through_mirror</a>
+- <a class="module-object-refer-to" module="hgbeam">convert_through_lens</a>
 
 <!-- tab:mirror -->
 
