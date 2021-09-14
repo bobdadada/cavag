@@ -7,9 +7,10 @@ from .hgbeam import EqualHGBeam
 from .misc import RTL, Position
 
 __all__ = [
-    'CavityStructure', 'EqualCavityStructure',
-    'Cavity', 'EqualCavity',
-    'CavityMode', 'EqualCavityMode',
+    'CavityStructure', 'SymmetricCavityStructure',
+    'Cavity', 'SymmetricCavity',
+    'CavityMode', 'SymmetricCavityMode',
+    'get_available_wavelengthf', 'get_available_wavelength',
     'judge_cavity_type',
     'calculate_loss_clipping', 'calculate_loss_scattering'
 ]
@@ -68,12 +69,12 @@ class CavityStructure(PrintableObject):
         return judge_cavity_type(self.length, self.rocl, self.rocr)[1]
 
 
-class EqualCavityStructure(CavityStructure):
-    name = "EqualCavityStructure"
+class SymmetricCavityStructure(CavityStructure):
+    name = "SymmetricCavityStructure"
 
     modifiable_properties = ('length', 'roc')
 
-    def __init__(self, name="EqualCavityStructure", **kwargs):
+    def __init__(self, name="SymmetricCavityStructure", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
@@ -81,7 +82,7 @@ class EqualCavityStructure(CavityStructure):
         self.name = name
 
         self.property_set.add_required(
-            EqualCavityStructure.modifiable_properties)
+            SymmetricCavityStructure.modifiable_properties)
         self.property_set['roc'] = roc
 
     def preprocess_properties(self, **propdict):
@@ -228,13 +229,13 @@ class Cavity(CavityStructure):
         return self.get_property('q', lambda: constants.pi*self.nu/(self.kappa))
 
 
-class EqualCavity(EqualCavityStructure, Cavity):
-    name = "EqualCavity"
+class SymmetricCavity(SymmetricCavityStructure, Cavity):
+    name = "SymmetricCavity"
 
     modifiable_properties = ('length', 'nc', 'lc', 'roc',
                              'rl', 'tl', 'll', 'rr', 'tr', 'lr')
 
-    def __init__(self, name="EqualCavity", **kwargs):
+    def __init__(self, name="SymmetricCavity", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
@@ -356,13 +357,13 @@ class CavityMode(CavityStructure, EqualHGBeam, Position):
         return ampl, np.cos(phase-self.xi-self.k*z)
 
 
-class EqualCavityMode(EqualCavityStructure, CavityMode):
-    name = "EqualCavityMode"
+class SymmetricCavityMode(SymmetricCavityStructure, CavityMode):
+    name = "SymmetricCavityMode"
 
     modifiable_properties = ('length', 'wavelength',
                              'roc', 'a0', 'position', 'mx', 'my', 'xi')
 
-    def __init__(self, name="EqualCavityMode", **kwargs):
+    def __init__(self, name="SymmetricCavityMode", **kwargs):
         roc = kwargs.get('roc', None)
         kwargs.update(rocl=roc, rocr=roc)
 
@@ -405,10 +406,7 @@ class EqualCavityMode(EqualCavityStructure, CavityMode):
         return self.get_property('omegam', self.omega0*np.sqrt(1+(self.length/2 / self.z0)**2))
 
 
-## -------------------------------------------
-# TO DO
-
-def get_wavelengthf(length, rocl, rocr, mx, my):
+def get_available_wavelengthf(length, rocl, rocr, mx, my):
     """
     获取满足腔相位条件的波长函数
     :param length: 腔长
@@ -420,16 +418,19 @@ def get_wavelengthf(length, rocl, rocr, mx, my):
     """
     gl, gr = 1-length/rocl, 1-length/rocr
     glgr = gl*gr
-    try:
-        pl = gr*(1-gl)/(gl+gr-2*glgr)*length
-        pr = gl*(1-gr)/(gl+gr-2*glgr)*length
-        z0 = np.sqrt(glgr*(1-glgr)/(gl+gr-2*glgr)**2)*length
-    except ZeroDivisionError:
+    gs = gl+gr-2*glgr
+
+    if gs == 0:
         z0 = pl = pr = length/2
+    else:
+        pl = gr*(1-gl)/gs*length
+        pr = gl*(1-gr)/gs*length
+        z0 = np.sqrt(glgr*(1-glgr)/gs**2)*length
 
     def func(p):
         return 2*np.pi*length/(p*np.pi+(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0)))
     return func
+
 
 def get_available_wavelength(wavelength0, length, rocl, rocr, mx, my):
     """
@@ -440,28 +441,32 @@ def get_available_wavelength(wavelength0, length, rocl, rocr, mx, my):
     :param rocR: 右边腔镜ROC
     :param mx: x方向模式数
     :param my: y方向模式数
-    :return: wavelength 满足条件的波长
+    :return: (p, wavelength) (纵模模式，满足条件的波长)
     """
     gl, gr = 1-length/rocl, 1-length/rocr
     glgr = gl*gr
-    try:
-        pl = gr*(1-gl)/(gl+gr-2*glgr)*length
-        pr = gl*(1-gr)/(gl+gr-2*glgr)*length
-        z0 = np.sqrt(glgr*(1-glgr)/(gl+gr-2*glgr)**2)*length
-    except ZeroDivisionError:
-        z0 = pl = pr = length/2
-    
-    p0 = 2*length/wavelength0-(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0))/np.pi
+    gs = gl+gr-2*glgr
 
-    wavelength1 = 2*np.pi*length/(int(p0)*np.pi+(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0)))
-    wavelength2 = 2*np.pi*length/(int(p0)*np.pi+np.pi+(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0)))
+    if gs == 0:
+        z0 = pl = pr = length/2
+    else:
+        pl = gr*(1-gl)/gs*length
+        pr = gl*(1-gr)/gs*length
+        z0 = np.sqrt(glgr*(1-glgr)/gs**2)*length
+
+    p = int(2*length/wavelength0-(mx+my+1) *
+            (np.arctan(pl/z0)+np.arctan(pr/z0))/np.pi)
+
+    wavelength1 = 2*np.pi*length / \
+        (p*np.pi+(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0)))
+    wavelength2 = 2*np.pi*length / \
+        ((p+1)*np.pi+(mx+my+1)*(np.arctan(pl/z0)+np.arctan(pr/z0)))
 
     if abs(wavelength1-wavelength0) < abs(wavelength2-wavelength0):
-        return int(p0), wavelength1
+        return p, wavelength1
     else:
-        return int(p0)+1, wavelength2
+        return p+1, wavelength2
 
-# -----------------------------------------------------------------------------------
 
 def judge_cavity_type(length, rocl, rocr):
     """
