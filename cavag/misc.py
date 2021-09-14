@@ -1,19 +1,39 @@
-from scipy import constants
+"""
+用于描述只有少数属性的帮助类的模块。此模块描述了
 
+    - class
+
+    1.
+    RTL - 反射-透射-损耗
+    RTLConverter - RTL转换类
+    
+    2.
+    Position - 位置
+
+    3.
+    Wavelength - 波长
+"""
+
+from scipy import constants
 from ._utils import PrintableObject
 
 __all__ = [
-    'RTL',
-    'RTLConverter',
-    'Position',
-    'Wavelength'
+    'RTL', 'RTLConverter',
+    'Position', 'Wavelength'
 ]
 
 
 class RTL(PrintableObject):
+    """
+    此类描述了反射-透射-损耗抽象类。
+
+    此类可以通过以下属性构建：
+        r - 反射率
+        t - 透射率
+        l - 损耗
+    """
     name = 'RTL'
 
-    # 反射率，透射率，损耗
     modifiable_properties = ('r', 't', 'l')
 
     def __init__(self, name='RTL', **kwargs):
@@ -31,36 +51,41 @@ class RTL(PrintableObject):
         self.property_set['l'] = l
 
     @property
-    def r(self) -> float:
+    def r(self):
         """反射率[1]"""
         return self.get_property('r')
 
     @property
-    def t(self) -> float:
+    def t(self):
         """透射率[1]"""
         return self.get_property('t')
 
     @property
-    def l(self) -> float:
+    def l(self):
         """损耗[1]"""
         return self.get_property('l')
-    
+
     def add_loss(self, loss):
         m = self.r, self.t, self.l
         r, t, l = RTLConverter.add_loss(m, loss)
         self.property_set['r'] = r
         self.property_set['t'] = t
         self.property_set['l'] = l
-    
+
     def preprocess_properties(self, _norm=True, **propdict):
         if _norm and any(p in propdict for p in RTL.modifiable_properties):
-            r, t, l = propdict.get('r', None), propdict.get('t', None), propdict.get('l', None)
+            r, t, l = propdict.get('r', None), propdict.get(
+                't', None), propdict.get('l', None)
             r, t, l = RTLConverter.normalize(r=r, t=t, l=l)
-            propdict.update({'r':r, 't':t, 'l':l})
+            propdict.update({'r': r, 't': t, 'l': l})
         return propdict
 
 
 class RTLConverter:
+    """
+    反射-透射-损耗转换类，可以实现反射、透射、损耗的转换运算。
+    此类将所有转换运算都包含在一起。
+    """
 
     @staticmethod
     def normalize(r=None, t=None, l=None):
@@ -85,7 +110,7 @@ class RTLConverter:
             elif i == 1:
                 return r, 1-r-l, l
             else:
-                return r, t, 1-r-t            
+                return r, t, 1-r-t
 
     @staticmethod
     def rtl_by_r_t2l(r, t2l):
@@ -97,7 +122,7 @@ class RTLConverter:
         """
         t, l = (1-r)*t2l/(t2l+1), (1-r)/(t2l+1)
         return r, t, l
-    
+
     @staticmethod
     def rtl_by_t_r2l(t, r2l):
         """
@@ -153,18 +178,23 @@ class RTLConverter:
 
 
 class Position(PrintableObject):
+    """
+    位置抽象类。
+
+    此类可以通过以下属性构建：
+        position - 位置
+    """
     name = 'Position'
 
-    # 位置
     modifiable_properties = ('position', )
 
     def __init__(self, name='Position', **kwargs):
         super().__init__(**kwargs)
         self.property_set.add_required(Position.modifiable_properties)
         self.name = name
-        
+
         self.property_set['position'] = kwargs.get('position', 0)
-    
+
     @property
     def position(self):
         """位置[L]"""
@@ -172,23 +202,28 @@ class Position(PrintableObject):
 
 
 class Wavelength(PrintableObject):
+    """
+    波长抽象类。
+
+    此类可以通过以下属性构建：
+        wavelength - 波长
+    """
     name = 'Wavelength'
 
-    # 波长
     modifiable_properties = ('wavelength', )
 
     def __init__(self, name='Wavelenght', **kwargs):
         super().__init__(**kwargs)
         self.property_set.add_required(Wavelength.modifiable_properties)
         self.name = name
-        
+
         self.property_set['wavelength'] = kwargs.get('wavelength', None)
-    
+
     @property
     def wavelength(self):
         """波长[L]"""
         return self.get_property('wavelength')
-    
+
     @property
     def k(self):
         """波矢[1/L]"""
@@ -198,9 +233,8 @@ class Wavelength(PrintableObject):
     def nu(self):
         """频率[1/T]"""
         return self.get_property('nu', lambda: constants.c/self.wavelength)
-    
+
     @property
     def nu_angular(self):
         """角频率[1/T]"""
         return self.get_property('nu_angular', lambda: 2*constants.pi*self.nu)
-

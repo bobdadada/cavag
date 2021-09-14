@@ -4,44 +4,40 @@ import numpy as np
 from scipy import constants
 from cavag.fiber import *
 
-class Test_FiberEnd(unittest.TestCase):
+class Test_Fiber(unittest.TestCase):
 
     def test_constructor_1(self):
-        ps = {'nf': 1.4, 'wavelength': 980, 'omegaf': 1.2, 'roc': 600}
-        fe = FiberEnd(**ps)
-        self.assertEqual(fe.nf, 1.4)
-        self.assertEqual(fe.wavelength, 980)
-        self.assertEqual(fe.omegaf, 1.2)
-        self.assertEqual(fe.roc, 600)
-        self.assertEqual(fe.k, 2*constants.pi/fe.wavelength)
+        ps = {'nf': 1.4, 'wavelength': 980, 'omegaf': 1.2}
+        fiber = Fiber(**ps)
+        self.assertEqual(fiber.nf, 1.4)
+        self.assertEqual(fiber.wavelength, 980)
+        self.assertEqual(fiber.omegaf, 1.2)
+        self.assertEqual(fiber.k, 2*constants.pi/fiber.wavelength)
     
     def test_constructor_2(self):
         ps = {'nf': 1.4, 'wavelength': 980, 'omegaf': 1.2}
-        fe = FiberEnd(**ps)
-        self.assertEqual(fe.nf, 1.4)
-        self.assertEqual(fe.wavelength, 980)
-        self.assertEqual(fe.omegaf, 1.2)
-        self.assertEqual(fe.roc, np.inf)
-        self.assertEqual(fe.k, 2*constants.pi/fe.wavelength)
+        fiber = Fiber(**ps)
+        self.assertEqual(fiber.nf, 1.4)
+        self.assertEqual(fiber.wavelength, 980)
+        self.assertEqual(fiber.omegaf, 1.2)
+        self.assertEqual(fiber.k, 2*constants.pi/fiber.wavelength)
 
-class Test_StepIndexFiberEnd(unittest.TestCase):
+class Test_StepIndexFiber(unittest.TestCase):
 
     def test_constructor(self):
         nf = 1.4
         wavelength = 980e-9
         a = 3e-6
         naf = np.sqrt(0.01)
-        roc = 600e-6
 
         V = 2*constants.pi*a*naf/wavelength
         omegaf = a * (0.65 + 1.619 * V ** (-1.5) + 2.879 * V ** (-6))
 
-        sfe = StepIndexFiberEnd(nf=nf, wavelength=wavelength, a=a, naf=naf, roc=roc)
+        sfiber = StepIndexFiber(nf=nf, wavelength=wavelength, a=a, naf=naf)
 
-        self.assertEqual(sfe.nf, nf)
-        self.assertEqual(sfe.wavelength, wavelength)
-        self.assertEqual(sfe.roc, roc)
-        self.assertAlmostEqual(sfe.omegaf, omegaf)
+        self.assertEqual(sfiber.nf, nf)
+        self.assertEqual(sfiber.wavelength, wavelength)
+        self.assertAlmostEqual(sfiber.omegaf, omegaf)
 
 
 if __name__ == '__main__':

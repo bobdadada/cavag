@@ -1,6 +1,4 @@
 import logging
-from re import DOTALL
-
 import numpy as np
 from scipy import constants
 

@@ -1,15 +1,35 @@
+"""
+用于描述mirror或类似的器件行为的模块。此模块描述了
+
+    - class
+
+    1.
+    Mirror - 镜面
+    
+    2.
+    Lens - 薄透镜
+"""
+
 from .misc import Position, RTL
 
 __all__ = [
-    'Mirror',
-    'Lens'
+    'Mirror', 'Lens'
 ]
 
 
 class Mirror(RTL, Position):
+    """
+    此类描述了圆形镜片。在实际应用中，镜片的透射率可为0。
+
+    此类可以通过以下属性构建：
+        roc - 曲率半径
+        r - 反射率
+        t - 透射率
+        l - 损耗
+        position - 镜片位置
+    """
     name = "Mirror"
 
-    # 曲率半径, 反射率, 透射率, 损耗率, 位置
     modifiable_properties = ('roc', 'r', 't', 'l', 'position')
 
     def __init__(self, name='Mirror', **kwargs):
@@ -27,9 +47,18 @@ class Mirror(RTL, Position):
 
 
 class Lens(RTL, Position):
+    """
+    此类描述了薄透镜。在实际应用中，薄透镜的反射率可为0。
+
+    此类可以通过以下属性构建：
+        f - 焦距
+        r - 反射率
+        t - 透射率
+        l - 损耗
+        position - 镜片位置
+    """
     name = "Lens"
 
-    # 焦距, 反射率, 透射率, 损耗率, 位置
     modifiable_properties = ('f', 'r', 't', 'l', 'position')
 
     def __init__(self, name='Lens', **kwargs):

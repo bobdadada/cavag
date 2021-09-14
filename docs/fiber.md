@@ -14,26 +14,24 @@ With the advancement of technology, manufacturers can produce optical fibers for
 
 ### Classes
 
-#### 1. The input and output ends of a fiber
+#### 1. Fiber
 
-In optical coupling applications, we only need to consider the conditions of the input and output ends of the fiber. Three properties, $n_f$ (core refractive index), $\lambda$ (wavelength of transmitted light), and $\omega_f$ (radius of mode field), of the fiber must be considered. Any qualified manufacturer is fully capable of providing these data.  For the fiber cavity, the end face of the fiber is not necessarily flat. For this case, the radius of curvature $roc$ (radius of curvature) of the end face needs to be considered.
+In optical applications, three properties, $n_f$ (core refractive index), $\lambda$ (wavelength of transmitted light), and $\omega_f$ (radius of mode field), of the fiber must be considered. Any qualified manufacturer is fully capable of providing these data. 
 
 ----
 
-<strong class="object" id="FiberEnd">FiberEnd</strong>: `class FiberEnd(misc.Wavelength)`
+<strong class="object" id="Fiber">Fiber</strong>: `class Fiber(misc.Wavelength)`
 
 This class define a fiber end face object. Almost all attributes cannot be assigned by `self.attr = value`.
 
 <p style="color:blue;">attributes:</p>
 
-- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'omegaf', 'roc')` where
-  
+- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'omegaf')` where
   - <span class="attr" style="color:red;">nf</span> - $n_f$, core refractive index
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of transmitted light
   - <span class="attr" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
-  - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
   
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *FiberEnd*, which can be modified as required. 
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *Fiber*, which can be modified as required. 
 
 - <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -43,35 +41,33 @@ This class define a fiber end face object. Almost all attributes cannot be assig
 
     - <span class="attr" style="color:red;">nf</span> - $n_f$, core refractive index
     - <span class="attr" style="color:red;">omegaf</span> - $\omega_f$, radius of mode field of fiber
-    - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature
-
-  - properties provided by parent class
-
-    - see <a class="module-object-refer">misc.Wavelength</a> for details
+  
+- properties provided by parent class
+  
+  - see <a class="module-object-refer">misc.Wavelength</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='FiberEnd', \*\*<span class="param">kwargs</span>)</span>  - Create a `FiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='Fiber', \*\*<span class="param">kwargs</span>)</span>  - Create a `Fiber` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
 
 - See <a class="module-object-refer">misc.Wavelength</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
 ----
 
-<strong class="object" id="StepIndexFiberEnd">StepIndexFiberEnd</strong>: `class StepIndexFiberEnd(FiberEnd)`
+<strong class="object" id="StepIndexFiber">StepIndexFiber</strong>: `class StepIndexFiber(Fiber)`
 
-This class is a subclass of `FiberEnd` and particularly used to describe a step-index fiber.
+This class is a subclass of `Fiber` and particularly used to describe a step-index fiber.
 
 <p style="color:blue;">attributes:</p>
 
-- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'a', 'naf', 'roc')` where
+- <span class="attr" style="color:red;">modifiable_properties</span> - This attribute is set to `modifiable_properties = ('nf', 'wavelength', 'a', 'naf')` where
   
   - <span class="attr" style="color:red;">nf</span> - $n_f$, core refractive index
   - <span class="attr" style="color:red;">wavelength</span> - $\lambda$, wavelength of transmitted light
   - <span class="attr" style="color:red;">a</span> - $a$, radius of fiber core
   - <span class="attr" style="color:red;">naf</span> - $NA_f$, numerical aperture
-  - <span class="attr" style="color:red;">roc</span> - $roc$, radius of curvature, default to `inf`
   
-- <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *StepIndexFiberEnd*, which can be modified as required.
+- <span class="attr" style="color:red;">name</span> - The name of instances or classes. The default is *StepIndexFiber*, which can be modified as required.
 
 - <span class="attr" style="color:red;">property_set</span> -  Property collection, which is an instance of `PropertySet`, inherited from `_utils.Object`. See [introduction](introduction.md) for details.
 
@@ -93,13 +89,13 @@ This class is a subclass of `FiberEnd` and particularly used to describe a step-
 
   - properties provided by parent class
 
-    - see <a class="module-object-refer-to" module="fiber">FiberEnd</a> for details
+    - see <a class="module-object-refer-to" module="fiber">Fiber</a> for details
 
 <p style="color:blue;">methods:</p>
 
-- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='StepIndexFiberEnd', \*\*<span class="param">kwargs</span>)</span>  - Create a `StepIndexFiberEnd` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
+- <span class="method" style="color:red;">\_\_init\_\_(<span class="param">name</span>='StepIndexFiber', \*\*<span class="param">kwargs</span>)</span>  - Create a `StepIndexFiber` object by named parameters consistent with <span class="attr" style="color:red;">modifiable_properties</span>. 
 
-- See <a class="module-object-refer-to" module="fiber">FiberEnd</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
+- See <a class="module-object-refer-to" module="fiber">Fiber</a>, <a class="module-object-refer-to" module="introduction">Object</a> from [introduction](introduction.md) for other methods.
 
 ----
 

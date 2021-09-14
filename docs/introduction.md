@@ -14,8 +14,8 @@ Source Page: [fiber](fiber.md)
 
 **Class[es]**
 
-- <a class="module-object-refer-to" module="fiber">FiberEnd</a>
-- <a class="module-object-refer-to" module="fiber">StepIndexFiberEnd</a>
+- <a class="module-object-refer-to" module="fiber">Fiber</a>
+- <a class="module-object-refer-to" module="fiber">StepIndexFiber</a>
 
 <!-- tab:fpcavity -->
 
