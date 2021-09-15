@@ -14,7 +14,7 @@
     Wavelength - 波长
 """
 
-from scipy import constants
+from scipy import constants as C
 from ._utils import PrintableObject
 
 __all__ = [
@@ -227,14 +227,14 @@ class Wavelength(PrintableObject):
     @property
     def k(self):
         """波矢[1/L]"""
-        return self.get_property('k', lambda: 2*constants.pi/self.wavelength)
+        return self.get_property('k', lambda: 2*C.pi/self.wavelength)
 
     @property
     def nu(self):
         """频率[1/T]"""
-        return self.get_property('nu', lambda: constants.c/self.wavelength)
+        return self.get_property('nu', lambda: C.c/self.wavelength)
 
     @property
     def nu_angular(self):
         """角频率[1/T]"""
-        return self.get_property('nu_angular', lambda: 2*constants.pi*self.nu)
+        return self.get_property('nu_angular', lambda: 2*C.pi*self.nu)

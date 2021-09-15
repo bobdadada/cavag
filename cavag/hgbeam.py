@@ -48,7 +48,7 @@
 """
 
 import numpy as np
-from scipy import constants
+from scipy import constants as C
 from scipy import special
 from .misc import Wavelength
 
@@ -95,7 +95,7 @@ class NormalizedHGBeam1D(Wavelength):
         def v_f():
             omega0 = self.omega0
             m = self.m
-            return (2/constants.pi)**(1/4)/np.sqrt(omega0*(2**m)*special.factorial(m))
+            return (2/C.pi)**(1/4)/np.sqrt(omega0*(2**m)*special.factorial(m))
         return self.get_property('cm', v_f)
 
     @property
@@ -121,12 +121,12 @@ class NormalizedHGBeam1D(Wavelength):
     @property
     def z0(self):
         """瑞利长度[L]"""
-        return self.get_property('z0', lambda:  constants.pi * (self.omega0) ** 2 / self.wavelength)
+        return self.get_property('z0', lambda:  C.pi * (self.omega0) ** 2 / self.wavelength)
 
     @property
     def thetam(self):
         """半发散角[1]"""
-        return self.get_property('thetam', lambda: np.sqrt(2*self.m+1)*np.arctan(self.wavelength/(constants.pi*self.omega0)))
+        return self.get_property('thetam', lambda: np.sqrt(2*self.m+1)*np.arctan(self.wavelength/(C.pi*self.omega0)))
 
     @property
     def hm(self):
@@ -744,7 +744,7 @@ def local2remote(wavelength, omega0, z):
     :param z: 距离
     :return: (omega, r)基模模场半径和曲率半径
     """
-    zr = constants.pi * omega0 ** 2 / wavelength
+    zr = C.pi * omega0 ** 2 / wavelength
     omega = omega0 * np.sqrt(1 + (z / zr) ** 2)
     r = z * (1 + (zr / z) ** 2)
     return omega, r
@@ -759,7 +759,7 @@ def remote2local(wavelength, omega, r):
     :param r: 曲率半径
     :return: (omega0, z)基模束腰半径和位置
     """
-    zrp = constants.pi * omega ** 2 / wavelength
+    zrp = C.pi * omega ** 2 / wavelength
     omega0 = omega / np.sqrt(1 + (zrp / r) ** 2)
     z = r / (1 + (r / zrp) ** 2)
     return omega0, z

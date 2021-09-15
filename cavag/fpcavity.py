@@ -1,7 +1,12 @@
+"""
+用于描述F-P cavity行为的模块。此模块定义的所有腔面都是圆形或平面的，即可以使用曲率半径
+描述整个腔面。其他情况的腔面通常没有理论解，需要进行数值模拟。
+"""
+
+
 import logging
 import numpy as np
-from scipy import constants
-
+from scipy import constants as C
 from ._utils import PrintableObject
 from .hgbeam import EqualHGBeam
 from .misc import RTL, Position
@@ -205,18 +210,18 @@ class Cavity(CavityStructure):
 
     @property
     def kappa(self):
-        """半波半宽(圆频率)[1/T]"""
+        """透射曲线半高半宽(圆频率)[1/T]"""
         def v_f():
             if np.sqrt(self.rl*self.rr) < 0.9 or (self.lc > 0.01):
                 logging.warning("The reflectivity of the cavity mirror is too low, or the loss of cavity is too high, "
                                 "so the deviation of the `kappa` calculated by this approximate formula is large.")
-            return constants.c*(2-(1-self.lc)*(self.rl+self.rr))/(4*self.length)
+            return C.c*(2-(1-self.lc)*(self.rl+self.rr))/(4*self.length)
         return self.get_property('kappa', v_f)
 
     @property
     def fsr(self):
         """FSR(圆频率)[1/T]"""
-        return self.get_property('fsr', lambda: 2*constants.pi*constants.c/(2*self.length))
+        return self.get_property('fsr', lambda: 2*C.pi*C.c/(2*self.length))
 
     @property
     def finesse(self):
@@ -226,7 +231,7 @@ class Cavity(CavityStructure):
     @property
     def q(self):
         """品质因子[1]"""
-        return self.get_property('q', lambda: constants.pi*self.nu/(self.kappa))
+        return self.get_property('q', lambda: C.pi*self.nu/(self.kappa))
 
 
 class SymmetricCavity(SymmetricCavityStructure, Cavity):
@@ -312,7 +317,7 @@ class CavityMode(CavityStructure, EqualHGBeam, Position):
     @property
     def omega0(self):
         """等价基模束腰半径[L]"""
-        return self.get_property('omega0', lambda: np.sqrt(self.wavelength*self.z0/constants.pi))
+        return self.get_property('omega0', lambda: np.sqrt(self.wavelength*self.z0/C.pi))
 
     @property
     def omegaml(self):
@@ -344,13 +349,13 @@ class CavityMode(CavityStructure, EqualHGBeam, Position):
             if (self.pl < 0) or (self.pr < 0):
                 logging.warning("The waist is not in the cavity,"
                                 "so the calculated mode volume is slightly different.")
-            return cx*cy*self.length*(self.omega0)**2*constants.pi/4
+            return cx*cy*self.length*(self.omega0)**2*C.pi/4
         return self.get_property('v_mode', v_f)
 
     @property
     def e(self):
         """单光子电场强度[ML/T^3I]"""
-        return self.get_property('e', lambda: np.sqrt(constants.h*self.nu/(2*constants.epsilon_0*self.v_mode)))
+        return self.get_property('e', lambda: np.sqrt(C.h*self.nu/(2*C.epsilon_0*self.v_mode)))
 
     def u_f(self, z, x, y):
         ampl, phase = super().u_f(z, x, y)
@@ -507,4 +512,4 @@ def calculate_loss_scattering(sigmasc, wavelength):
     :param wavelength: 光波波长
     :return: 腔面的散射损耗
     """
-    return (4*constants.pi*sigmasc/wavelength)**2
+    return (4*C.pi*sigmasc/wavelength)**2
