@@ -5,7 +5,7 @@ from scipy import constants as C
 __all__ = [
     'calculate_mu', 'calculate_emax',
     'calculate_g', 'calculate_c1', 'calculate_eta_e',
-    'calculate_eta_ext',
+    'calculate_eta_ext', 'calculate_eta_trans'
 ]
 
 
@@ -94,6 +94,7 @@ def calculate_eta_ext(kappa, gammat):
     """
     return 2*kappa/(2*kappa+gammat)
 
+
 def calculate_eta_trans(rtl, rtr, lc, direction='both'):
     """
     计算腔中光子等效透射几率
@@ -108,19 +109,24 @@ def calculate_eta_trans(rtl, rtr, lc, direction='both'):
     rl0, tl0 = rtl
     rr0, tr0 = rtr
 
-    # 由于腔内损耗在一个来回中要经历两次，可以将腔内损耗等效地添加到左右介质膜中
-    rl, rr = rl0*(1-lc), rr0*(1-lc)
-
-    pass
-
-    # 适当的缓存以减少计算量
-    s = (1-lc)/(1-rl*rr)/2   
-
-    # 计算等效透射率
-    if direction == 'left':
-        return tl0*(1-rl)*(1+rr)*s
-    elif direction == 'right':
-        return tr0*(1-rr)*(1+rl)*s
+    if tl0 == 0:  # 边缘情况
+        pl = 0
+    elif tr0 == 0:  # 边缘情况
+        pr = 0
     else:
-        return tr0*(1-lc)*(1-rr)*(1+rl)/(1-rl*rr)/2
+        # 由于腔内损耗在一个来回中要经历两次，可以将腔内损耗等效地添加到左右介质膜中
+        rl, rr = rl0*(1-lc), rr0*(1-lc)
+        tl, tr = tl0*(1-lc), tr0*(1-lc)
+        
+        # 适当的缓存以减少计算量
+        s = 1/(1-rl*rr)/2
 
+        pl = tl*(1+rr)*s
+        pr = tr*(1+rl)*s
+
+    if direction == 'left':
+        return pl
+    elif direction == 'right':
+        return pr
+    else:
+        return pl, pr
