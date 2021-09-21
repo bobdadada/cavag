@@ -7,4 +7,5 @@
 - [mirror](mirror.md)
 - [misc](misc.md) 
 - [extension[s]](extension.md)
+  - [fcqs](extension/fcqs.md)
 

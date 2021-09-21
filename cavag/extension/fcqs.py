@@ -4,8 +4,9 @@ from scipy import constants as C
 
 __all__ = [
     'calculate_mu', 'calculate_emax',
-    'calculate_g', 'calculate_c1', 'calculate_eta_e',
-    'calculate_eta_ext', 'calculate_eta_trans'
+    'calculate_g', 'calculate_c1', 'ccalculate_eta_cpemit',
+    'calculate_eta_cpext', 'calculate_eta_ctrans',
+    'calculate_eta_fccoupling'
 ]
 
 
@@ -67,7 +68,7 @@ def calculate_c1(g, kappa, gammat):
     return g**2/(kappa*gammat)
 
 
-def calculate_eta_e(c1):
+def ccalculate_eta_cpemit(c1):
     """
     计算单原子发射几率
 
@@ -82,7 +83,7 @@ def calculate_eta_e(c1):
     return 2*c1/(2*c1+1)
 
 
-def calculate_eta_ext(kappa, gammat):
+def calculate_eta_cpext(kappa, gammat):
     """
     计算腔耦合光子提取几率
 
@@ -95,7 +96,7 @@ def calculate_eta_ext(kappa, gammat):
     return 2*kappa/(2*kappa+gammat)
 
 
-def calculate_eta_trans(rtl, rtr, lc, direction='both'):
+def calculate_eta_ctrans(rtl, rtr, lc, direction='both'):
     """
     计算腔中光子等效透射几率
 
@@ -105,6 +106,8 @@ def calculate_eta_trans(rtl, rtr, lc, direction='both'):
     :param rtr: (r, t) 右边介质膜的(反射率，透射率)
     :param lc: 腔内损耗
     :param direction: 透射方向，可为left、right、both，默认为both
+    :return: 当direction为both时，函数会返回左右两个方向的透射几率。
+            其他情况下，函数返回对应方向上的透射几率。
     """
     rl0, tl0 = rtl
     rr0, tr0 = rtr
@@ -117,7 +120,7 @@ def calculate_eta_trans(rtl, rtr, lc, direction='both'):
         # 由于腔内损耗在一个来回中要经历两次，可以将腔内损耗等效地添加到左右介质膜中
         rl, rr = rl0*(1-lc), rr0*(1-lc)
         tl, tr = tl0*(1-lc), tr0*(1-lc)
-        
+
         # 适当的缓存以减少计算量
         s = 1/(1-rl*rr)/2
 
@@ -130,3 +133,19 @@ def calculate_eta_trans(rtl, rtr, lc, direction='both'):
         return pr
     else:
         return pl, pr
+
+
+def calculate_eta_fccoupling(wavelength, nf, omegaf, roc, omegam):
+    """
+    计算光纤模式与照射在光纤上的腔模式耦合效率
+
+    此函数假设腔模式和光纤是在同一个轴线上的。
+
+    :param wavelength: 腔光子的波长
+    :param nf: 对应波长下，光纤的折射率
+    :param omegaf: 对应波长下，光纤的模场半径
+    :param roc: 腔膜式在光纤端面上的曲率半径
+    :param omegam: 腔膜式在光纤端面上的模场半径
+    :return: 耦合效率
+    """
+    return 4/((omegaf/omegam+omegam/omegaf)**2+(C.pi*nf*omegaf*omegam/(wavelength*roc))**2)
