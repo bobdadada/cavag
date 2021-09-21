@@ -382,7 +382,6 @@ def calculate_eta_mode(fiber, gaussmode, direction='l'):
         return 4 / ((omegam / omegaf + omegaf / omegam) ** 2 + (
                     constants.pi * nf * omegam * omegaf / (wavelength * ROC)))
 
-
 def calculate_eta_trans(ml, mr, direction='l'):
     """
     计算单个方向光子的等效透过率，为某个方向上膜的透过率/(总损耗+总透过率)
@@ -393,10 +392,11 @@ def calculate_eta_trans(ml, mr, direction='l'):
     """
     rl, tl, ll = ml
     rr, tr, lr = mr
+
     if direction == 'l':
-        return tl / (1 - rl + 1 - rr)
+        return (1-rl)*(1+rr)/2/(1-rl*rr)*tl/(tl+ll)
     elif direction == 'r':
-        return tr / (1 - rl + 1 - rr)
+        return (1-rr)*(1+rl)/2/(1-rl*rr)*tr/(tr+lr)
     else:
         raise AttributeError("方向只能为'l'或者'r'.")
 
