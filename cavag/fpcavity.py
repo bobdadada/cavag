@@ -134,7 +134,6 @@ class Cavity(CavityStructure):
                 self.property_set[prop] = val
 
         # rtl cache
-
         self.__rtls = {
             'l': RTL(**(__kwarg_rtls[0])), 'r': RTL(**(__kwarg_rtls[1]))}
 

@@ -4,7 +4,7 @@ from scipy import constants as C
 
 __all__ = [
     'calculate_mu', 'calculate_emax',
-    'calculate_g', 'calculate_C1', 'calculate_eta_e',
+    'calculate_g', 'calculate_c1', 'calculate_eta_e',
     'calculate_eta_ext',
 ]
 
@@ -50,7 +50,7 @@ def calculate_g(mu, e):
     return mu*e/C.hbar
 
 
-def calculate_C1(g, kappa, gammat):
+def calculate_c1(g, kappa, gammat):
     """
     计算单原子耦合系数
 
@@ -67,7 +67,7 @@ def calculate_C1(g, kappa, gammat):
     return g**2/(kappa*gammat)
 
 
-def calculate_eta_e(C1):
+def calculate_eta_e(c1):
     """
     计算单原子发射几率
 
@@ -76,10 +76,10 @@ def calculate_eta_e(C1):
         cavity-QED strong-coupling regime
     部分文献定义类似的耦合因子，注意区别。
 
-    :param C1: 耦合因子
+    :param c1: 耦合因子
     :return: 光子发射几率
     """
-    return 2*C1/(2*C1+1)
+    return 2*c1/(2*c1+1)
 
 
 def calculate_eta_ext(kappa, gammat):
@@ -90,6 +90,37 @@ def calculate_eta_ext(kappa, gammat):
 
     :param kappa: 腔泄露速率
     :param gammat: 总自发辐射速率
-    return: 腔耦合提取几率
+    :return: 腔耦合提取几率
     """
     return 2*kappa/(2*kappa+gammat)
+
+def calculate_eta_trans(rtl, rtr, lc, direction='both'):
+    """
+    计算腔中光子等效透射几率
+
+    假设腔内含有某个模式的单光子，求等效透射几率。
+
+    :param rtl: (r, t) 左边介质膜的(反射率，透射率)
+    :param rtr: (r, t) 右边介质膜的(反射率，透射率)
+    :param lc: 腔内损耗
+    :param direction: 透射方向，可为left、right、both，默认为both
+    """
+    rl0, tl0 = rtl
+    rr0, tr0 = rtr
+
+    # 由于腔内损耗在一个来回中要经历两次，可以将腔内损耗等效地添加到左右介质膜中
+    rl, rr = rl0*(1-lc), rr0*(1-lc)
+
+    pass
+
+    # 适当的缓存以减少计算量
+    s = (1-lc)/(1-rl*rr)/2   
+
+    # 计算等效透射率
+    if direction == 'left':
+        return tl0*(1-rl)*(1+rr)*s
+    elif direction == 'right':
+        return tr0*(1-rr)*(1+rl)*s
+    else:
+        return tr0*(1-lc)*(1-rr)*(1+rl)/(1-rl*rr)/2
+
