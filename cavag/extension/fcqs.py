@@ -4,7 +4,7 @@ from scipy import constants as C
 
 __all__ = [
     'calculate_mu', 'calculate_emax',
-    'calculate_g', 'calculate_c1', 'ccalculate_eta_cpemit',
+    'calculate_g', 'calculate_c1', 'calculate_eta_cpemit',
     'calculate_eta_cpext', 'calculate_eta_ctrans',
     'calculate_eta_fccoupling'
 ]
@@ -68,7 +68,7 @@ def calculate_c1(g, kappa, gammat):
     return g**2/(kappa*gammat)
 
 
-def ccalculate_eta_cpemit(c1):
+def calculate_eta_cpemit(c1):
     """
     计算单原子发射几率
 

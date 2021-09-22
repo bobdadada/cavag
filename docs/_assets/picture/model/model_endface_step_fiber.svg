@@ -7,12 +7,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="400"
-   height="400"
-   viewBox="0 0 65.832 65.832"
+   width="360.70032"
+   height="360.70032"
+   viewBox="0 0 59.364058 59.364058"
    version="1.1"
    id="svg8"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="model_endface_step_fiber.svg">
   <defs
      id="defs2">
@@ -38,8 +38,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.83730389"
-     inkscape:cx="207.03995"
-     inkscape:cy="465.4615"
+     inkscape:cx="-21.849859"
+     inkscape:cy="444.25207"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -48,11 +48,15 @@
      objecttolerance="10000"
      scale-x="0.16458"
      units="px"
-     inkscape:window-width="1842"
+     inkscape:window-width="1827"
      inkscape:window-height="1051"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -68,24 +72,25 @@
   <g
      inkscape:label="图层 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-2.7813808,-2.9772933)">
     <g
        id="g1236"
        transform="matrix(0.57720811,0,0,0.57720811,-26.856837,-20.252993)"
-       style="stroke-width:1.73247">
+       style="stroke-width:1.73247004">
       <g
          id="g1219"
          transform="translate(-10.008774,-15.174594)"
-         style="stroke-width:1.73247">
+         style="stroke-width:1.73247004">
         <circle
-           style="fill:#cada4f;fill-opacity:1;stroke:#00ff38;stroke-width:0.247737;stroke-linecap:square;stroke-opacity:0.982301"
+           style="fill:#cada4f;fill-opacity:1;stroke:#00ff38;stroke-width:0.24773701;stroke-linecap:square;stroke-opacity:0.982301"
            id="path963"
            cx="112.77976"
            cy="106.84399"
            r="27.624844"
            transform="matrix(1.8531831,0,0,1.8531831,-96.221789,-91.157486)" />
         <circle
-           style="opacity:0.999;fill:#4fda7a;fill-opacity:1;stroke:#00ff38;stroke-width:0.459105;stroke-linecap:square;stroke-opacity:0.982301;filter:url(#filter1213)"
+           style="opacity:0.99900004;fill:#4fda7a;fill-opacity:1;stroke:#00ff38;stroke-width:0.45910501;stroke-linecap:square;stroke-opacity:0.982301;filter:url(#filter1213)"
            id="circle965"
            cx="112.77976"
            cy="106.84399"
@@ -93,7 +98,7 @@
       </g>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.458386"
+         style="font-style:normal;font-weight:normal;font-size:10.58329964px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.458386"
          x="98.796295"
          y="67.801369"
          id="text1223"><tspan
@@ -104,7 +109,7 @@
            style="stroke-width:0.458386">cladding</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.458386"
+         style="font-style:normal;font-weight:normal;font-size:10.58329964px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.458386"
          x="102.49231"
          y="94.716942"
          id="text1227"><tspan

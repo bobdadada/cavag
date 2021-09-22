@@ -2,7 +2,7 @@
 
 The modules in `cavag` are organized as shown below
 
-<div style="text-align: center"><img src="_assets/picture/uml/cavag_uml.svg" alt="UML of cavag"></div>
+<div style="text-align: center"><img class="path-append" src="./_assets/picture/uml/cavag_uml.svg" alt="UML of cavag"></div>
 
 **Module Contents:**
 
@@ -89,10 +89,6 @@ Source Page: [misc](misc.md)
 Source Page: [extension[s]](extension)
 
 - [fcqs](extension/fcqs.md)
-  - <a class="module-object-refer-to" module="extension/fcqs">calculate_g</a>
-  - <a class="module-object-refer-to" module="extension/fcqs">calculate_C1</a>
-  - <a class="module-object-refer-to" module="extension/fcqs">calculate_neta_e</a>
-  - <a class="module-object-refer-to" module="extension/fcqs">calculate_neta_ext</a>
 
 <!-- tabs:end -->
 
@@ -102,7 +98,7 @@ Source Page: [extension[s]](extension)
 
 The core functions of `cavag` are provided by `Object` and `PropertySet` in *_utils.py*. The UML diagram of this file is shown below
 
-<div style="text-align: center"><img src="_assets/picture/uml/_utils_uml.svg" alt="UML of _utils"></div>
+<div style="text-align: center"><img class="path-append" src="./_assets/picture/uml/_utils_uml.svg" alt="UML of _utils"></div>
 
 1. **Usage**
 

@@ -6,6 +6,6 @@
 - [hgbeam](hgbeam.md)
 - [mirror](mirror.md)
 - [misc](misc.md) 
-- [extension[s]](extension.md)
+- [extension[s]](extension/)
   - [fcqs](extension/fcqs.md)
 

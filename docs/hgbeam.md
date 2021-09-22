@@ -130,16 +130,15 @@ where $V_{00eff}$ is the mode volume of the fundamental mode at the same locatio
 
 ### Demonstration
 
-<div><img src="_assets/picture/res/hgbeam/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
+<div><img class="path-append" src="./_assets/picture/res/hgbeam/waist_of_hermite_gaussian_modes.png" alt="waist_of_hermite_gaussian_modes" style="float:left; height:300px;"></div>
 
 The figure on the left shows the waist shape of some modes. It is easy to find that although the equation $(3)$ is equivalently satisfied for each mode, the beam waist of different modes cannot be represented by $\omega_0$ only, and only the waist radius of fundamental Gaussian mode can be represented by $\omega_0$.
 
 In addition, as $m$ or $n$ increases, the number of nodes increases and the range of the waist becomes larger and larger. 
 
-
 <div style="clear: both"></div>
 
-<div><img src="_assets/picture/res/hgbeam/random_comb_hermite_gaussian.png" alt="random_comb_hermite_gaussian" style="float:left; height:300px;"></div>
+<div><img class="path-append" src="./_assets/picture/res/hgbeam/random_comb_hermite_gaussian.png" alt="random_comb_hermite_gaussian" style="float:left; height:300px;"></div>
 
 A waist of a random combinations of some mode are shown in this figure. It can be seen that the graph of a random combination of the Hermite-Gaussian modes becomes very weird. 
 
@@ -155,7 +154,7 @@ The final inequality represents a typical difference between classical and quant
 
 <div style="clear: both"></div>
 
-<div><img src="_assets/picture/res/hgbeam/intensity_center_waist_normalized_hg.png" alt="intensity_center_waist_normalized_hg" style="float:left; height:300px;"></div>
+<div><img class="path-append" src="./_assets/picture/res/hgbeam/intensity_center_waist_normalized_hg.png" alt="intensity_center_waist_normalized_hg" style="float:left; height:300px;"></div>
 
 Using the orthogonality of the Hermite-Gaussian modes can we expand this graph. And the second figure shows the intensity at the center of the waist of each normalized Hermite-Gaussian mode. We also find an oscillation characteristic in this figure.
 
@@ -169,7 +168,7 @@ The above pictures can be obtained from the notebook [hermite_gaussian_beam.ipyn
 
 !> Please note that the definition of the symbol here is slightly different from elsewhere.
 
-<div style="text-align:center"><img src="_assets/picture/model/model_gb_thin_lens.svg" alt="transformation of H-G by thin lens"></div>
+<div style="text-align:center"><img class="path-append" src="./_assets/picture/model/model_gb_thin_lens.svg" alt="transformation of H-G by thin lens"></div>
 
 With the characteristics of Hermite-Gaussian beams and the notation in the figure, we get
 $$
@@ -200,7 +199,7 @@ one can get radius and position of the waist of the Gaussian beam after passing 
 
 #### Transformation by a mirror
 
-<div style="text-align:center"><img src="_assets/picture/model/model_gb_mirror.svg" alt="transformation of H-G by thin mirror"></div>
+<div style="text-align:center"><img class="path-append" src="./_assets/picture/model/model_gb_mirror.svg" alt="transformation of H-G by thin mirror"></div>
 
 A mirror of radius $R_0$ reflects the beam and changes the radius of curvature of the phase front. If we unfold the beam, we find that the incident phase delay $k(x^2+y^2)/(2R)$ is advanced by $2[k(x^2+y^2)/(2R_0)]$ because the path is shortened twice. Thus $R'$ of the unfolded reflected beam is given by
 $$
@@ -913,3 +912,4 @@ See also <a class="module-object-refer-to" module="hgbeam">convert_through_lens<
 ## References
 
 [1]: Hermann A. Haus, "[WAVES AND FIELDS IN OPTOELECTRONICS](_assets/paper/waves-and-fields-in-optoelectronics.djvu ":ignore :class=download")," Prentice-Hall, Inc., Englewood Cliffs, New Jersey 07632.
+

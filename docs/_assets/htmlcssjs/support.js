@@ -16,7 +16,7 @@
         return resolved.join('/');
     }
 
-    // 对class name包括path-append的含href的元素进行路径增添
+    // 对class name包括path-append的含href/src的元素进行路径增添
     function docsifyAppendPath(hook, vm) {
 
         hook.doneEach(function() {
@@ -25,17 +25,34 @@
                 let len = els.length;
                 if (len > 0){
                     // get the local directory, note directory always ends with '/'
-                    let dir = DOM.URL.replace(/^[^#]*\/#\//,'').replace(/\/(?!.*\/).*/, '');
+                    let dir = DOM.URL.replace(/^[^#]*\/#/, '').replace(/\/(?!.*\/).*/, '').replace(/^\//, '');
 
                     for (let i=len; i--; ){
-                        let hrefNode = els[i].attributes['href'];
-                        let oldHref = hrefNode? hrefNode.nodeValue : "";
+                        let el = els[i];
+                        
+                        let node;
+                        if (el.hasAttribute('src')) {
+                            node = el.attributes['src'];
+                        } else if (el.hasAttribute('href')) {
+                            node = el.attributes['href'];
+                        }
 
-                        if (oldHref && !oldHref.startsWith(DOM.location.origin)){
-                            if (oldHref.startsWith('#/')){
-                                hrefNode.nodeValue  = '#/' + resolvePath(dir + oldHref.substring(1)); // pop #
+                        let oldValue = node ? node.nodeValue : "";
+
+                        if (oldValue && !oldValue.startsWith(DOM.location.origin)){
+                            
+                            if (oldValue.startsWith('#/')){
+                                if (dir) {
+                                    node.nodeValue = '#/' + resolvePath(dir + oldValue.substring(1)); // pop #
+                                } else {
+                                    node.nodeValue = '#/' + resolvePath(oldValue.substring(2)); // pop #/
+                                }
                             } else {
-                                hrefNode.nodeValue  = resolvePath(dir + '/' + oldHref.replace(/^\.\//, '').replace(/^\//, ''));
+                                if (dir) {
+                                    node.nodeValue = resolvePath(dir + '/' + oldValue.replace(/^\.\//, '').replace(/^\//, ''));
+                                } else {
+                                    node.nodeValue = resolvePath(oldValue.replace(/^\.\//, '').replace(/^\//, ''));
+                                }
                             }
                         }
                     }
@@ -107,7 +124,7 @@
         })
     }
 
-    // 使用scrollIntoView对class进行跳转
+    // 使用scrollIntoView对modul中的对象进行跳转
     function docsifyModuleObjectRefer(hook, vm) {
         function scrollIntoModuleObject(name, f) {
             let path = name.split('.');

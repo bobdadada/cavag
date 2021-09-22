@@ -2,7 +2,7 @@
 
 F-P (Fabry-Perot) cavity is a passive optical resonant cavity. It was first produced in 1897 and invented by the French Charles Fabry and Alfred Perot. It has been widely used in the fields of optical communication, laser and spectroscopy to control or measure light wavelengths. The traditional F-P cavity is composed of two parallel plates with a certain reflectivity, that is, a plane parallel cavity. Currently commonly used scanning F-P cavity interferometers usually use spherical mirrors to reduce adjustment difficulty and improve system stability with a confocal cavity structure. 
 
-<div class="float"><img src="_assets/picture/model/model_fpcavity.svg" style="float:left;width:200px" alt="Fabry-Perot Cavity" title="Fabry-Perot Cavity"></div>
+<div class="float"><img class="path-append" src="./_assets/picture/model/model_fpcavity.svg" style="float:left;width:200px" alt="Fabry-Perot Cavity" title="Fabry-Perot Cavity"></div>
 
 In the field of microcavity, we use F-P cavity to describe all optical resonant cavities with similar structures, not just to describe parallel plates. Optical resonators in that field are often composed of plano-concave high-reflection mirrors or double-concave high-reflection mirrors, with their reflectivity higher than or even far higher than $99\%$. The fineness of such a highly reflective cavity is higher than $1000$.
 
@@ -151,5 +151,5 @@ There are a lot of losses in the cavity, and a lot of losses are on the mirror s
 
 ## References
 
-[1]: D Hunger et al "[A fiber Fabry–Perot cavity with high finesse](_assets/paper/Hunger_A_fiber_Fabry–Perot_cavity_with_high_finesse.pdf ':ignore :target=_blank')," *New J. Phys.* **12** 065038 (2010)
+[1]: D Hunger et al "[A fiber Fabry–Perot cavity with high finesse](_assets/paper/Hunger_A_fiber_Fabry–Perot_cavity_with_high_finesse.pdf ':ignore :target=_blank :class=download')," *New J. Phys.* **12** 065038 (2010)
 
