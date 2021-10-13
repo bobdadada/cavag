@@ -247,11 +247,11 @@ class SymmetricCavity(SymmetricCavityStructure, Cavity):
         self.name = name
 
 
-class CavityMode(CavityStructure, EqualHGBeam, Position):
+class CavityMode(CavityStructure, EqualHGBeam):
     name = 'CavityMode'
 
     modifiable_properties = ('length', 'wavelength',
-                             'rocl', 'rocr', 'a0', 'position', 'mx', 'my', 'xi')
+                             'rocl', 'rocr', 'a0', 'mx', 'my', 'xi')
 
     def __init__(self, name="CavityMode", **kwargs):
         kwargs.update(a0=kwargs.get('a0', 1))
@@ -311,7 +311,7 @@ class CavityMode(CavityStructure, EqualHGBeam, Position):
     @property
     def p0(self):
         """束腰位置[L]"""
-        return self.get_property('p0', lambda: (self.pl-self.pr)/2+self.position)
+        return self.get_property('p0', lambda: (self.pl-self.pr)/2)
 
     @property
     def omega0(self):
@@ -352,8 +352,8 @@ class CavityMode(CavityStructure, EqualHGBeam, Position):
         return self.get_property('v_mode', v_f)
 
     @property
-    def e(self):
-        """单光子电场强度[ML/T^3I]"""
+    def emax(self):
+        """单光子峰值电场强度[ML/T^3I]"""
         return self.get_property('e', lambda: np.sqrt(C.h*self.nu/(2*C.epsilon_0*self.v_mode)))
 
     def u_f(self, z, x, y):
