@@ -9,7 +9,7 @@ import numpy as np
 from scipy import constants as C
 from ._utils import PrintableObject
 from .hgbeam import EqualHGBeam
-from .misc import RTL, Position
+from .misc import RTL
 
 __all__ = [
     'CavityStructure', 'SymmetricCavityStructure',
@@ -354,7 +354,7 @@ class CavityMode(CavityStructure, EqualHGBeam):
     @property
     def emax(self):
         """单光子峰值电场强度[ML/T^3I]"""
-        return self.get_property('e', lambda: np.sqrt(C.h*self.nu/(2*C.epsilon_0*self.v_mode)))
+        return self.get_property('emax', lambda: np.sqrt(C.h*self.nu/(2*C.epsilon_0*self.v_mode)))
 
     def u_f(self, z, x, y):
         ampl, phase = super().u_f(z, x, y)
@@ -365,7 +365,7 @@ class SymmetricCavityMode(SymmetricCavityStructure, CavityMode):
     name = "SymmetricCavityMode"
 
     modifiable_properties = ('length', 'wavelength',
-                             'roc', 'a0', 'position', 'mx', 'my', 'xi')
+                             'roc', 'a0', 'mx', 'my', 'xi')
 
     def __init__(self, name="SymmetricCavityMode", **kwargs):
         roc = kwargs.get('roc', None)
@@ -392,7 +392,7 @@ class SymmetricCavityMode(SymmetricCavityStructure, CavityMode):
     @property
     def p0(self):
         """束腰位置[L]"""
-        return self.get_property('p0', lambda: self.position)
+        return self.get_property('p0', lambda: 0)
 
     @property
     def pl(self):
